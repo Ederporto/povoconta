@@ -1,0 +1,22 @@
+h1 {
+    color: black;
+    font-family: 'Amatic SC', cursive;
+    font-size: 4.5em;
+    font-weight: normal;
+}
+
+p {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1.4em;
+}
+
+button {
+    background-color: 06b6c9;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1.2em;
+    margin: 5px;
+    padding: 20px;
+    align: center;
+}
