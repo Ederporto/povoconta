@@ -47,6 +47,7 @@ def login():
         redirect_, request_token = mwoauth.initiate(app.config['OAUTH_MWURI'], consumer_token)
     except Exception:
         app.logger.exception('mwoauth.initiate failed')
+        flash(u'OAuth handshake failed.', 'danger')
         return redirect(url_for('museupaulista'))
     else:
         session['request_token'] = dict(zip(request_token._fields, request_token))
@@ -71,10 +72,12 @@ def oauth_callback():
         identity = mwoauth.identify(app.config['OAUTH_MWURI'], consumer_token, access_token)
     except Exception:
         app.logger.exception('OAuth authentication failed')
+        flash('OAuth authentication failed')
 
     else:
         session['access_token'] = dict(zip(access_token._fields, access_token))
         session['username'] = identity['username']
+        flash('You were signed in, %s!' % identity['username'], 'success')
 
     return redirect(url_for('museupaulista'))
 
