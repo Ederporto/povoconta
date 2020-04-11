@@ -92,7 +92,8 @@ def logout():
 @app.route('/', methods=['GET'])
 @app.route('/museupaulista', methods=['GET'])
 def museupaulista():
-    return render_template("museupaulista.html")
+    username = session.get('username', None)
+    return render_template("museupaulista.html", username=username)
 
 
 @app.route('/museupaulista/<url_prefix>/<qid>', methods=['GET'])
