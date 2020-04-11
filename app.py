@@ -47,7 +47,7 @@ def login():
         redirect_, request_token = mwoauth.initiate(app.config['OAUTH_MWURI'], consumer_token)
     except Exception:
         app.logger.exception('mwoauth.initiate failed')
-        return redirect(url_for('index'))
+        return redirect(url_for('museupaulista'))
     else:
         session['request_token'] = dict(zip(request_token._fields, request_token))
         return redirect(redirect_)
@@ -57,7 +57,7 @@ def login():
 def oauth_callback():
     if 'request_token' not in session:
         flash('OAuth callback failed. Are cookies disabled?')
-        return redirect(url_for('index'))
+        return redirect(url_for('museupaulista'))
 
     consumer_token = mwoauth.ConsumerToken(app.config['CONSUMER_KEY'], app.config['CONSUMER_SECRET'])
 
@@ -76,14 +76,14 @@ def oauth_callback():
         session['access_token'] = dict(zip(access_token._fields, access_token))
         session['username'] = identity['username']
 
-    return redirect(url_for('index'))
+    return redirect(url_for('museupaulista'))
 
 
 @app.route('/logout')
 def logout():
     """Log the user out by clearing their session."""
     session.clear()
-    return redirect(url_for('index'))
+    return redirect(url_for('museupaulista'))
 
 
 ############################################################################
