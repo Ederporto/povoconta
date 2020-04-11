@@ -1,9 +1,12 @@
 {% block head %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{{ url_for('static', filename= 'static.css') }}">
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Amatic+SC:700" type='text/css'>
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Josefin+Sans" type='text/css'>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <script>
+    function goBack() {
+        window.history.back();
+    }
     function validator_with_quantity(qid) {
         var quantity_of = "{{_('Quantidade de ')}}"
         var elementos = document.getElementsByClassName("depicts");
@@ -34,7 +37,7 @@
 </script>
 {% endblock %}
 {% block content %}
-<h1 style="text-align:center"><a href="/" class="nav-link">{{_("Wikidatificador de Imagens")}}</a></h1>
+<h1 style="text-align:center"><a href="/mp" class="nav-link">{{_("Povo Conta")}}</a></h1>
 {% if show %}
 <p style="text-align:center">{{_("Valide a wikidatificação de outras pessoas!")}}</p>
 {% if not image %}
@@ -85,11 +88,11 @@
 {% else %}
 <p style="text-align:center">{{_("Esta entidade não possui imagem ou itens retratados para serem validados.")}}</p>
 <p style="text-align:center">
-    <a href="{{ url_for('validate') }}">
-        <button name="validate"
-                class="validate"
-                value="validate">{{ _("Tente novamente") }}</button>
-    </a>
+    <button name="validate"
+            class="validate"
+            value="validate"
+            onclick="goBack()">{{ _("Tente novamente") }}
+    </button>
     ou
     <a href="{{ url_for('wikidatify') }}/{{item}}">
         <button name="wikidatify"

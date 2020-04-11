@@ -1,8 +1,44 @@
+.nav {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    float: left; /*add this*/
+}
+.navbar-right {
+    float: right !important;
+}
+
+#page-container {
+    position: relative;
+    min-height: 93vh;
+}
+
+#content {
+    padding-bottom: 2.5rem;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5em;
+}
+
 h1 {
-    color: black;
+    color: #547473;
     font-family: 'Amatic SC', cursive;
     font-size: 4.5em;
     font-weight: normal;
+}
+
+ul {
+    list-style-type:none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    display:inline;
 }
 
 p {
@@ -10,8 +46,12 @@ p {
     font-size: 1.4em;
 }
 
-button {
-    background-color: 06b6c9;
+a {
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+.button {
+    background-color: #547473;
     border: none;
     border-radius: 5px;
     color: white;

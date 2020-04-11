@@ -12,6 +12,7 @@ def get_p18(qid):
         "ids": qid,
         "props": "claims",
         "format": "json"
+        
     }
 
     result = SESSION.get(url=WIKIDATA_API_ENDPOINT, params=params)
@@ -53,20 +54,19 @@ def get_p180(qid, lang):
 
     result = SESSION.get(url=WIKIDATA_API_ENDPOINT, params=params)
     data = result.json()
-    entities = []
-    entity = {}
+    depicts = []
     try:
         p180s = data["entities"][qid]["claims"]["P180"]
         for p180 in p180s:
-            quantidade = get_p1114(p180)
+            quantity = get_p1114(p180)
             qid = p180["mainsnak"]["datavalue"]["value"]["id"]
             name = get_name(qid, lang)
-            entity = {"qid": qid, "name": name, "quantity": quantidade}
-            entities.append(entity)
+            depict = {"qid": qid, "name": name, "quantity": quantity}
+            depicts.append(depict)
     except:
         pass
 
-    return entities
+    return depicts
 
 
 def get_p1114(snak):
@@ -124,6 +124,27 @@ def search(term, lang):
         possible_terms.append({"qid": qid, "label": label, "description": description})
 
     return possible_terms
+
+
+def query_wikidata(query):
+    url = "https://query.wikidata.org/sparql"
+    params = {
+        "query": query,
+        "format": "json"
+    }
+    result = SESSION.post(url=url, params=params)
+    data = result.json()
+    return data
+
+
+def per_collection(lang="pt-br"):
+    data = query_wikidata("SELECT DISTINCT ?collection ?collection_label (COUNT(?work) AS ?num_works) WHERE { ?work wdt:P195 wd:Q56677470, ?collection; wdt:P18 ?image. ?collection rdfs:label ?collection_label. FILTER((LANG(?collection_label)) = '"+lang+"') } GROUP BY ?collection ?collection_label ORDER BY DESC (?num_works)")
+    return data
+
+
+def works_in_collection(qid_collection, mode="validate", lang="pt-br"):
+    data = query_wikidata("SELECT DISTINCT ?work ?work_label WHERE { ?work wdt:P195 wd:Q56677470, wd:"+qid_collection+". ?work wdt:P18 ?imagem. ?work rdfs:label ?work_label. FILTER((LANG(?work_label)) = '"+lang+"') }")
+    return data
 
 
 def post_to_wikidata():

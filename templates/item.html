@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename= 'static.css') }}">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Amatic+SC:700" type='text/css'>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Josefin+Sans" type='text/css'>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+{% endblock %}
+
+{% block scripts %}
+    var remove_values = {}
+
+    function remove_list(){
+        qid = event.target.value;
+        remove_values["statement_"+qid] = qid;
+        console.log(remove_values);
+    }
+
+    function yes_or_maybe(){
+        qid = event.target.value;
+        delete remove_values["statement_"+qid];
+        console.log(remove_values);
+    }
+
+    function validate_chosen(){
+        document.getElementById("validate").style.display="inline";
+    }
+    function validate(depict){
+        if (depict.quantity > 0) {
+            var quantity_of = "{{_('Quantidade de ')}}"
+            var elements = document.getElementsByName("depicts");
+            for(var i=0; i < elements.length; i++) {
+                if (elements[i].id==depict.qid) {
+                    elements[i].style.backgroundColor="#06b6c9";
+                    document.getElementById("quantity_label").textContent=quantity_of+'"'+depict.name+'": '+depict.quantity;
+                    document.getElementById("quantity_validator").style.display="inline";
+                    document.getElementById("validator_without_quantity").style.display="none";
+                    document.getElementById("validator_no").value=depict.qid;
+                    document.getElementById("validator_yes").value=depict.qid;
+                    document.getElementById("validator_maybe").value=depict.qid;
+                }
+                else {
+                    elements[i].style.backgroundColor="#d4d4d4";
+                }
+            }
+        }
+        else {
+            var elements = document.getElementsByName("depicts");
+            for(var i=0; i < elements.length; i++) {
+                elements[i].style.backgroundColor="#d4d4d4";
+                document.getElementById("quantity_validator").style.display="none";
+            }
+        }
+    }
+{% endblock %}
+
+{% block navright %}
+    {% if username %}
+        <li class="nav-item">
+            <button style="background-color: white;
+                           border: none;
+                           border-radius: 5px;
+                           color: #547473;
+                           padding: 10px;
+                           align: center;">
+                {{username}}
+            </button>
+        </li>
+        <li class="nav-item">
+            <a href="{{ url_for('logout') }}">
+                <button style="background-color: white;
+                               border: none;
+                               border-radius: 5px;
+                               color: #547473;
+                               padding: 10px;
+                               align: center;">
+                    <span class="fas fa-sign-out-alt" aria-hidden="true"></span>
+                    {{_("Sair")}}
+                </button>
+            </a>
+        </li>
+    {% else %}
+        <li class="nav-item">
+            <a href="{{ url_for('login') }}">
+                <button style="
+                background-color: white;
+                border: none;
+                border-radius: 5px;
+                color: #547473;
+                padding: 10px;
+                align: center;">
+                    <span class="fas fa-sign-in-alt" aria-hidden="true"></span>
+                    {{_("Autenticar-se")}}
+                </button>
+            </a>
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block banner %}
+    <br/>
+    <div class="container" style="width:50%">
+        <h1 style="text-align:center;">{{ _("Povo Conta") }}</h1><br/>
+        <p style="text-align:center">{{ _("Esta é uma ferramenta Wiki para inserir e validar os qualificadores de quantidade de itens retratados em entidades do Wikidata.") }}</p><br/>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div id="choose_method">
+    <p style="text-align:center">{{ _("Escolha uma opção:") }}</p>
+    <ul style="text-align:center">
+        <li>
+            <button name="quantify" class="button" value="quantify" onclick="quantify()">
+                {{ _("Quantificar") }}
+            </button>
+        </li>
+        {% if depicts %}
+        <li>
+            <button name="validate" class="button" value="validate" onclick="validate_chosen()">
+                {{ _("Validar") }}
+            </button>
+        </li>
+        {% endif %}
+    </ul>
+</div>
+<br>
+<div id="validate" style="display:none">
+    <table style="text-align:center;width:100%">
+        <tr>
+            <td rowspan="2"><img src="{{ image }}" style="max-widht:1000px; max-height:500px; align:center;" ></td>
+            <td align="center" style="width:50%;height:30%">
+                <p id="instructions" style="text-align:center"></p>
+                <div id="quantity_validator" style="display:none">
+                    <p id="quantity_label" style="text-align:center"></p>
+                    <button class="button" id="validator_yes" style="background-color:green" onclick="yes_or_maybe()">{{_("SIM")}}</button>
+                    <button class="button" id="validator_maybe" style="background-color:#d4d4d4" onclick="yes_or_maybe()">{{_("NÃO SEI")}}</button>
+                    <button class="button" id="validator_no" style="background-color:red" onclick="remove_list()">{{_("NÃO")}}</button>
+                </div>
+                <div id="validator_without_quantity" style="display:none">
+                    <p id="no_quantity_label"></p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    {% for depict in depicts %}
+                    <li>
+                        <button class="button" name="depicts" id="{{ depict.qid }}" onclick="validate({{ depict }})" style="background-color:#d4d4d4" >
+                            {{depict.name}} ({{depict.quantity}})
+                        </button>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <a href="{{ url_for('index') }}">
+                    <button class="button" id="confirmation" style="width:100%">{{_("Confirmar")}}</button>
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="quantify" style="display:none"></div>
+{% endblock %}

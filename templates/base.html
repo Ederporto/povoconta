@@ -1,0 +1,59 @@
+
+    <div id="pahe-container"g!DOCTYPE
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title%}{{_("Povo Conta")}}{% endblock %}</title>
+    {% block styles %}{% endblock %}
+    <script>{% block scripts %}{% endblock %}</script>
+</head>
+<body>
+    <div id="page-container">
+        {% block navbar %}
+        <nav class="navbar navbar-light" style="background-color: #547473;">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{{ url_for('index') }}" style="font-family: 'Josefin Sans', sans-serif; font-weight: bold; color:white">{{_("Povo Conta")}}</a>
+                    <a class="navbar-brand" style="font-family: 'Josefin Sans', sans-serif; color:white">|</a>
+                    <a class="navbar-brand" href="{{ url_for('museupaulista') }}" style="font-family: 'Josefin Sans', sans-serif; color:white">{{_("Museu Paulista")}}</a>
+                </div>
+                <div>
+                    <ul class="nav navbar-nav navbar-right">
+                        {% block navright %}{% endblock %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        {% endblock %}
+        {% block banner %}{% endblock banner %}
+        <div id="content" class="container-fluid">
+            {% block pre_content %}
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{category}} alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            {% endblock %}
+            {% block content %}{% endblock %}
+        </div>
+        <footer class="footer" role="contentinfo">
+            <hr style="border: 0.5px solid #547473;">
+            <div class="container" style="width:50%">
+                <div class="row align-items-center justify-content-md-center" >
+                    <div class="col-md-4">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Museu_Paulista_wordmark.jpg" alt="{{_('Uma iniciativa do Museu do Ipiranga')}}" height="50px" width="50px">
+                    </div>
+                    <div class="col-md-4 offset-md-4 text-muted">
+                        <a id="source" href="https://github.com/Ederporto/povoconta">{{_("Veja o código-fonte")}}</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

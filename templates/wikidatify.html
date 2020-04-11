@@ -1,15 +1,18 @@
 {% block head %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{{ url_for('static', filename= 'static.css') }}">
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Amatic+SC:700" type='text/css'>
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Josefin+Sans" type='text/css'>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <script>
+    function goBack() {
+        window.history.back();
+    }
     function search() {
         document.getElementById("messages").style.display="none";
         var term = document.getElementById("getlist").value;
-        if(!term.includes("| Q")){
-            var lang = "pt-br";
-            var url = "https://www.wikidata.org/w/api.php?&origin=*&action=wbsearchentities&format=json&type=item&language="+lang+"&search="+term;
+        if(!term.includes(" (Q")){
+            var lang = "pt";
+            var url = "https://www.wikidata.org/w/api.php?uselang="+lang+"&origin=*&action=wbsearchentities&format=json&type=item&language="+lang+"&search="+term;
             fetch(url)
             .then((resp) => resp.json())
             .then(function(resp){
@@ -19,7 +22,8 @@
                 for (var i=0; i<suggestions.length; i++) {
                     var option = document.createElement('option');
                     option.textContent = suggestions[i].description;
-                    option.value = suggestions[i].label+" | "+suggestions[i].id;
+                    console.log(suggestions[i])
+                    option.value = suggestions[i]["match"].text+" ("+suggestions[i].id+")";
                     dataList.appendChild(option);
                 }
              })
@@ -41,7 +45,7 @@
 </script>
 {% endblock %}
 {% block content %}
-<h1 style="text-align:center"><a href="/" class="nav-link">{{_("Wikidatificador de Imagens")}}</a></h1>
+<h1 style="text-align:center"><a href="/mp" class="nav-link">{{_("Povo Conta")}}</a></h1>
 {% if show %}
 <p style="text-align:center">{{_("Declare as entidades retratadas e suas quantidades!")}}</p>
 {% if not image %}
@@ -102,11 +106,10 @@
 {% else %}
 <p style="text-align:center">{{_("Esta entidade não possui imagem.")}}</p>
 <p style="text-align:center">
-    <a href="{{ url_for('wikidatify') }}">
-        <button name="wikidatify"
-                class="wikidatify"
-                value="wikidatify">{{ _("Tente novamente") }}</button>
-    </a>
+    <button name="wikidatify"
+            class="wikidatify"
+            value="wikidatify"
+            onclick="goBack()">{{ _("Tente novamente") }}</button>
 </p>
 {% endif %}
 {% endblock %}

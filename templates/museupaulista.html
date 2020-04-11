@@ -55,17 +55,40 @@
     <br/>
     <div class="container" style="width:50%">
         <h1 style="text-align:center;">{{ _("Povo Conta") }}</h1><br/>
-        <p style="text-align:center">{{ _("Esta é uma ferramenta Wiki para inserir e validar os qualificadores de quantidade de itens retratados em entidades do Wikidata.") }}</p><br/>
+        <p style="text-align:center">{{ _("Navegue pelo acervo do Novo Museu do Ipiranga e valide as edições de outras pessoas ou insira novas informações nos itens do acervo.") }}</p><br/>
     </div>
 {% endblock %}
 
 {% block content %}
 <p style="text-align:center">{{ _("Escolha uma opção:") }}</p>
-<p style="text-align:center">
-    <a href="{{ url_for('museupaulista') }}">
-        <button name="museupaulista"
-                class="button"
-                value="museupaulista">{{ _("Museu Paulista") }}</button>
-    </a>
-</p>
+<ul style="text-align:center">
+    <li>
+        <a href="{{ url_for('show_per_collection') }}">
+            <button name="per_collection" class="button" value="per_collection">
+                {{ _("Por coleção") }}
+            </button>
+        </a>
+    </li>
+    <li>
+        <a href="{{ url_for('show_per_collection') }}">
+            <button name="per_artist" class="button" value="per_artist">
+                {{ _("Por artista") }}
+            </button>
+        </a>
+    </li>
+    <li>
+        <a href="{{ url_for('show_per_collection') }}">
+            <button name="per_decade" class="button" value="per_decade">
+                {{ _("Por década") }}
+            </button>
+        </a>
+    </li>
+    <li>
+        <a href="{{ url_for('show_per_collection') }}">
+            <button name="per_type" class="button" value="per_type">
+                {{ _("Por tipo") }}
+            </button>
+        </a>
+    </li>
+</ul>
 {% endblock %}
