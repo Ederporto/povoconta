@@ -115,6 +115,7 @@ def oauth_callback():
 
 
 @app.route('/logout')
+@app.route('/oauth/disconnect')
 def logout():
     next_page = request.args.get('next')
     if next_page:
