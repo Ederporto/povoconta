@@ -10,18 +10,21 @@
 
 {% block navright %}
     {% if username %}
-        <li class="nav-item">
-            <button style="background-color: white;
-                           border: none;
-                           border-radius: 5px;
-                           color: #547473;
-                           padding: 10px;
-                           align: center;">
+        <li class="nav-item" style="display:inline;">
+            <a href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">
+                <button style="
+                background-color: white;
+                border: none;
+                border-radius: 5px;
+                color: #547473;
+                padding: 10px;
+                align: center;">
                 {{username}}
             </button>
+            </a>
         </li>
-        <li class="nav-item">
-            <a href="{{ url_for('logout') }}">
+        <li class="nav-item" style="display:inline;">
+            <a href="{{ url_for('logout',  next=request.script_root + request.full_path) }}">
                 <button style="background-color: white;
                                border: none;
                                border-radius: 5px;
@@ -34,8 +37,8 @@
             </a>
         </li>
     {% else %}
-        <li class="nav-item">
-            <a href="{{ url_for('login') }}">
+        <li class="nav-item" style="display:inline;">
+            <a href="{{ url_for('login', next=request.script_root + request.full_path) }}">
                 <button style="
                 background-color: white;
                 border: none;

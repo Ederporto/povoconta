@@ -63,8 +63,9 @@ def global_user():
 
 @app.route('/login')
 def login():
-    next_page = current_url()
-    session['after_login'] = next_page
+    next_page = request.args.get('next')
+    if next_page:
+        session['after_login'] = next_page
 
     client_key = app.config['CONSUMER_KEY']
     client_secret = app.config['CONSUMER_SECRET']
@@ -85,7 +86,7 @@ def login():
     return redirect(authorization_url)
 
 
-@app.route("/oauth_callback", methods=["GET"])
+@app.route("/oauth-callback", methods=["GET"])
 def oauth_callback():
     base_url = 'https://www.wikidata.org/w/index.php'
     client_key = app.config['CONSUMER_KEY']
@@ -115,6 +116,10 @@ def oauth_callback():
 
 @app.route('/logout')
 def logout():
+    next_page = request.args.get('next')
+    if next_page:
+        session['after_login'] = next_page
+
     for key in 'owner_key', 'owner_secret', 'username', 'after_login':
         if key in session:
             del session[key]
