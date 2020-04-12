@@ -16,14 +16,19 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Some functions, particular to the login part, are derived directly from
+# Wikidata Art Depiction Explorer tool, available at
+# <https://github.com/EdwardBetts/depicts>, under GPL-3 license.
 
 import requests
 import os
 import yaml
 import mwoauth
 import mwapi
-import requests_oauthlib
-from flask import Flask, render_template, flash, request, redirect, url_for, session
+from requests_oauthlib import OAuth1Session
+import wikidata_oauth
+from flask import Flask, render_template, flash, request, redirect, url_for, session, g
 from flask_babel import Babel, gettext
 from povoconta.validate import get_p18, get_p180, post_to_wikidata, per_collection, works_in_collection
 
@@ -37,56 +42,84 @@ consumer_token = mwoauth.ConsumerToken(
     app.config['CONSUMER_SECRET'])
 
 
+@app.template_global()
+def current_url():
+    args = request.view_args.copy()
+    args.update(request.args)
+    return url_for(request.endpoint, **args)
+
 ############################################################################
 # LOGIN                                                                    #
 ############################################################################
+@app.before_request
+def init_profile():
+    g.profiling = []
+
+
+@app.before_request
+def global_user():
+    g.user = wikidata_oauth.get_username()
+
+
 @app.route('/login')
 def login():
-    consumer_token = mwoauth.ConsumerToken(app.config['CONSUMER_KEY'], app.config['CONSUMER_SECRET'])
-    try:
-        redirect_, request_token = mwoauth.initiate(app.config['OAUTH_MWURI'], consumer_token)
-    except Exception:
-        app.logger.exception('mwoauth.initiate failed')
-        flash(u'OAuth handshake failed.', 'danger')
-        return redirect(url_for('museupaulista'))
-    else:
-        session['request_token'] = dict(zip(request_token._fields, request_token))
-        return redirect(redirect_)
+    next_page = current_url()
+    session['after_login'] = next_page
+
+    client_key = app.config['CONSUMER_KEY']
+    client_secret = app.config['CONSUMER_SECRET']
+    base_url = 'https://www.wikidata.org/w/index.php'
+    request_token_url = base_url + '?title=Special%3aOAuth%2finitiate'
+
+    oauth = OAuth1Session(client_key,
+                          client_secret=client_secret,
+                          callback_uri='oob')
+    fetch_response = oauth.fetch_request_token(request_token_url)
+
+    session['owner_key'] = fetch_response.get('oauth_token')
+    session['owner_secret'] = fetch_response.get('oauth_token_secret')
+
+    base_authorization_url = 'https://www.wikidata.org/wiki/Special:OAuth/authorize'
+    authorization_url = oauth.authorization_url(base_authorization_url,
+                                                oauth_consumer_key=client_key)
+    return redirect(authorization_url)
 
 
-@app.route('/oauth-callback')
+@app.route("/oauth_callback", methods=["GET"])
 def oauth_callback():
-    if 'request_token' not in session:
-        flash('OAuth callback failed. Are cookies disabled?')
-        return redirect(url_for('museupaulista'))
+    base_url = 'https://www.wikidata.org/w/index.php'
+    client_key = app.config['CONSUMER_KEY']
+    client_secret = app.config['CONSUMER_SECRET']
 
-    consumer_token = mwoauth.ConsumerToken(app.config['CONSUMER_KEY'], app.config['CONSUMER_SECRET'])
+    oauth = OAuth1Session(client_key,
+                          client_secret=client_secret,
+                          resource_owner_key=session['owner_key'],
+                          resource_owner_secret=session['owner_secret'])
 
-    try:
-        access_token = mwoauth.complete(
-            app.config['OAUTH_MWURI'],
-            consumer_token,
-            mwoauth.RequestToken(**session['request_token']),
-            request.query_string)
+    oauth_response = oauth.parse_authorization_response(request.url)
+    verifier = oauth_response.get('oauth_verifier')
+    access_token_url = base_url + '?title=Special%3aOAuth%2ftoken'
+    oauth = OAuth1Session(client_key,
+                          client_secret=client_secret,
+                          resource_owner_key=session['owner_key'],
+                          resource_owner_secret=session['owner_secret'],
+                          verifier=verifier)
 
-        identity = mwoauth.identify(app.config['OAUTH_MWURI'], consumer_token, access_token)
-    except Exception:
-        app.logger.exception('OAuth authentication failed')
-        flash('OAuth authentication failed')
+    oauth_tokens = oauth.fetch_access_token(access_token_url)
+    session['owner_key'] = oauth_tokens.get('oauth_token')
+    session['owner_secret'] = oauth_tokens.get('oauth_token_secret')
 
-    else:
-        session['access_token'] = dict(zip(access_token._fields, access_token))
-        session['username'] = identity['username']
-        flash('You were signed in, %s!' % identity['username'], 'success')
-
-    return redirect(url_for('museupaulista'))
+    next_page = session.get('after_login')
+    return redirect(next_page)
 
 
 @app.route('/logout')
 def logout():
-    """Log the user out by clearing their session."""
-    session.clear()
-    return redirect(url_for('museupaulista'))
+    for key in 'owner_key', 'owner_secret', 'username', 'after_login':
+        if key in session:
+            del session[key]
+    next_page = session.get('after_login')
+    return redirect(next_page)
 
 
 ############################################################################
