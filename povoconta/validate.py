@@ -55,25 +55,27 @@ def get_p180(qid, lang):
     result = SESSION.get(url=WIKIDATA_API_ENDPOINT, params=params)
     data = result.json()
     depicts = []
+    show_validate = False
     try:
         p180s = data["entities"][qid]["claims"]["P180"]
         for p180 in p180s:
-            quantity = get_p1114(p180)
+            quantity, show_validate = get_p1114(p180)
             qid = p180["mainsnak"]["datavalue"]["value"]["id"]
+            id = p180["id"]
             name = get_name(qid, lang)
-            depict = {"qid": qid, "name": name, "quantity": quantity}
+            depict = {"qid": qid, "id":id, "name": name, "quantity": quantity}
             depicts.append(depict)
     except:
         pass
 
-    return depicts
+    return depicts, show_validate
 
 
 def get_p1114(snak):
     if "qualifiers" in snak and "P1114" in snak["qualifiers"]:
-        return int(snak["qualifiers"]["P1114"][0]["datavalue"]["value"]["amount"])
+        return int(snak["qualifiers"]["P1114"][0]["datavalue"]["value"]["amount"]), True
     else:
-        return 0
+        return 0, False
 
 
 def get_name(qid, lang):

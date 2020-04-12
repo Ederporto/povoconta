@@ -23,33 +23,34 @@
         console.log(remove_values);
     }
 
-    function validate_chosen(){
-        document.getElementById("validate").style.display="inline";
+    function save_validation() {
+        document.getElementById("validation").value=remove_values;
     }
-    function validate(depict){
-        if (depict.quantity > 0) {
-            var quantity_of = "{{_('Quantidade de ')}}"
-            var elements = document.getElementsByName("depicts");
-            for(var i=0; i < elements.length; i++) {
-                if (elements[i].id==depict.qid) {
-                    elements[i].style.backgroundColor="#06b6c9";
+
+    function validate_or_quantify(depict){
+        var elements = document.getElementsByName("depicts");
+        var quantity_of = "{{_('Quantidade de ')}}"
+        var quantity_of = "{{_('Quantidade de ')}}"
+        for(var i=0; i < elements.length; i++) {
+            if (elements[i].id==depict.id) {
+                elements[i].style.backgroundColor="#06b6c9";
+                if (depict.quantity > 0) {
                     document.getElementById("quantity_label").textContent=quantity_of+'"'+depict.name+'": '+depict.quantity;
                     document.getElementById("quantity_validator").style.display="inline";
-                    document.getElementById("validator_without_quantity").style.display="none";
-                    document.getElementById("validator_no").value=depict.qid;
-                    document.getElementById("validator_yes").value=depict.qid;
-                    document.getElementById("validator_maybe").value=depict.qid;
+                    document.getElementById("quantity_quantificator").style.display="none";
+                    document.getElementById("validator_no").value=depict.id;
+                    document.getElementById("validator_yes").value=depict.id;
+                    document.getElementById("validator_maybe").value=depict.id
                 }
                 else {
-                    elements[i].style.backgroundColor="#d4d4d4";
+                    document.getElementById("quantity_validator").style.display="none";
+                    document.getElementById("insert_label").textContent=quantity_of+'"'+depict.name+'":';
+                    document.getElementById("quantity_quantificator").style.display="inline";
+                    document.getElementById("insert_button").value=depict.id;
                 }
             }
-        }
-        else {
-            var elements = document.getElementsByName("depicts");
-            for(var i=0; i < elements.length; i++) {
+            else {
                 elements[i].style.backgroundColor="#d4d4d4";
-                document.getElementById("quantity_validator").style.display="none";
             }
         }
     }
@@ -110,38 +111,34 @@
 {% endblock %}
 
 {% block content %}
-<div id="choose_method">
-    <p style="text-align:center">{{ _("Escolha uma opção:") }}</p>
-    <ul style="text-align:center">
-        <li>
-            <button name="quantify" class="button" value="quantify" onclick="quantify()">
-                {{ _("Quantificar") }}
-            </button>
-        </li>
-        {% if depicts %}
-        <li>
-            <button name="validate" class="button" value="validate" onclick="validate_chosen()">
-                {{ _("Validar") }}
-            </button>
-        </li>
-        {% endif %}
-    </ul>
-</div>
-<br>
-<div id="validate" style="display:none">
-    <table style="text-align:center;width:100%">
+<div id="validate" style="display:inline">
+    <table style="text-align:center;width:100%;" border="1px">
         <tr>
-            <td rowspan="2"><img src="{{ image }}" style="max-widht:1000px; max-height:500px; align:center;" ></td>
-            <td align="center" style="width:50%;height:30%">
+            <td rowspan="2" valign="top"><img src="{{ image }}" style="max-widht:1000px; max-height:500px; align:center;"></td>
+            <td align="center" style="width:50%;height:40%">
                 <p id="instructions" style="text-align:center"></p>
                 <div id="quantity_validator" style="display:none">
                     <p id="quantity_label" style="text-align:center"></p>
-                    <button class="button" id="validator_yes" style="background-color:green" onclick="yes_or_maybe()">{{_("SIM")}}</button>
-                    <button class="button" id="validator_maybe" style="background-color:#d4d4d4" onclick="yes_or_maybe()">{{_("NÃO SEI")}}</button>
-                    <button class="button" id="validator_no" style="background-color:red" onclick="remove_list()">{{_("NÃO")}}</button>
+                        <ul>
+                            <li>
+                                <button class="button" id="validator_yes" style="background-color:green" onclick="yes_or_maybe()">{{_("SIM")}}</button>
+                            </li>
+                            <li>
+                                <button class="button" id="validator_maybe" style="background-color:#d4d4d4" onclick="yes_or_maybe()">{{_("NÃO SEI")}}</button>
+                            </li>
+                            <li>
+                                <form action="{{ url_for('view_work_museupaulista', url_prefix=url_prefix, qid=entity) }}" method="post" style="display:inline">
+                                    <button type="submit" class="button" name="confirmation" id="validator_no" style="background-color:red">{{_("NÃO")}}</button>
+                                </form>
+                            </li>
+                        </ul>
                 </div>
-                <div id="validator_without_quantity" style="display:none">
-                    <p id="no_quantity_label"></p>
+                <div id="quantity_quantificator" style="display:none">
+                    <p id="insert_label" style="text-align:center"></p>
+                    <form action="{{ url_for('view_work_museupaulista', url_prefix=url_prefix, qid=entity) }}" method="post">
+                        <input type="number" name="quantity_statement" class="input" min="0" step="1" value="0"/><br><br>
+                        <button type="submit" class="button" name="confirmation_quantity" id="insert_button" style="background-color:green">{{_("CONFIRMAR")}}</button>
+                    </form>
                 </div>
             </td>
         </tr>
@@ -150,19 +147,12 @@
                 <ul>
                     {% for depict in depicts %}
                     <li>
-                        <button class="button" name="depicts" id="{{ depict.qid }}" onclick="validate({{ depict }})" style="background-color:#d4d4d4" >
+                        <button class="button" name="depicts" id="{{ depict.id }}" onclick="validate_or_quantify({{ depict }})" style="background-color:#d4d4d4;padding:8px;;font-size:1em;" >
                             {{depict.name}} ({{depict.quantity}})
                         </button>
                     </li>
                     {% endfor %}
                 </ul>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <a href="{{ url_for('museupaulista') }}">
-                    <button class="button" id="confirmation" style="width:100%">{{_("Confirmar")}}</button>
-                </a>
             </td>
         </tr>
     </table>

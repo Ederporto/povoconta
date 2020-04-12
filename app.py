@@ -119,12 +119,12 @@ def oauth_callback():
 def logout():
     next_page = request.args.get('next')
     if next_page:
-        session['after_login'] = next_page
+        session['after_logout'] = next_page
 
     for key in 'owner_key', 'owner_secret', 'username', 'after_login':
         if key in session:
             del session[key]
-    next_page = session.get('after_login')
+    next_page = session.get('after_logout')
     return redirect(next_page)
 
 
@@ -138,14 +138,29 @@ def museupaulista():
     return render_template("museupaulista.html", username=username)
 
 
-@app.route('/museupaulista/<url_prefix>/<qid>', methods=['GET'])
+@app.route('/museupaulista/<url_prefix>/<qid>', methods=['GET', 'POST'])
 def view_work_museupaulista(url_prefix, qid):
     username = wikidata_oauth.get_username()
-    depicts = get_p180(qid, "pt-br")
+    depicts, show_validate = get_p180(qid, "pt-br")
     image = get_p18(qid)
-    print(depicts)
-    return render_template("item.html", depicts=depicts, image=image, username=username)
+    if request.method == "POST":
+        if "confirmation" in request.form:
+            print(request.form["confirmation"])
+        else:
+            print(request.form["confirmation_quantity"])
+            print(request.form["quantity_statement"])
+    return render_template("item.html",
+                           entity=qid,
+                           url_prefix=url_prefix,
+                           depicts=depicts,
+                           image=image,
+                           username=username)
 
+
+@app.route('/save_validation', methods=['POST'])
+def save_validation():
+    confirmation = request.form['confirmation']
+    return confirmation
 
 @app.route('/museupaulista/P195s', methods=['GET'])
 def show_per_collection():
