@@ -48,6 +48,7 @@ def current_url():
     args.update(request.args)
     return url_for(request.endpoint, **args)
 
+
 ############################################################################
 # LOGIN                                                                    #
 ############################################################################
@@ -115,7 +116,6 @@ def oauth_callback():
 
 
 @app.route('/logout')
-@app.route('/oauth/disconnect')
 def logout():
     next_page = request.args.get('next')
     if next_page:
@@ -134,20 +134,22 @@ def logout():
 @app.route('/', methods=['GET'])
 @app.route('/museupaulista', methods=['GET'])
 def museupaulista():
-    username = session.get('username', None)
+    username = wikidata_oauth.get_username()
     return render_template("museupaulista.html", username=username)
 
 
 @app.route('/museupaulista/<url_prefix>/<qid>', methods=['GET'])
 def view_work_museupaulista(url_prefix, qid):
+    username = wikidata_oauth.get_username()
     depicts = get_p180(qid, "pt-br")
     image = get_p18(qid)
     print(depicts)
-    return render_template("item.html", depicts=depicts, image=image)
+    return render_template("item.html", depicts=depicts, image=image, username=username)
 
 
 @app.route('/museupaulista/P195s', methods=['GET'])
 def show_per_collection():
+    username = wikidata_oauth.get_username()
     json = per_collection()
     collections = []
     for result in json["results"]["bindings"]:
@@ -155,18 +157,19 @@ def show_per_collection():
             "qid": result["collection"]["value"].split("/")[-1],
             "label": result["collection_label"]["value"],
             "quantity": result["num_works"]["value"]})
-    return render_template("per_collection.html", collections=collections)
+    return render_template("per_collection.html", collections=collections, username=username)
 
 
 @app.route('/museupaulista/P195/<qid>', methods=['GET'])
 def show_works_in_collection(qid):
+    username = wikidata_oauth.get_username()
     json = works_in_collection(qid)
     collection = []
     for result in json["results"]["bindings"]:
         collection.append({
             "qid": result["work"]["value"].split("/")[-1],
             "label": result["work_label"]["value"]})
-    return render_template("per_collection.html", collection=collection, qid=qid)
+    return render_template("per_collection.html", collection=collection, qid=qid, username=username)
 
 
 if __name__ == "__main__":
