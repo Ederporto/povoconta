@@ -145,7 +145,7 @@ def per_collection(lang="pt-br"):
 
 
 def works_in_collection(qid_collection, mode="validate", lang="pt-br"):
-    data = query_wikidata("SELECT DISTINCT ?work ?work_label WHERE { ?work wdt:P195 wd:Q56677470, wd:"+qid_collection+". ?work wdt:P18 ?imagem; ?work wdt:P180 ?depicts. ?work rdfs:label ?work_label. FILTER((LANG(?work_label)) = '"+lang+"') }")
+    data = query_wikidata("SELECT DISTINCT ?work ?work_label WHERE { ?work wdt:P195 wd:Q56677470, wd:"+qid_collection+"; wdt:P18 ?imagem; wdt:P180 ?depicts; rdfs:label ?work_label. FILTER((LANG(?work_label)) = '"+lang+"') }")
     return data
 
 
