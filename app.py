@@ -179,8 +179,8 @@ def add_qualifier(claim, quantity):
         "action": "wbsetqualifier",
         "claim": claim,
         "property": "P1114",
-        "value": quantity,
-        "snaktype": value,
+        "value": value,
+        "snaktype": "value",
         "token": token
     }
 
