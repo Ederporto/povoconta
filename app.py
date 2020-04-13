@@ -26,6 +26,7 @@ import os
 import yaml
 import mwoauth
 import mwapi
+from urllib.parse import urlencode
 from requests_oauthlib import OAuth1Session
 import wikidata_oauth
 from flask import Flask, render_template, flash, request, redirect, url_for, session, g
@@ -174,12 +175,11 @@ def remove_qualifier(claim, qualifier):
 
 def add_qualifier(claim, quantity):
     token = wikidata_oauth.get_token()
-    value = "{'amount':'+"+quantity+"', 'unit':'1'}"
     params = {
         "action": "wbsetqualifier",
         "claim": claim,
         "property": "P1114",
-        "value": value,
+        "value": {"amount": "+"+quantity, "unit": "1"},
         "snaktype": "value",
         "token": token
     }
