@@ -179,7 +179,7 @@ def add_qualifier(claim, quantity):
         "action": "wbsetqualifier",
         "claim": claim,
         "property": "P1114",
-        "value": {"amount": "+"+quantity, "unit": "1"},
+        "value": "{\"amount\": \"+"+quantity+"\", \"unit\": \"1\"}",
         "snaktype": "value",
         "token": token
     }
