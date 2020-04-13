@@ -9,25 +9,8 @@
 {% endblock %}
 
 {% block scripts %}
-    var remove_values = {}
-
-    function remove_list(){
-        qid = event.target.value;
-        remove_values["statement_"+qid] = qid;
-        console.log(remove_values);
-    }
-
-    function yes_or_maybe(){
-        qid = event.target.value;
-        delete remove_values["statement_"+qid];
-        console.log(remove_values);
-    }
-
-    function save_validation() {
-        document.getElementById("validation").value=remove_values;
-    }
-
     function validate_or_quantify(depict){
+        document.getElementById("instructions").style.display="none";
         var elements = document.getElementsByName("depicts");
         var quantity_of = "{{_('Quantidade de ')}}"
         var quantity_of = "{{_('Quantidade de ')}}"
@@ -105,7 +88,7 @@
 {% block banner %}
     <br/>
     <div class="container" style="width:50%">
-        <h1 style="text-align:center;">{{ _("Povo Conta") }}</h1><br/>
+        <h1 style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.48em;">{{ _("Novo Museu do Ipiranga") }}</small></h1><br/>
         <p style="text-align:center">{{ _("Esta é uma ferramenta Wiki para inserir e validar os qualificadores de quantidade de itens retratados em entidades do Wikidata.") }}</p><br/>
     </div>
 {% endblock %}
@@ -116,19 +99,25 @@
         <tr>
             <td rowspan="2" valign="top"><img src="{{ image }}" style="max-widht:1000px; max-height:500px; align:center;"></td>
             <td align="center" style="width:50%;height:40%">
-                <p id="instructions" style="text-align:center"></p>
+                <p id="instructions" style="text-align:center">
+                    {{_("Selecione abaixo uma das entidades retratadas na imagem ao lado.")}}
+                </p>
                 <div id="quantity_validator" style="display:none">
                     <p id="quantity_label" style="text-align:center"></p>
                         <ul>
                             <li>
-                                <button class="button" id="validator_yes" style="background-color:green" onclick="yes_or_maybe()">{{_("SIM")}}</button>
+                                <a href="{{ url_for('view_work_museupaulista', url_prefix=url_prefix, qid=entity) }}" style="display:inline">
+                                    <button class="button" id="validator_yes" style="background-color:green" onclick="yes_or_maybe()">{{_("SIM")}}</button>
+                                </a>
                             </li>
                             <li>
-                                <button class="button" id="validator_maybe" style="background-color:#d4d4d4" onclick="yes_or_maybe()">{{_("NÃO SEI")}}</button>
+                                <a href="{{ url_for('view_work_museupaulista', url_prefix=url_prefix, qid=entity) }}" style="display:inline">
+                                    <button class="button" id="validator_maybe" style="background-color:#d4d4d4" onclick="yes_or_maybe()">{{_("NÃO SEI")}}</button>
+                                </a>
                             </li>
                             <li>
                                 <form action="{{ url_for('view_work_museupaulista', url_prefix=url_prefix, qid=entity) }}" method="post" style="display:inline">
-                                    <button type="submit" class="button" name="confirmation" id="validator_no" style="background-color:red">{{_("NÃO")}}</button>
+                                    <button type="submit" class="button" name="confirmation" id="validator_no" style="background-color:red;font-family: 'Josefin Sans', sans-serif;">{{_("NÃO")}}</button>
                                 </form>
                             </li>
                         </ul>
