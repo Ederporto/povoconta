@@ -83,7 +83,7 @@
 <ul style="text-align:center">
     {% for work in collection %}
     <li>
-        <a href="{{url_for('view_work_museupaulista', url_prefix= 'P195-'+qid, qid=work.qid) }}">
+        <a href="{{url_for('view_work_museudoipiranga', url_prefix= 'P195-'+qid, qid=work.qid) }}">
             <button name="work" class="button" value="{{work.qid}}" style="padding: 10px;">
                 {{ work.label }} ({{ work.qid }})
             </button>

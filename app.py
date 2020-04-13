@@ -25,8 +25,6 @@ import requests
 import os
 import yaml
 import mwoauth
-import mwapi
-from urllib.parse import urlencode
 from requests_oauthlib import OAuth1Session
 import wikidata_oauth
 from flask import Flask, render_template, flash, request, redirect, url_for, session, g
@@ -42,12 +40,6 @@ consumer_token = mwoauth.ConsumerToken(
     app.config['CONSUMER_KEY'],
     app.config['CONSUMER_SECRET'])
 WIKIDATA_API_ENDPOINT = 'https://www.wikidata.org/w/api.php'
-
-@app.template_global()
-def current_url():
-    args = request.view_args.copy()
-    args.update(request.args)
-    return url_for(request.endpoint, **args)
 
 
 ############################################################################
@@ -130,17 +122,42 @@ def logout():
 
 
 ############################################################################
-# MUSEU PAULISTA                                                           #
+# MUSEU DO IPIRANGA                                                        #
 ############################################################################
 @app.route('/', methods=['GET'])
-@app.route('/museupaulista', methods=['GET'])
-def museupaulista():
+@app.route('/museudoipiranga', methods=['GET'])
+def museudoipiranga():
     username = wikidata_oauth.get_username()
-    return render_template("museupaulista.html", username=username)
+    return render_template("museudoipiranga.html", username=username)
 
 
-@app.route('/museupaulista/<url_prefix>/<qid>', methods=['GET', 'POST'])
-def view_work_museupaulista(url_prefix, qid):
+@app.route('/museudoipiranga/P195s', methods=['GET'])
+def show_per_collection():
+    username = wikidata_oauth.get_username()
+    json = per_collection()
+    collections = []
+    for result in json["results"]["bindings"]:
+        collections.append({
+            "qid": result["collection"]["value"].split("/")[-1],
+            "label": result["collection_label"]["value"],
+            "quantity": result["num_works"]["value"]})
+    return render_template("per_collection.html", collections=collections, username=username)
+
+
+@app.route('/museudoipiranga/P195/<qid>', methods=['GET'])
+def show_works_in_collection(qid):
+    username = wikidata_oauth.get_username()
+    json = works_in_collection(qid)
+    collection = []
+    for result in json["results"]["bindings"]:
+        collection.append({
+            "qid": result["work"]["value"].split("/")[-1],
+            "label": result["work_label"]["value"]})
+    return render_template("per_collection.html", collection=collection, qid=qid, username=username)
+
+
+@app.route('/museudoipiranga/<url_prefix>/<qid>', methods=['GET', 'POST'])
+def view_work_museudoipiranga(url_prefix, qid):
     username = wikidata_oauth.get_username()
     if request.method == "POST":
         if "confirmation" in request.form:
@@ -161,18 +178,9 @@ def view_work_museupaulista(url_prefix, qid):
                            username=username)
 
 
-def remove_qualifier(claim, qualifier):
-    token = wikidata_oauth.get_token()
-    params = {
-        "action": "wbremovequalifiers",
-        "claim": claim,
-        "qualifiers": qualifier,
-        "token": token
-    }
-
-    wikidata_oauth.api_post_request(params)
-
-
+############################################################################
+# REQUESTS TO WIKIDATA                                                     #
+############################################################################
 def add_qualifier(claim, quantity):
     token = wikidata_oauth.get_token()
     params = {
@@ -185,36 +193,24 @@ def add_qualifier(claim, quantity):
     }
 
     wikidata_oauth.api_post_request(params)
-
-@app.route('/save_validation', methods=['POST'])
-def save_validation():
-    confirmation = request.form['confirmation']
-    return confirmation
-
-@app.route('/museupaulista/P195s', methods=['GET'])
-def show_per_collection():
-    username = wikidata_oauth.get_username()
-    json = per_collection()
-    collections = []
-    for result in json["results"]["bindings"]:
-        collections.append({
-            "qid": result["collection"]["value"].split("/")[-1],
-            "label": result["collection_label"]["value"],
-            "quantity": result["num_works"]["value"]})
-    return render_template("per_collection.html", collections=collections, username=username)
+    flash(_("Qualificador inserido com sucesso"), "success")
 
 
-@app.route('/museupaulista/P195/<qid>', methods=['GET'])
-def show_works_in_collection(qid):
-    username = wikidata_oauth.get_username()
-    json = works_in_collection(qid)
-    collection = []
-    for result in json["results"]["bindings"]:
-        collection.append({
-            "qid": result["work"]["value"].split("/")[-1],
-            "label": result["work_label"]["value"]})
-    return render_template("per_collection.html", collection=collection, qid=qid, username=username)
+def remove_qualifier(claim, qualifier):
+    token = wikidata_oauth.get_token()
+    params = {
+        "action": "wbremovequalifiers",
+        "claim": claim,
+        "qualifiers": qualifier,
+        "token": token
+    }
+
+    wikidata_oauth.api_post_request(params)
+    flash(_("Qualificador removido com sucesso"), "success")
 
 
+############################################################################
+# RUN THE APP                                                              #
+############################################################################
 if __name__ == "__main__":
     app.run()

@@ -97,7 +97,12 @@
 <div id="validate" style="display:inline">
     <table style="text-align:center;width:100%;">
         <tr>
-            <td rowspan="2" valign="top"><img src="{{ image }}" style="max-widht:1000px; max-height:500px; align:center;"></td>
+            <td rowspan="2" valign="top">
+                <div style="position:relative;display:inline-block">
+                    <img src="{{ image }}" style="object-fit:cover;max-widht:1000px; max-height:500px; align:center;"/>
+                    <span style="position:absolute;text-align:right;bottom:0px;right:0;background:#03f5ff;opacity:0.5;">Teste</span>
+                </div>
+            </td>
             <td align="center" style="width:50%;height:40%">
                 <p id="instructions" style="text-align:center">
                     {{_("Selecione abaixo uma das entidades retratadas na imagem ao lado.")}}
@@ -106,17 +111,17 @@
                     <p id="quantity_label" style="text-align:center"></p>
                         <ul>
                             <li>
-                                <a href="{{ url_for('view_work_museupaulista', url_prefix=url_prefix, qid=entity) }}" style="display:inline">
+                                <a href="{{ url_for('view_work_museudoipiranga', url_prefix=url_prefix, qid=entity) }}" style="display:inline">
                                     <button class="button" id="validator_yes" style="background-color:green" onclick="yes_or_maybe()">{{_("SIM")}}</button>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ url_for('view_work_museupaulista', url_prefix=url_prefix, qid=entity) }}" style="display:inline">
+                                <a href="{{ url_for('view_work_museudoipiranga', url_prefix=url_prefix, qid=entity) }}" style="display:inline">
                                     <button class="button" id="validator_maybe" style="background-color:#d4d4d4" onclick="yes_or_maybe()">{{_("NÃO SEI")}}</button>
                                 </a>
                             </li>
                             <li>
-                                <form action="{{ url_for('view_work_museupaulista', url_prefix=url_prefix, qid=entity) }}" method="post" style="display:inline">
+                                <form action="{{ url_for('view_work_museudoipiranga', url_prefix=url_prefix, qid=entity) }}" method="post" style="display:inline">
                                     <button type="submit" class="button" name="confirmation" id="validator_no" style="background-color:red;font-family: 'Josefin Sans', sans-serif;">{{_("NÃO")}}</button>
                                 </form>
                             </li>
@@ -124,7 +129,7 @@
                 </div>
                 <div id="quantity_quantificator" style="display:none">
                     <p id="insert_label" style="text-align:center"></p>
-                    <form action="{{ url_for('view_work_museupaulista', url_prefix=url_prefix, qid=entity) }}" method="post">
+                    <form action="{{ url_for('view_work_museudoipiranga', url_prefix=url_prefix, qid=entity) }}" method="post">
                         <input type="number" name="quantity_statement" class="input" min="0" step="1" value="0"/><br><br>
                         <button type="submit" class="button" name="confirmation_quantity" id="insert_button" style="background-color:green">{{_("CONFIRMAR")}}</button>
                     </form>
