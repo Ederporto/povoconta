@@ -141,16 +141,17 @@ def museupaulista():
 @app.route('/museupaulista/<url_prefix>/<qid>', methods=['GET', 'POST'])
 def view_work_museupaulista(url_prefix, qid):
     username = wikidata_oauth.get_username()
-    depicts = get_p180(qid, "pt-br")
-    image = get_p18(qid)
     if request.method == "POST":
         if "confirmation" in request.form:
-            edit = request.form["confirmation"].split(";")
-            result = post_to_wikidata(edit[0], edit[1])
-            return result
+            claim, qualifier = request.form["confirmation"].split(";")
+            remove_qualifier(claim, qualifier)
         else:
-            print(request.form["confirmation_quantity"])
-            print(request.form["quantity_statement"])
+            claim = request.form["confirmation_quantity"]
+            quantity = request.form["quantity_statement"]
+            add_qualifier(claim, quantity)
+
+    depicts = get_p180(qid, "pt-br")
+    image = get_p18(qid)
     return render_template("item.html",
                            entity=qid,
                            url_prefix=url_prefix,
@@ -159,16 +160,30 @@ def view_work_museupaulista(url_prefix, qid):
                            username=username)
 
 
-def post_to_wikidata(claim, qualifier):
+def remove_qualifier(claim, qualifier):
+    token = wikidata_oauth.get_token()
     params = {
         "action": "wbremovequalifiers",
         "claim": claim,
-        "qualifiers": qualifier
+        "qualifiers": qualifier,
+        "token": token
     }
 
-    result = wikidata_oauth.api_post_request(params)
-    return result
+    wikidata_oauth.api_post_request(params)
 
+
+def add_qualifier(claim, quantity):
+    token = wikidata_oauth.get_token()
+    params = {
+        "action": "wbsetqualifier",
+        "claim": claim,
+        "property": "P1114",
+        "value": quantity,
+        "snaktype": "value",
+        "token": token
+    }
+
+    wikidata_oauth.api_post_request(params)
 
 @app.route('/save_validation', methods=['POST'])
 def save_validation():
