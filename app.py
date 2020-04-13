@@ -30,7 +30,7 @@ from requests_oauthlib import OAuth1Session
 import wikidata_oauth
 from flask import Flask, render_template, flash, request, redirect, url_for, session, g
 from flask_babel import Babel, gettext
-from povoconta.validate import get_p18, get_p180, post_to_wikidata, per_collection, works_in_collection
+from povoconta.validate import get_p18, get_p180, per_collection, works_in_collection
 
 
 __dir__ = os.path.dirname(__file__)
@@ -40,7 +40,7 @@ BABEL = Babel(app)
 consumer_token = mwoauth.ConsumerToken(
     app.config['CONSUMER_KEY'],
     app.config['CONSUMER_SECRET'])
-
+WIKIDATA_API_ENDPOINT = 'https://www.wikidata.org/w/api.php'
 
 @app.template_global()
 def current_url():
@@ -141,11 +141,12 @@ def museupaulista():
 @app.route('/museupaulista/<url_prefix>/<qid>', methods=['GET', 'POST'])
 def view_work_museupaulista(url_prefix, qid):
     username = wikidata_oauth.get_username()
-    depicts, show_validate = get_p180(qid, "pt-br")
+    depicts = get_p180(qid, "pt-br")
     image = get_p18(qid)
     if request.method == "POST":
         if "confirmation" in request.form:
-            print(request.form["confirmation"])
+            edit = request.form["confirmation"].split(";")
+            post_to_wikidata(edit[0], edit[1])
         else:
             print(request.form["confirmation_quantity"])
             print(request.form["quantity_statement"])
@@ -155,6 +156,18 @@ def view_work_museupaulista(url_prefix, qid):
                            depicts=depicts,
                            image=image,
                            username=username)
+
+
+def post_to_wikidata(claim, qualifier):
+    params = {
+        "action": "wbremovequalifiers",
+        "claim": claim,
+        "qualifiers": qualifier
+    }
+
+    result = wikidata_oauth.api_post_request(params)
+    data = result.json()
+    return 0
 
 
 @app.route('/save_validation', methods=['POST'])

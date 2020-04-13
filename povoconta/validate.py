@@ -55,27 +55,26 @@ def get_p180(qid, lang):
     result = SESSION.get(url=WIKIDATA_API_ENDPOINT, params=params)
     data = result.json()
     depicts = []
-    show_validate = False
     try:
         p180s = data["entities"][qid]["claims"]["P180"]
         for p180 in p180s:
-            quantity, show_validate = get_p1114(p180)
+            quantity, quantity_hash, show_validate = get_p1114(p180)
             qid = p180["mainsnak"]["datavalue"]["value"]["id"]
             id = p180["id"]
             name = get_name(qid, lang)
-            depict = {"qid": qid, "id":id, "name": name, "quantity": quantity}
+            depict = {"qid": qid, "id": id, "name": name, "quantity": quantity, "hash": quantity_hash}
             depicts.append(depict)
     except:
         pass
 
-    return depicts, show_validate
+    return depicts
 
 
 def get_p1114(snak):
     if "qualifiers" in snak and "P1114" in snak["qualifiers"]:
-        return int(snak["qualifiers"]["P1114"][0]["datavalue"]["value"]["amount"]), True
+        return int(snak["qualifiers"]["P1114"][0]["datavalue"]["value"]["amount"]), snak["qualifiers"]["P1114"][0]["hash"], True
     else:
-        return 0, False
+        return 0, "", False
 
 
 def get_name(qid, lang):
@@ -147,7 +146,3 @@ def per_collection(lang="pt-br"):
 def works_in_collection(qid_collection, mode="validate", lang="pt-br"):
     data = query_wikidata("SELECT DISTINCT ?work ?work_label WHERE { ?work wdt:P195 wd:Q56677470, wd:"+qid_collection+"; wdt:P18 ?imagem; wdt:P180 ?depicts; rdfs:label ?work_label. FILTER((LANG(?work_label)) = '"+lang+"') }")
     return data
-
-
-def post_to_wikidata():
-    return 0

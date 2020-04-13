@@ -47,6 +47,7 @@ def get_token():
     }
     reply = api_request(params)
     token = reply['query']['tokens']['csrftoken']
+    return token
 
 
 def userinfo_call():

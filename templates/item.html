@@ -38,7 +38,7 @@
                     document.getElementById("quantity_label").textContent=quantity_of+'"'+depict.name+'": '+depict.quantity;
                     document.getElementById("quantity_validator").style.display="inline";
                     document.getElementById("quantity_quantificator").style.display="none";
-                    document.getElementById("validator_no").value=depict.id;
+                    document.getElementById("validator_no").value=depict.id+";"+depict.hash;
                     document.getElementById("validator_yes").value=depict.id;
                     document.getElementById("validator_maybe").value=depict.id
                 }
