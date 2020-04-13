@@ -146,7 +146,8 @@ def view_work_museupaulista(url_prefix, qid):
     if request.method == "POST":
         if "confirmation" in request.form:
             edit = request.form["confirmation"].split(";")
-            post_to_wikidata(edit[0], edit[1])
+            result = post_to_wikidata(edit[0], edit[1])
+            return result
         else:
             print(request.form["confirmation_quantity"])
             print(request.form["quantity_statement"])
@@ -166,8 +167,7 @@ def post_to_wikidata(claim, qualifier):
     }
 
     result = wikidata_oauth.api_post_request(params)
-    data = result.json()
-    return 0
+    return result
 
 
 @app.route('/save_validation', methods=['POST'])
