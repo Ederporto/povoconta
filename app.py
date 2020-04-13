@@ -174,12 +174,13 @@ def remove_qualifier(claim, qualifier):
 
 def add_qualifier(claim, quantity):
     token = wikidata_oauth.get_token()
+    value = "{'amount':'+"+quantity+"', 'unit':'1'}"
     params = {
         "action": "wbsetqualifier",
         "claim": claim,
         "property": "P1114",
         "value": quantity,
-        "snaktype": "value",
+        "snaktype": value,
         "token": token
     }
 
