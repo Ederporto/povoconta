@@ -1,6 +1,7 @@
 requests
 flask
 flask_babel
+flask_thumbnails
 pyyaml
 mwoauth
 mwapi
