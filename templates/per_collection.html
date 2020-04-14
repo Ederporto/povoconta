@@ -69,7 +69,7 @@
                     {% endif %}
                 {% endif %}
                 {% if collection_data.total and collection_data.total_scope %}
-                    <br>Possui {{collection_data.total}} obras registradas no Wikidata, das quais {{collection_data.total_scope}} possuem ao menos uma imagem e um descritor no banco de dados.
+                    <br>Possui {{collection_data.total}} obras registradas no Wikidata, das quais {{collection_data.total_scope}} {% if collection_data.total_scope >1 %} possuem {% else %} possui {% endif %} ao menos uma imagem e um descritor no banco de dados.
                 {% endif %}
                 {% if collection_data.collection_article %}
                     <br>A coleção possui <a href="https://pt.wikipedia.org/wiki/{{collection_data.collection_article}}">um artigo na Wikipédia</a>
