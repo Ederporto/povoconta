@@ -25,17 +25,19 @@ import requests
 import os
 import yaml
 import mwoauth
+from flask_thumbnails import Thumbnail
 from requests_oauthlib import OAuth1Session
 import wikidata_oauth
 from flask import Flask, render_template, flash, request, redirect, url_for, session, g
 from flask_babel import Babel, gettext
-from povoconta.validate import get_p18, get_p180, per_collection, works_in_collection
+from povoconta.validate import get_p18, get_p180, per_collection, works_in_collection, collection_data
 
 
 __dir__ = os.path.dirname(__file__)
 app = Flask(__name__)
 app.config.update(yaml.safe_load(open(os.path.join(__dir__, 'config.yaml'))))
 BABEL = Babel(app)
+thumb = Thumbnail(app)
 consumer_token = mwoauth.ConsumerToken(
     app.config['CONSUMER_KEY'],
     app.config['CONSUMER_SECRET'])
@@ -125,13 +127,24 @@ def logout():
 # MUSEU DO IPIRANGA                                                        #
 ############################################################################
 @app.route('/', methods=['GET'])
-@app.route('/museudoipiranga', methods=['GET'])
 def museudoipiranga():
     username = wikidata_oauth.get_username()
     return render_template("museudoipiranga.html", username=username)
 
 
-@app.route('/museudoipiranga/P195s', methods=['GET'])
+@app.route('/sobre', methods=['GET'])
+def sobre():
+    username = wikidata_oauth.get_username()
+    return render_template("sobre.html", username=username)
+
+
+@app.route('/tutorial', methods=['GET'])
+def tutorial():
+    username = wikidata_oauth.get_username()
+    return render_template("tutorial.html", username=username)
+
+
+@app.route('/P195s', methods=['GET'])
 def show_per_collection():
     username = wikidata_oauth.get_username()
     json = per_collection()
@@ -144,19 +157,39 @@ def show_per_collection():
     return render_template("per_collection.html", collections=collections, username=username)
 
 
-@app.route('/museudoipiranga/P195/<qid>', methods=['GET'])
+@app.route('/P195/<qid>', methods=['GET'])
 def show_works_in_collection(qid):
     username = wikidata_oauth.get_username()
     json = works_in_collection(qid)
     collection = []
+    collection_data_ = collection_data(qid)
+
     for result in json["results"]["bindings"]:
         collection.append({
             "qid": result["work"]["value"].split("/")[-1],
-            "label": result["work_label"]["value"]})
-    return render_template("per_collection.html", collection=collection, qid=qid, username=username)
+            "label": result["work_label"]["value"],
+            "image": result["image"]["value"]+"?width=200px"})
+
+    coll_data = {
+        "collection_label": collection_data_["results"]["bindings"][0]["collection_label"]["value"],
+        "total": collection_data_["results"]["bindings"][0]["total"]["value"],
+        "total_scope": len(collection),
+        "collection_article": collection_data_["results"]["bindings"][0]["collection_article"]["value"] if "collection_article" in collection_data_["results"]["bindings"][0] else "",
+        "collection_category": collection_data_["results"]["bindings"][0]["collection_category"]["value"] if "collection_category" in collection_data_["results"]["bindings"][0] else "",
+        "named_after": collection_data_["results"]["bindings"][0]["named_after"]["value"] if "named_after" in collection_data_["results"]["bindings"][0] else "",
+        "named_after_label": collection_data_["results"]["bindings"][0]["named_after_label"]["value"] if "named_after_label" in collection_data_["results"]["bindings"][0] else "",
+        "named_after_article": collection_data_["results"]["bindings"][0]["named_after_article"]["value"] if "named_after_article " in collection_data_["results"]["bindings"][0] else ""
+    }
+
+    return render_template("per_collection.html",
+                           collection=collection,
+                           qid=qid,
+                           username=username,
+                           collection_data=coll_data
+                           )
 
 
-@app.route('/museudoipiranga/<url_prefix>/<qid>', methods=['GET', 'POST'])
+@app.route('/<url_prefix>/<qid>', methods=['GET', 'POST'])
 def view_work_museudoipiranga(url_prefix, qid):
     username = wikidata_oauth.get_username()
     if request.method == "POST":

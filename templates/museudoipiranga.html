@@ -3,7 +3,6 @@
 {% block styles %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{{ url_for('static', filename= 'static.css') }}">
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Amatic+SC:700" type='text/css'>
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Josefin+Sans" type='text/css'>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 {% endblock %}
@@ -57,8 +56,8 @@
 {% block banner %}
     <br/>
     <div class="container" style="width:50%">
-        <h1 style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.48em;">{{ _("Novo Museu do Ipiranga") }}</small></h1><br/><br/>
-        <p style="text-align:center">{{ _("Navegue pelo acervo do Novo Museu do Ipiranga e valide as edições de outras pessoas ou complemente as informações nos itens do acervo.") }}</p><br/>
+        <h1 style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.6em;">{{ _("Museu do Ipiranga") }}</small></h1><br/><br/>
+        <p style="text-align:center">{{ _("Navegue pelo acervo do Museu do Ipiranga e ajude a melhorar as descrições das obras.") }}</p><br/>
     </div>
 {% endblock %}
 
@@ -68,28 +67,28 @@
     <li>
         <a href="{{ url_for('show_per_collection') }}">
             <button name="per_collection" class="button" value="per_collection">
-                {{ _("Por coleção") }}
+                {{ _("Coleções") }}
             </button>
         </a>
     </li>
     <li>
         <a href="{{ url_for('show_per_collection') }}">
             <button name="per_artist" class="button" value="per_artist">
-                {{ _("Por artista") }}
+                {{ _("Artistas") }}
             </button>
         </a>
     </li>
     <li>
         <a href="{{ url_for('show_per_collection') }}">
             <button name="per_decade" class="button" value="per_decade">
-                {{ _("Por década") }}
+                {{ _("Décadas") }}
             </button>
         </a>
     </li>
     <li>
         <a href="{{ url_for('show_per_collection') }}">
             <button name="per_type" class="button" value="per_type">
-                {{ _("Por tipo") }}
+                {{ _("Tipos de obra") }}
             </button>
         </a>
     </li>

@@ -53,21 +53,6 @@
     {% endif %}
 {% endblock %}
 
-{% block banner %}
-    <br/>
-    <div class="container" style="width:50%">
-        <h1 style="text-align:center;">{{ _("Povo Conta") }}</h1><br/>
-        <p style="text-align:center">{{ _("Esta é uma ferramenta Wiki para inserir e validar os qualificadores de quantidade de itens retratados em entidades do Wikidata.") }}</p><br/>
-    </div>
-{% endblock %}
-
 {% block content %}
-<p style="text-align:center">{{ _("Escolha uma opção:") }}</p>
-<p style="text-align:center">
-    <a href="{{ url_for('museudoipiranga') }}">
-        <button name="museudoipiranga"
-                class="button"
-                value="museudoipiranga">{{ _("Museu do Ipiranga") }}</button>
-    </a>
-</p>
+<h1>{{_("Em construção")}}</h1>
 {% endblock %}

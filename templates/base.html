@@ -12,8 +12,10 @@
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="{{ url_for('museudoipiranga') }}" style="font-family: 'Josefin Sans', sans-serif; font-weight: bold; color:white">{{_("Povo Conta")}}</a>
-                    <a class="navbar-brand" style="font-family: 'Josefin Sans', sans-serif; color:white">|</a>
-                    <a class="navbar-brand" href="{{ url_for('museudoipiranga') }}" style="font-family: 'Josefin Sans', sans-serif; color:white">{{_("Museu do Ipiranga")}}</a>
+                    <a class="navbar-brand" style="color:white">|</a>
+                    <a class="navbar-brand" href="{{ url_for('sobre') }}" style="color:white">{{_("Sobre")}}</a>
+                    <a class="navbar-brand" style="color:white">|</a>
+                    <a class="navbar-brand" href="{{ url_for('tutorial') }}" style="color:white">{{_("Como jogar?")}}</a>
                 </div>
                 <div>
                     <ul class="navbar-brand">
@@ -41,13 +43,23 @@
         </div>
         <footer class="footer" role="contentinfo">
             <hr style="border: 0.5px solid #547473;">
-            <div class="container" style="width:50%">
+            <div class="container" style=" width:75%">
                 <div class="row align-items-center justify-content-md-center" >
-                    <div class="col-md-4">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Museu_Paulista_wordmark.jpg" alt="{{_('Uma iniciativa do Museu do Ipiranga')}}" height="50px" width="50px">
+                    <div class="col" style="text-align:center;font-weight:bold;">{{_("Organização")}}</div>
+                    <div class="col" style="text-align:center;font-weight:bold;">{{_("Parceria")}}</div>
+                    <div class="col" style="text-align:center;font-weight:bold;">{{_("Realização")}}</div>
+                </div><br>
+                <div class="row align-items-center justify-content-md-center" >
+                    <div class="col" style="text-align:center">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/45/Wiki_Movimento_Brasil_logo.svg" alt="{{_('Wiki Movimento Brasil')}}" height="100px" width="120px">&emsp;&emsp;
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Museu_Paulista_wordmark.jpg" alt="{{_('Museu do Ipiranga')}}" height="100px" width="100px">
                     </div>
-                    <div class="col-md-4 offset-md-4 text-muted">
-                        <a id="source" href="https://github.com/Ederporto/povoconta">{{_("Veja o código-fonte")}}</a>
+                    <div class="col" style="text-align:center">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/50/Funda%C3%A7%C3%A3o_Banco_do_Brasil_-_logo.svg" alt="{{_('Fundação Banco do Brasil')}}" height="100px" width="160px">
+                    </div>
+                    <div class="col" style="text-align:center">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Webysther_20160310_-_Logo_USP.svg" alt="{{_('Universidade de São Paulo')}}" height="100px" width="100px">&emsp;&emsp;
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/1/16/Funda%C3%A7%C3%A3o_de_Apoio_%C3%A0_Universidade_de_S%C3%A3o_Paulo_-_logo.svg" alt="{{_('Fundação de Apoio à Universidade de São Paulo')}}" height="100px" width="120px">
                     </div>
                 </div>
             </div>

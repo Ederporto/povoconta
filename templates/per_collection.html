@@ -3,7 +3,6 @@
 {% block styles %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{{ url_for('static', filename= 'static.css') }}">
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Amatic+SC:700" type='text/css'>
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Josefin+Sans" type='text/css'>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 {% endblock %}
@@ -56,19 +55,39 @@
 
 {% block banner %}
     <br/>
-    <div class="container" style="width:50%">
-        <h1 style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.48em;">{{ _("Novo Museu do Ipiranga") }}</small></h1><br/>
-        <p style="text-align:center">{{ _("Esta é uma ferramenta Wiki para inserir e validar os qualificadores de quantidade de itens retratados nos itens do acervo do Museu no Wikidata.") }}</p><br/>
-        {% if collection %}
-            <p style="text-align:center">{{ _("Abaixo estão listadas as coleções do Museu cujas obras já estão carregadas no Wikimedia Commons.") }}</p><br/>
-        {% else %}
-            <p style="text-align:center">{{ _("Abaixo estão listadas as obras desta coleção. Escolha uma para validar ou quantificar as entidades retratadas") }}</p><br/>
-        {% endif %}
+    <div class="container" style="width:100%">
+        <p style="text-align:center;font-size:1.2em;">
+            {% if collection and collection_data %}
+                {% if collection_data.collection_label %}
+                    Esta é a {{collection_data.collection_label}}.
+                {% endif %}
+                {% if collection_data.named_after_label %}
+                    {% if collection_data.named_after_article %}
+                        É nomeada em homenagem a <a href="https://pt.wikipedia.org/wiki/{{collection_data.named_after_article}}">{{collection_data.named_after_label}}</a>.
+                    {% else %}
+                        É nomeada em homenagem a {{collection_data.named_after_label}}.
+                    {% endif %}
+                {% endif %}
+                {% if collection_data.total and collection_data.total_scope %}
+                    <br>Possui {{collection_data.total}} obras registradas no Wikidata, das quais {{collection_data.total_scope}} possuem ao menos uma imagem e um descritor no banco de dados.
+                {% endif %}
+                {% if collection_data.collection_article %}
+                    <br>A coleção possui <a href="https://pt.wikipedia.org/wiki/{{collection_data.collection_article}}">um artigo na Wikipédia</a>
+                {% endif %}
+                {% if collection_data.collection_article and collection_data.collection_category %}
+                    e todas as imagens dela podem ser encontradas no <a href="https://commons.wikimedia.org/wiki/{{collection_data.collection_category}}">Wikimedia Commons.</a>
+                {% endif %}
+                {% if not collection_data.collection_article and collection_data.collection_category %}
+                    Todas as imagens da coleção podem ser encontradas no <a href="https://commons.wikimedia.org/wiki/{{collection_data.collection_category}}">Wikimedia Commons.</a>
+                {% endif %}
+            {% else %}
+                {{ _("Escolha uma coleção para começar a jogar.") }}
+            {% endif %}
+        </p><br/>
     </div>
 {% endblock %}
 
 {% block content %}
-<p style="text-align:center">{{ _("Escolha uma opção:") }}</p>
 <ul style="text-align:center">
     {% for collection in collections %}
         <li>
@@ -84,9 +103,7 @@
     {% for work in collection %}
     <li>
         <a href="{{url_for('view_work_museudoipiranga', url_prefix= 'P195-'+qid, qid=work.qid) }}">
-            <button name="work" class="button" value="{{work.qid}}" style="padding: 10px;">
-                {{ work.label }} ({{ work.qid }})
-            </button>
+            <img src="{{ work.image }}" style="object-fit:contain;max-widht:1000px; max-height:500px; align:center;"/>
         </a>
     </li>
     {% endfor %}

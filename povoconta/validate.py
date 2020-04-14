@@ -77,7 +77,7 @@ def get_p1114(snak):
         return 0, "", False
 
 
-def get_name(qid, lang):
+def get_name(qid, lang="pt-br"):
     params = {
         "action": "wbgetentities",
         "ids": qid,
@@ -139,10 +139,15 @@ def query_wikidata(query):
 
 
 def per_collection(lang="pt-br"):
-    data = query_wikidata("SELECT DISTINCT ?collection ?collection_label (COUNT(?work) AS ?num_works) WHERE { ?work wdt:P195 wd:Q56677470, ?collection; wdt:P18 ?image; wdt:P180 ?depicts. ?collection rdfs:label ?collection_label. FILTER((LANG(?collection_label)) = '"+lang+"') } GROUP BY ?collection ?collection_label ORDER BY DESC (?num_works)")
+    data = query_wikidata("SELECT DISTINCT ?collection ?collection_label (COUNT(?work) AS ?num_works) WHERE {?work wdt:P195 wd:Q56677470, ?collection; wdt:P18 ?image; wdt:P180 ?depicts. FILTER(?collection!=wd:Q56677470) ?collection rdfs:label ?collection_label_aux. FILTER((LANG(?collection_label_aux)) = \""+lang+"\") BIND(STRAFTER(?collection_label_aux, \" \") AS ?collection_label)} GROUP BY ?collection ?collection_label ORDER BY ?num_works")
     return data
 
 
-def works_in_collection(qid_collection, mode="validate", lang="pt-br"):
-    data = query_wikidata("SELECT DISTINCT ?work ?work_label WHERE { ?work wdt:P195 wd:Q56677470, wd:"+qid_collection+"; wdt:P18 ?imagem; wdt:P180 ?depicts; rdfs:label ?work_label. FILTER((LANG(?work_label)) = '"+lang+"') }")
+def works_in_collection(qid_collection, lang="pt-br"):
+    data = query_wikidata("SELECT DISTINCT ?work ?work_label ?image (COUNT(DISTINCT(?depicts_p)) AS ?count_depicts) WHERE {?work wdt:P195 wd:Q56677470, wd:"+qid_collection+";wdt:P18 ?image;wdt:P180 ?depicts;rdfs:label ?work_label. OPTIONAL {?work p:P180 ?depicts_p. ?depicts_p pq:P1114 ?depicts_quantity.} FILTER((LANG(?work_label)) = \""+lang+"\")} GROUP BY ?work ?work_label ?image ORDER BY ?count_depicts")
+    return data
+
+
+def collection_data(qid_collection, lang="pt-br"):
+    data = query_wikidata("SELECT DISTINCT ?collection ?collection_label ?collection_category ?collection_article ?named_after ?named_after_label ?named_after_article (COUNT(?work) AS ?total) (COUNT(?work_scope) AS ?total_scope) WHERE { BIND(wd:"+qid_collection+" AS ?collection) OPTIONAL {?commons_collection schema:about ?collection; schema:name ?collection_category; schema:isPartOf <https://commons.wikimedia.org/>.} OPTIONAL {?article_collection schema:about ?collection; schema:name ?collection_article; schema:isPartOf <https://pt.wikipedia.org/>.} ?collection rdfs:label ?collection_label. FILTER(LANG(?collection_label)=\""+lang+"\") OPTIONAL {?collection wdt:P138 ?named_after. ?named_after rdfs:label ?named_after_label. FILTER(LANG(?named_after_label)=\""+lang+"\") OPTIONAL{?article schema:about ?named_after; schema:name ?named_after_article; schema:isPartOf <https://pt.wikipedia.org/>.}} ?work wdt:P195 ?collection. OPTIONAL {?work wdt:P18 ?image; wdt:P180 ?depic. BIND(1 AS ?work_scope)}} GROUP BY ?named_after ?named_after_label ?named_after_article ?collection ?collection_label ?collection_category ?collection_article")
     return data
