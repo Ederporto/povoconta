@@ -25,12 +25,13 @@ import requests
 import os
 import yaml
 import mwoauth
+import roman
 from flask_thumbnails import Thumbnail
 from requests_oauthlib import OAuth1Session
 import wikidata_oauth
 from flask import Flask, render_template, flash, request, redirect, url_for, session, g
 from flask_babel import Babel, gettext
-from povoconta.validate import get_p18, get_p180, per_collection, works_in_collection, collection_data
+from povoconta.validate import get_p18, get_p180, per_collection, works_in_collection, collection_data, work_data, work_depicts, get_next_qid
 
 
 __dir__ = os.path.dirname(__file__)
@@ -132,6 +133,7 @@ def museudoipiranga():
     return render_template("museudoipiranga.html", username=username)
 
 
+@app.route('/about', methods=['GET'])
 @app.route('/sobre', methods=['GET'])
 def sobre():
     username = wikidata_oauth.get_username()
@@ -144,7 +146,9 @@ def tutorial():
     return render_template("tutorial.html", username=username)
 
 
-@app.route('/P195s', methods=['GET'])
+@app.route('/p195', methods=['GET'])
+@app.route('/collections', methods=['GET'])
+@app.route('/coleções', methods=['GET'])
 def show_per_collection():
     username = wikidata_oauth.get_username()
     json = per_collection()
@@ -157,7 +161,9 @@ def show_per_collection():
     return render_template("per_collection.html", collections=collections, username=username)
 
 
-@app.route('/P195/<qid>', methods=['GET'])
+@app.route('/p195/<qid>', methods=['GET'])
+@app.route('/collection/<qid>', methods=['GET'])
+@app.route('/coleção/<qid>', methods=['GET'])
 def show_works_in_collection(qid):
     username = wikidata_oauth.get_username()
     json = works_in_collection(qid)
@@ -185,30 +191,175 @@ def show_works_in_collection(qid):
                            collection=collection,
                            qid=qid,
                            username=username,
-                           collection_data=coll_data
-                           )
+                           collection_data=coll_data,
+                           goback="museudoipiranga")
 
 
-@app.route('/<url_prefix>/<qid>', methods=['GET', 'POST'])
-def view_work_museudoipiranga(url_prefix, qid):
+@app.route('/qid/<qid>', methods=['GET'])
+def view_work_museudoipiranga(qid, goback="museudoipiranga"):
     username = wikidata_oauth.get_username()
-    if request.method == "POST":
-        if "confirmation" in request.form:
-            claim, qualifier = request.form["confirmation"].split(";")
-            remove_qualifier(claim, qualifier)
-        else:
-            claim = request.form["confirmation_quantity"]
-            quantity = request.form["quantity_statement"]
-            add_qualifier(claim, quantity)
 
-    depicts = get_p180(qid, "pt-br")
-    image = get_p18(qid)
-    return render_template("item.html",
-                           entity=qid,
-                           url_prefix=url_prefix,
-                           depicts=depicts,
-                           image=image,
-                           username=username)
+    work_data_ = get_work_data(qid)
+    work_depicts_ = get_work_depicts(qid)
+
+    if work_data_:
+        return render_template("item.html",
+                               entity=qid,
+                               work_depicts=work_depicts_,
+                               work_data=work_data_,
+                               username=username,
+                               back=goback,
+                               skip=get_next_qid(qid))
+    else:
+        return redirect(url_for("erro"))
+
+
+@app.route('/save/<qid>', methods=['POST'])
+def save_quantities(qid):
+    form = request.form
+    if form and form.__len__() > 0:
+        for action in form:
+            statement_, hash = action.split(";")
+            quantity, continue_ = validate_quantity(form[action])
+            if continue_:
+                if hash:
+                    try:
+                        change_qualifier(statement_, hash, quantity)
+                    except:
+                        pass
+                else:
+                    try:
+                        add_qualifier(statement_, quantity)
+                    except:
+                        pass
+    next_qid = get_next_qid(qid)
+    return redirect(url_for("view_work_museudoipiranga", qid=next_qid, goback=qid))
+
+
+def validate_quantity(quantity):
+    if quantity == "" or quantity == "0":
+        return "", False
+    else:
+        try:
+            return int(quantity), True
+        except ValueError:
+            return "", False
+
+
+def get_work_depicts(qid):
+    depicts_work = work_depicts(qid)
+    work_depicts_ = []
+    for result in depicts_work["results"]["bindings"]:
+        depicts_id = result["depicts_"]["value"].split("/")[-1]
+        depicts_qid = result["depicts"]["value"].split("/")[-1]
+        if "depicts_label_ptbr" in result:
+            depicts_label = result["depicts_label_ptbr"]["value"]
+        elif "depicts_label_pt" in result:
+            depicts_label = result["depicts_label_pt"]["value"]
+        else:
+            depicts_label = ""
+        if "depicts_desc_ptbr" in result:
+            depicts_desc = result["depicts_desc_ptbr"]["value"]
+        elif "depicts_desc_pt" in result:
+            depicts_desc = result["depicts_desc_pt"]["value"]
+        else:
+            depicts_desc = ""
+        quantity_hash = result["quantity_"]["value"] if "quantity_" in result else ""
+        quantity_value = result["quantity"]["value"] if "quantity" in result else 0
+
+        work_depicts_.append({"depict_id": depicts_id,
+                              "depict_qid": depicts_qid,
+                              "depict_label": depicts_label,
+                              "depict_desc": depicts_desc,
+                              "quantity_hash": quantity_hash,
+                              "quantity_value": quantity_value})
+    return work_depicts_
+
+
+def get_work_data(qid):
+    data_work = work_data(qid)
+    if data_work["results"]["bindings"].__len__()>0:
+        if "work_label_" in data_work["results"]["bindings"][0]:
+            work_label = data_work["results"]["bindings"][0]["work_label_"]["value"]
+        else:
+            work_label = ""
+        if "image" in data_work["results"]["bindings"][0]:
+            image = data_work["results"]["bindings"][0]["image"]["value"]# + "?width=680px"
+        else:
+            image = ""
+        if "date" in data_work["results"]["bindings"][0]:
+            date_aux = data_work["results"]["bindings"][0]["date"]["value"]
+            if date_aux.startswith("Século"):
+                date = "Século"+str(roman.toRoman(int(date_aux.replace("Século ", ""))/100))
+            else:
+                date = date_aux
+        else:
+            date = ""
+        if "instances" in data_work["results"]["bindings"][0]:
+            instances_ = data_work["results"]["bindings"][0]["instances"]["value"].split(";")
+        else:
+            instances_ = []
+        if "instance_labels" in data_work["results"]["bindings"][0]:
+            instance_labels_ = data_work["results"]["bindings"][0]["instance_labels"]["value"].split(";")
+        else:
+            instance_labels_ = []
+        if "artists" in data_work["results"]["bindings"][0]:
+            artists_ = data_work["results"]["bindings"][0]["artists"]["value"].split(";")
+        else:
+            artists_ = []
+        if "artists_labels" in data_work["results"]["bindings"][0]:
+            artists_labels_ = data_work["results"]["bindings"][0]["artists_labels"]["value"].split(";")
+        else:
+            artists_labels_ = []
+        if "materials" in data_work["results"]["bindings"][0]:
+            materials_ = data_work["results"]["bindings"][0]["materials"]["value"].split(";")
+        else:
+            materials_ = []
+        if "materials_labels" in data_work["results"]["bindings"][0]:
+            materials_labels_ = data_work["results"]["bindings"][0]["materials_labels"]["value"].split(";")
+        else:
+            materials_labels_ = []
+        if "commissioners" in data_work["results"]["bindings"][0]:
+            commissioners_ = data_work["results"]["bindings"][0]["commissioners"]["value"].split(";")
+        else:
+            commissioners_ = []
+        if "commissioners_labels" in data_work["results"]["bindings"][0]:
+            commissioners_labels_ = data_work["results"]["bindings"][0]["commissioners_labels"]["value"].split(";")
+        else:
+            commissioners_labels_ = []
+
+        instances = []
+        if instances_ and instance_labels_ and len(instances_)==len(instance_labels_) and instances!=[""]:
+            for i in range(len(instances_)):
+                instances.append({"qid": instances_[i].split("/")[-1],
+                                  "label": instance_labels_[i]})
+        artists = []
+        if artists_ and artists_labels_ and len(artists_) == len(artists_labels_) and artists_!=[""]:
+            for i in range(len(artists_)):
+                artists.append({"qid": artists_[i].split("/")[-1],
+                                  "label": artists_labels_[i]})
+        materials = []
+        if materials_ and materials_labels_ and len(materials_) == len(materials_labels_) and materials_!=[""]:
+            for i in range(len(materials_)):
+                materials.append({"qid": materials_[i].split("/")[-1],
+                                  "label": materials_labels_[i]})
+        commissioners = []
+        if commissioners_ and commissioners_labels_ and len(commissioners_) == len(commissioners_labels_) and commissioners_!=[""]:
+            for i in range(len(commissioners_)):
+                commissioners.append({"qid": commissioners_[i].split("/")[-1],
+                                      "label": commissioners_labels_[i]})
+
+        work_data_ = {"work_label": work_label,
+                      "image": image,
+                      "date": date,
+                      "instances": instances,
+                      "artists": artists,
+                      "materials": materials,
+                      "commissioners": commissioners}
+
+        return work_data_
+    else:
+        return ""
 
 
 ############################################################################
@@ -227,6 +378,22 @@ def add_qualifier(claim, quantity):
 
     wikidata_oauth.api_post_request(params)
     flash(_("Qualificador inserido com sucesso"), "success")
+
+
+def change_qualifier(claim, hash, quantity):
+    token = wikidata_oauth.get_token()
+    params = {
+        "action": "wbsetqualifier",
+        "claim": claim,
+        "property": "P1114",
+        "value": "{\"amount\": \"+" + quantity + "\", \"unit\": \"1\"}",
+        "snaktype": "value",
+        "snakhash": hash,
+        "token": token
+    }
+
+    wikidata_oauth.api_post_request(params)
+    flash(_("Qualificador alterado com sucesso"), "success")
 
 
 def remove_qualifier(claim, qualifier):

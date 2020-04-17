@@ -1,69 +1,35 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title%}{{_("Povo Conta")}}{% endblock %}</title>
     {% block styles %}{% endblock %}
-    <script>{% block scripts %}{% endblock %}</script>
+    <script>
+    {% block scripts %}{% endblock %}
+    </script>
 </head>
 <body>
-    <div id="page-container">
-        {% block navbar %}
-        <nav class="navbar navbar-light" style="background-color: #547473;">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="{{ url_for('museudoipiranga') }}" style="font-family: 'Josefin Sans', sans-serif; font-weight: bold; color:white">{{_("Povo Conta")}}</a>
-                    <a class="navbar-brand" style="color:white">|</a>
-                    <a class="navbar-brand" href="{{ url_for('sobre') }}" style="color:white">{{_("Sobre")}}</a>
-                    <a class="navbar-brand" style="color:white">|</a>
-                    <a class="navbar-brand" href="{{ url_for('tutorial') }}" style="color:white">{{_("Como jogar?")}}</a>
-                </div>
-                <div>
-                    <ul class="navbar-brand">
-                        {% block navright %}{% endblock %}
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        {% endblock %}
-        {% block banner %}{% endblock banner %}
-        <div id="content" class="container-fluid">
-            {% block pre_content %}
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-                        {% for category, message in messages %}
-                            <div class="alert alert-{{category}} alert-dismissible" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
-            {% endblock %}
-            {% block content %}{% endblock %}
-        </div>
-        <footer class="footer" role="contentinfo">
-            <hr style="border: 0.5px solid #547473;">
-            <div class="container" style=" width:75%">
-                <div class="row align-items-center justify-content-md-center" >
-                    <div class="col" style="text-align:center;font-weight:bold;">{{_("Organização")}}</div>
-                    <div class="col" style="text-align:center;font-weight:bold;">{{_("Parceria")}}</div>
-                    <div class="col" style="text-align:center;font-weight:bold;">{{_("Realização")}}</div>
-                </div><br>
-                <div class="row align-items-center justify-content-md-center" >
-                    <div class="col" style="text-align:center">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/45/Wiki_Movimento_Brasil_logo.svg" alt="{{_('Wiki Movimento Brasil')}}" height="100px" width="120px">&emsp;&emsp;
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Museu_Paulista_wordmark.jpg" alt="{{_('Museu do Ipiranga')}}" height="100px" width="100px">
-                    </div>
-                    <div class="col" style="text-align:center">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/50/Funda%C3%A7%C3%A3o_Banco_do_Brasil_-_logo.svg" alt="{{_('Fundação Banco do Brasil')}}" height="100px" width="160px">
-                    </div>
-                    <div class="col" style="text-align:center">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Webysther_20160310_-_Logo_USP.svg" alt="{{_('Universidade de São Paulo')}}" height="100px" width="100px">&emsp;&emsp;
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/1/16/Funda%C3%A7%C3%A3o_de_Apoio_%C3%A0_Universidade_de_S%C3%A3o_Paulo_-_logo.svg" alt="{{_('Fundação de Apoio à Universidade de São Paulo')}}" height="100px" width="120px">
-                    </div>
-                </div>
-            </div>
-        </footer>
+{% block navbar %}
+<div class="topnav" id="myTopnav">
+    <a href="/" class="active">{{_("Povo Conta")}}</a>
+    <a href="/sobre">{{_("Sobre")}}</a>
+    <a href="/tutorial">{{_("Como jogar?")}}</a>
+    {% block divright %}{% endblock %}
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+    </a>
+</div>
+{% endblock %}
+<div class="w3-container">
+    {% block banner %}{% endblock banner %}
+    {% block content %}{% endblock %}
+    <div class="w3-row w3-padding" style="text-align:center;">
+        <hr>
+        <p style="font-size:85%;">{{_("<i>Povo Conta</i> é um jogo desenvolvido no contexto do
+            <i><b><a href='/sobre'>Projeto Novo Museu do Ipiranga</a></b></i>, organizado pelo <b>Grupo de Usuários Wikimedia no Brasil</b>
+            e o <b>Museu do Ipiranga</b>, em parceria com a <b>Fundação Banco do Brasil</b> e com realização da
+            <b>Universidade de São Paulo</b> e a <b>Fundação de Apoio à Universidade de São Paulo</b>.")}}</p>
     </div>
+</div>
 </body>
 </html>

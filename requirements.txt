@@ -6,3 +6,4 @@ pyyaml
 mwoauth
 mwapi
 Pillow
+roman

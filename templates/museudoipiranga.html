@@ -1,96 +1,85 @@
 {% extends "base.html" %}
 
 {% block styles %}
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{{ url_for('static', filename= 'static.css') }}">
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Josefin+Sans" type='text/css'>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 {% endblock %}
 
-{% block navright %}
+{% block scripts %}
+    function myFunction() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+            x.className += " responsive";
+        } else {
+            x.className = "topnav";
+        }
+    }
+{% endblock %}
+
+{% block divright %}
     {% if username %}
-        <li class="nav-item" style="display:inline;">
-            <a href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">
-                <button style="
-                background-color: white;
-                border: none;
-                border-radius: 5px;
-                color: #547473;
-                padding: 10px;
-                align: center;">
-                {{username}}
-            </button>
-            </a>
-        </li>
-        <li class="nav-item" style="display:inline;">
-            <a href="{{ url_for('logout', next=request.script_root + request.full_path) }}">
-                <button style="background-color: white;
-                               border: none;
-                               border-radius: 5px;
-                               color: #547473;
-                               padding: 10px;
-                               align: center;">
-                    <span class="fas fa-sign-out-alt" aria-hidden="true"></span>
-                    {{_("Sair")}}
-                </button>
-            </a>
-        </li>
+        <a class="right" href="{{ url_for('logout', next=request.script_root + request.full_path) }}"><span class="fas fa-sign-out-alt" aria-hidden="true"></span> {{_("Sair")}}</a>
+        <a class="right" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
     {% else %}
-        <li class="nav-item" style="display:inline;">
-            <a href="{{ url_for('login', next=request.script_root + request.full_path) }}">
-                <button style="
-                background-color: white;
-                border: none;
-                border-radius: 5px;
-                color: #547473;
-                padding: 10px;
-                align: center;">
-                    <span class="fas fa-sign-in-alt" aria-hidden="true"></span>
-                    {{_("Autenticar-se")}}
-                </button>
-            </a>
-        </li>
+        <a class="right" href="{{ url_for('login', next=request.script_root + request.full_path) }}"><span class="fas fa-sign-in-alt" aria-hidden="true"></span> {{_("Autenticar-se")}}</a>
     {% endif %}
 {% endblock %}
 
 {% block banner %}
-    <br/>
-    <div class="container" style="width:50%">
-        <h1 style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.6em;">{{ _("Museu do Ipiranga") }}</small></h1><br/><br/>
-        <p style="text-align:center">{{ _("Navegue pelo acervo do Museu do Ipiranga e ajude a melhorar as descrições das obras.") }}</p><br/>
+<div class="w3-container">
+    <div class="w3-row" style="padding-top:30px;padding-bottom:30px">
+        <h1 style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.6em;">{{ _("Museu do Ipiranga") }}</small></h1>
     </div>
+    <div class="w3-row" style="padding-bottom:30px">
+        <p style="text-align:center">{{ _("Navegue pelo acervo do Museu do Ipiranga e ajude a melhorar as descrições das obras.") }}</p>
+    </div>
+</div>
 {% endblock %}
 
 {% block content %}
-<p style="text-align:center">{{ _("Escolha uma opção:") }}</p>
-<ul style="text-align:center">
-    <li>
-        <a href="{{ url_for('show_per_collection') }}">
-            <button name="per_collection" class="button" value="per_collection">
-                {{ _("Coleções") }}
-            </button>
-        </a>
-    </li>
-    <li>
-        <a href="{{ url_for('show_per_collection') }}">
-            <button name="per_artist" class="button" value="per_artist">
-                {{ _("Artistas") }}
-            </button>
-        </a>
-    </li>
-    <li>
-        <a href="{{ url_for('show_per_collection') }}">
-            <button name="per_decade" class="button" value="per_decade">
-                {{ _("Décadas") }}
-            </button>
-        </a>
-    </li>
-    <li>
-        <a href="{{ url_for('show_per_collection') }}">
-            <button name="per_type" class="button" value="per_type">
-                {{ _("Tipos de obra") }}
-            </button>
-        </a>
-    </li>
-</ul>
+<div class="w3-container">
+    <div class="w3-row" style="padding-bottom:30px;">
+        <p style="text-align:center">{{ _("Escolha uma opção:") }}</p>
+    </div>
+    <div class="w3-row-padding">
+        <div class="w3-col m2" >
+            <a href="{{ url_for('show_per_collection') }}">
+                <button name="per_collection" class="button" value="per_collection" style="width:100%;">
+                    {{ _("Coleções") }}
+                </button>
+            </a>
+        </div>
+        <div class="w3-col m2">
+            <a href="{{ url_for('show_per_collection') }}">
+                <button name="per_collection" class="button" value="per_collection" style="width:100%;">
+                    {{ _("Artistas") }}
+                </button>
+            </a>
+        </div>
+        <div class="w3-col m2">
+            <a href="{{ url_for('show_per_collection') }}">
+                <button name="per_collection" class="button" value="per_collection" style="width:100%;">
+                    {{ _("Décadas") }}
+                </button>
+            </a>
+        </div>
+        <div class="w3-col m3">
+            <a href="{{ url_for('show_per_collection') }}">
+                <button name="per_collection" class="button" value="per_collection" style="width:100%;">
+                    {{ _("Tipo de obras") }}
+                </button>
+            </a>
+        </div>
+        <div class="w3-col m3">
+            <a href="{{ url_for('show_per_collection') }}">
+                <button name="per_collection" class="button" value="per_collection" style="width:100%;">
+                    {{ _("Descritores") }}
+                </button>
+            </a>
+        </div>
+    </div>
+</div>
 {% endblock %}

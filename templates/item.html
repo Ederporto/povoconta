@@ -1,154 +1,97 @@
 {% extends "base.html" %}
 
 {% block styles %}
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="{{ url_for('static', filename= 'static.css') }}">
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Josefin+Sans" type='text/css'>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 {% endblock %}
 
 {% block scripts %}
-    function validate_or_quantify(depict){
-        document.getElementById("instructions").style.display="none";
-        var elements = document.getElementsByName("depicts");
-        var quantity_of = "{{_('Quantidade de ')}}"
-        var quantity_of = "{{_('Quantidade de ')}}"
-        for(var i=0; i < elements.length; i++) {
-            if (elements[i].id==depict.id) {
-                elements[i].style.backgroundColor="#06b6c9";
-                if (depict.quantity > 0) {
-                    document.getElementById("quantity_label").textContent=quantity_of+'"'+depict.name+'": '+depict.quantity;
-                    document.getElementById("quantity_validator").style.display="inline";
-                    document.getElementById("quantity_quantificator").style.display="none";
-                    document.getElementById("validator_no").value=depict.id+";"+depict.hash;
-                    document.getElementById("validator_yes").value=depict.id;
-                    document.getElementById("validator_maybe").value=depict.id
-                }
-                else {
-                    document.getElementById("quantity_validator").style.display="none";
-                    document.getElementById("insert_label").textContent=quantity_of+'"'+depict.name+'":';
-                    document.getElementById("quantity_quantificator").style.display="inline";
-                    document.getElementById("insert_button").value=depict.id;
-                }
-            }
-            else {
-                elements[i].style.backgroundColor="#d4d4d4";
-            }
+    function myFunction() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+            x.className += " responsive";
+        } else {
+            x.className = "topnav";
         }
     }
 {% endblock %}
 
-{% block navright %}
+{% block divright %}
     {% if username %}
-        <li class="nav-item" style="display:inline;">
-            <a href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">
-                <button style="
-                background-color: white;
-                border: none;
-                border-radius: 5px;
-                color: #547473;
-                padding: 10px;
-                align: center;">
-                {{username}}
-            </button>
-            </a>
-        </li>
-        <li class="nav-item" style="display:inline;">
-            <a href="{{ url_for('logout', next=request.script_root + request.full_path) }}">
-                <button style="background-color: white;
-                               border: none;
-                               border-radius: 5px;
-                               color: #547473;
-                               padding: 10px;
-                               align: center;">
-                    <span class="fas fa-sign-out-alt" aria-hidden="true"></span>
-                    {{_("Sair")}}
-                </button>
-            </a>
-        </li>
+        <a class="right" href="{{ url_for('logout', next=request.script_root + request.full_path) }}"><span class="fas fa-sign-out-alt" aria-hidden="true"></span> {{_("Sair")}}</a>
+        <a class="right" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
     {% else %}
-        <li class="nav-item" style="display:inline;">
-            <a href="{{ url_for('login', next=request.script_root + request.full_path) }}">
-                <button style="
-                background-color: white;
-                border: none;
-                border-radius: 5px;
-                color: #547473;
-                padding: 10px;
-                align: center;">
-                    <span class="fas fa-sign-in-alt" aria-hidden="true"></span>
-                    {{_("Autenticar-se")}}
-                </button>
-            </a>
-        </li>
+        <a class="right" href="{{ url_for('login', next=request.script_root + request.full_path) }}"><span class="fas fa-sign-in-alt" aria-hidden="true"></span> {{_("Autenticar-se")}}</a>
     {% endif %}
 {% endblock %}
 
-{% block banner %}
-    <br/>
-    <div class="container" style="width:50%">
-        <h1 style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.6em;">{{ _("Museu do Ipiranga") }}</small></h1><br/>
-        <p style="text-align:center">{{ _("Esta é uma ferramenta Wiki para inserir e validar os qualificadores de quantidade de itens retratados em entidades do Wikidata.") }}</p><br/>
-    </div>
-{% endblock %}
-
 {% block content %}
-<div id="validate" style="display:inline">
-    <table style="text-align:center;width:100%;">
-        <tr>
-            <td rowspan="2" valign="top">
-                <div style="position:relative;display:inline-block">
-                    <img src="{{ image }}" style="object-fit:cover;max-widht:1000px; max-height:500px; align:center;"/>
-                    <span style="position:absolute;text-align:right;bottom:0px;right:0;background:#03f5ff;opacity:0.5;">Teste</span>
+<div class="w3-row" style="padding-top:30px">
+  <div class="w3-container w3-half">
+    <img src="{{work_data.image}}" width="100%">
+  </div>
+  <div class="w3-container w3-half" style="text-align:left; font-family: 'Josefin Sans', sans-serif; font-size:150%">
+      <div class="w3-row">
+          <b>Obra:</b> <a href="https://www.wikidata.org/wiki/{{entity}}">{{work_data.work_label}}</a>
+          {% if work_data.artists and work_data.artists|length > 0 %}
+                <br><b>Artista{% if work_data.artists|length > 1 %}(s){% endif %}:</b> {% for artist in work_data.artists %}
+                <a href="https://www.wikidata.org/wiki/{{artist.qid}}">{{artist.label}}</a>{{ "; " if not loop.last }}
+                {% endfor %}
+          {% endif %}
+          {% if work_data.date %}
+                <br><b>Data:</b> {{work_data.date}}
+          {% endif %}
+          {% if work_data.instances and work_data.instances|length > 0 %}
+                <br><b>Instância de:</b> {% for instance in work_data.instances %}
+                <a href="https://www.wikidata.org/wiki/{{instance.qid}}">{{instance.label}}</a>{{ "; " if not loop.last }}
+                {% endfor %}
+          {% endif %}
+          {% if work_data.materials and work_data.materials|length > 0 %}
+                <br><b>{% if work_data.instances|length > 1 %}Materiais utilizados{% else %}Material utilizado{% endif %}:</b> {% for material in work_data.materials %}
+                <a href="https://www.wikidata.org/wiki/{{material.qid}}">{{material.label}}</a>{{ "; " if not loop.last }}
+                {% endfor %}
+          {% endif %}
+          {% if work_data.commissioners and work_data.commissioners|length > 0 %}
+                <br><b>Encomendada por:</b> {% for commissioner in work_data.commissioners %}
+                <a href="https://www.wikidata.org/wiki/{{commissioner.qid}}">{{commissioner.label}}</a>{{ "; " if not loop.last }}
+                {% endfor %}
+          {% endif %}
+      </div>
+      <div class="w3-row"><hr></div>
+      {% if work_depicts %}
+        <div class="w3-row">
+            <p style="text-align:center;font-size:125%;font-weight:bold;">{{ _("Quantos itens de cada descritor você vê?") }}</p>
+            <form action="{{ url_for('save_quantities', qid=entity) }}" method="post">
+                {% for depict in work_depicts %}
+                    <div class="form-group">
+                        <label for="{{depict.depict_id}};{{depict.quantity_hash}}"><a href="https://www.wikidata.org/wiki/{{depict.depict_qid}}">{{depict.depict_label}}</a>:{% if depict.depict_desc %}<br><small><i>{{depict.depict_desc}}</i></small> {% endif %}</label>
+                        {% if depict.quantity_value == 0%}
+                            <input type="number" class="form-control" name="{{depict.depict_id}};{{depict.quantity_hash}}" min="0" step="1" value="" style="font-size:100%">
+                        {% else %}
+                            <input type="number" class="form-control" name="{{depict.depict_id}};{{depict.quantity_hash}}" min="0" step="1" value="{{depict.quantity_value}}" style="font-size:100%">
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <div class="w3-row">
+                    <div class="w3-container w3-third">
+                        <button type="submit" class="button" id="confirm" style="background-color:#547473;width:100%;margin:0;font-size:100%;">{{_("CONFIRMAR")}}</button>
+                    </div>
+                    <div class="w3-container w3-third">
+                        <a href="{{ url_for('view_work_museudoipiranga', qid=skip, goback=entity) }}"><button type="button" class="button" id="skip" style="background-color:#848484;width:100%;margin:0;font-size:100%;">{{_("PULAR")}}</button></a>
+                    </div>
+                    <div class="w3-container w3-third">
+                        <a href="{{ url_for('museudoipiranga') }}"><button type="button" class="button" id="backtobegin" style="background-color:#e2725b;width:100%;margin:0;font-size:100%;">{{_("VOLTAR")}}</button></a>
+                    </div>
                 </div>
-            </td>
-            <td align="center" style="width:50%;height:40%">
-                <p id="instructions" style="text-align:center">
-                    {{_("Selecione abaixo uma das entidades retratadas na imagem ao lado.")}}
-                </p>
-                <div id="quantity_validator" style="display:none">
-                    <p id="quantity_label" style="text-align:center"></p>
-                        <ul>
-                            <li>
-                                <a href="{{ url_for('view_work_museudoipiranga', url_prefix=url_prefix, qid=entity) }}" style="display:inline">
-                                    <button class="button" id="validator_yes" style="background-color:green" onclick="yes_or_maybe()">{{_("SIM")}}</button>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url_for('view_work_museudoipiranga', url_prefix=url_prefix, qid=entity) }}" style="display:inline">
-                                    <button class="button" id="validator_maybe" style="background-color:#d4d4d4" onclick="yes_or_maybe()">{{_("NÃO SEI")}}</button>
-                                </a>
-                            </li>
-                            <li>
-                                <form action="{{ url_for('view_work_museudoipiranga', url_prefix=url_prefix, qid=entity) }}" method="post" style="display:inline">
-                                    <button type="submit" class="button" name="confirmation" id="validator_no" style="background-color:red;font-family: 'Josefin Sans', sans-serif;">{{_("NÃO")}}</button>
-                                </form>
-                            </li>
-                        </ul>
-                </div>
-                <div id="quantity_quantificator" style="display:none">
-                    <p id="insert_label" style="text-align:center"></p>
-                    <form action="{{ url_for('view_work_museudoipiranga', url_prefix=url_prefix, qid=entity) }}" method="post">
-                        <input type="number" name="quantity_statement" class="input" min="0" step="1" value="0"/><br><br>
-                        <button type="submit" class="button" name="confirmation_quantity" id="insert_button" style="background-color:green">{{_("CONFIRMAR")}}</button>
-                    </form>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <ul>
-                    {% for depict in depicts %}
-                    <li>
-                        <button class="button" name="depicts" id="{{ depict.id }}" onclick="validate_or_quantify({{ depict }})" style="background-color:#d4d4d4;padding:8px;;font-size:1em;" >
-                            {{depict.name}} ({{depict.quantity}})
-                        </button>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </td>
-        </tr>
-    </table>
+            </form>
+        </div>
+      {% endif %}
+  </div>
 </div>
-<div id="quantify" style="display:none"></div>
 {% endblock %}
