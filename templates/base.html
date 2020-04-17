@@ -11,9 +11,9 @@
 <body>
 {% block navbar %}
 <div class="topnav" id="myTopnav">
-    <a href="/" class="active">{{_("Povo Conta")}}</a>
-    <a href="/sobre">{{_("Sobre")}}</a>
-    <a href="/tutorial">{{_("Como jogar?")}}</a>
+    <a href="{{url_for('museudoipiranga')}}" class="active">{{_("Povo Conta")}}</a>
+    <a href="{{url_for('sobre')}}">{{_("Sobre")}}</a>
+    <a href="{{url_for('tutorial')}}">{{_("Como jogar?")}}</a>
     {% block divright %}{% endblock %}
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>
