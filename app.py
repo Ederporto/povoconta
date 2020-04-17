@@ -26,6 +26,7 @@ import os
 import yaml
 import mwoauth
 import roman
+from math import ceil
 from flask_thumbnails import Thumbnail
 from requests_oauthlib import OAuth1Session
 import wikidata_oauth
@@ -196,8 +197,21 @@ def show_works_in_collection(qid):
 
 
 @app.route('/qid/<qid>', methods=['GET'])
-def view_work_museudoipiranga(qid, goback="museudoipiranga"):
+def view_work_museudoipiranga(qid):
     username = wikidata_oauth.get_username()
+    if "goback" in request.args:
+        goback = request.args["goback"]
+        if goback == "museudoipiranga":
+            goback = qid
+            first = True
+        elif goback == "":
+            return redirect(url_for("museudoipiranga"))
+        else:
+            goback = goback
+            first = False
+    else:
+        goback = "museudoipiranga"
+        first = True
 
     work_data_ = get_work_data(qid)
     work_depicts_ = get_work_depicts(qid)
@@ -209,7 +223,8 @@ def view_work_museudoipiranga(qid, goback="museudoipiranga"):
                                work_data=work_data_,
                                username=username,
                                back=goback,
-                               skip=get_next_qid(qid))
+                               skip=get_next_qid(qid),
+                               first=first)
     else:
         return redirect(url_for("erro"))
 
@@ -290,7 +305,7 @@ def get_work_data(qid):
         if "date" in data_work["results"]["bindings"][0]:
             date_aux = data_work["results"]["bindings"][0]["date"]["value"]
             if date_aux.startswith("Século"):
-                date = "Século"+str(roman.toRoman(int(date_aux.replace("Século ", ""))/100))
+                date = "Século "+str(roman.toRoman(ceil(int(date_aux.replace("Século ", ""))/100)))
             else:
                 date = date_aux
         else:
@@ -328,6 +343,7 @@ def get_work_data(qid):
         else:
             commissioners_labels_ = []
 
+        instances = []
         instances = []
         if instances_ and instance_labels_ and len(instances_)==len(instance_labels_) and instances!=[""]:
             for i in range(len(instances_)):

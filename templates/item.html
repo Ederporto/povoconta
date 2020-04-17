@@ -86,7 +86,11 @@
                         <a href="{{ url_for('view_work_museudoipiranga', qid=skip, goback=entity) }}"><button type="button" class="button" id="skip" style="background-color:#848484;width:100%;margin:0;font-size:100%;">{{_("PULAR")}}</button></a>
                     </div>
                     <div class="w3-container w3-third">
-                        <a href="{{ url_for('museudoipiranga') }}"><button type="button" class="button" id="backtobegin" style="background-color:#e2725b;width:100%;margin:0;font-size:100%;">{{_("VOLTAR")}}</button></a>
+                        {% if not first %}
+                            <a href="{{ url_for('view_work_museudoipiranga', qid=request.args.get('goback')) }}"><button type="button" class="button" id="goback" style="background-color:#e2725b;width:100%;margin:0;font-size:100%;">{{_("VOLTAR")}}</button></a>
+                        {% else %}
+                            <a href="{{ url_for('museudoipiranga') }}"><button type="button" class="button" id="backtobegin" style="background-color:#e2725b;width:100%;margin:0;font-size:100%;">{{_("INÍCIO")}}</button></a>
+                        {% endif %}
                     </div>
                 </div>
             </form>
