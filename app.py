@@ -32,7 +32,7 @@ from requests_oauthlib import OAuth1Session
 import wikidata_oauth
 from flask import Flask, render_template, flash, request, redirect, url_for, session, g
 from flask_babel import Babel, gettext
-from povoconta.validate import get_p18, get_p180, per_collection, works_in_collection, collection_data, work_data, work_depicts, get_next_qid
+from povoconta.validate import *
 
 
 __dir__ = os.path.dirname(__file__)
@@ -193,6 +193,51 @@ def show_works_in_collection(qid):
                            qid=qid,
                            username=username,
                            collection_data=coll_data,
+                           goback="museudoipiranga")
+
+
+@app.route('/p170', methods=['GET'])
+@app.route('/creators', methods=['GET'])
+@app.route('/criadores', methods=['GET'])
+def show_per_artist():
+    username = wikidata_oauth.get_username()
+    json = per_artist()
+    artists = []
+    for result in json["results"]["bindings"]:
+        artists.append({
+            "qid": result["artist"]["value"].split("/")[-1],
+            "label": result["artist_label"]["value"],
+            "quantity": result["total"]["value"]})
+    return render_template("per_artist.html", artists=artists, username=username)
+
+
+@app.route('/p170/<qid>', methods=['GET'])
+@app.route('/creator/<qid>', methods=['GET'])
+@app.route('/criador/<qid>', methods=['GET'])
+def show_works_of_artist(qid):
+    username = wikidata_oauth.get_username()
+    json = works_of_artist(qid)
+    artist = []
+    artist_data_ = artist_data(qid)
+
+    for result in json["results"]["bindings"]:
+        artist.append({
+            "qid": result["work"]["value"].split("/")[-1],
+            "label": result["work_label"]["value"],
+            "image": result["image"]["value"] + "?width=200px"})
+
+    artist_data_aux = {
+        "artist_article": artist_data_["results"]["bindings"][0]["artist_article"]["value"] if "artist_article" in artist_data_["results"]["bindings"][0] else "",
+        "artist_label": artist_data_["results"]["bindings"][0]["artist_label"]["value"],
+        "total": artist_data_["results"]["bindings"][0]["total"]["value"],
+        "total_scope": len(artist),
+    }
+
+    return render_template("per_artist.html",
+                           artist=artist,
+                           qid=qid,
+                           username=username,
+                           artist_data=artist_data_aux,
                            goback="museudoipiranga")
 
 

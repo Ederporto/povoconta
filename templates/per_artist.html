@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename= 'static.css') }}">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Josefin+Sans" type='text/css'>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+{% endblock %}
+
+{% block scripts %}
+    function myFunction() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+            x.className += " responsive";
+        } else {
+            x.className = "topnav";
+        }
+    }
+{% endblock %}
+
+{% block divright %}
+    {% if username %}
+        <a class="right" href="{{ url_for('logout', next=request.script_root + request.full_path) }}"><span class="fas fa-sign-out-alt" aria-hidden="true"></span> {{_("Sair")}}</a>
+        <a class="right" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
+    {% else %}
+        <a class="right" href="{{ url_for('login', next=request.script_root + request.full_path) }}"><span class="fas fa-sign-in-alt" aria-hidden="true"></span> {{_("Autenticar-se")}}</a>
+    {% endif %}
+{% endblock %}
+
+{% block banner %}
+    <br/>
+    <div class="container" style="width:100%">
+        <p style="text-align:center;font-size:1.2em;">
+            {% if artist and artist_data %}
+                {% if artist_data.artist_label and artist_data.total_scope %}
+                    Esta é a coleção de obras de
+                    {% if artist_data.artist_article %} <a href="https://pt.wikipedia.org/wiki/{{artist_data.artist_article}}">{{artist_data.artist_label}}</a>
+                    {% else %} {{artist_data.artist_label}}{% endif %} no Museu Paulista que possuem ao menos uma imagem e um descritor no Wikidata.<br>
+                    {% if artist_data.total_scope > 1 %}Atualmente são {{artist_data.total_scope}} obras que cumprem esses critérios.<br>
+                    {% elif artist_data.total_scope == 1 %}Há atualmente somente uma imagem no banco de dados que satisfaz esses critérios.<br>
+                    {% else %}Atualmente não há nenhuma imagem no banco de dados que satisfaz esses critérios.<br>{% endif %}
+                    Há um total de {{artist_data.total}}
+                    {% if artist_data.total == '1' %}obra de {{artist_data.artist_label}} cadastrada no banco de dados do Wikidata.<br>
+                    {% else %}obras de {{artist_data.artist_label}} cadastradas no banco de dados do Wikidata.<br>{% endif %}
+                {% endif %}
+            {% else %}
+                {{ _("Escolha um(a) artista para começar a jogar.") }}
+            {% endif %}
+        </p><br/>
+    </div>
+{% endblock %}
+
+{% block content %}
+<ul style="text-align:center">
+    {% for artist in artists %}
+        <li>
+            <a href="{{ url_for('show_works_of_artist',qid=artist.qid) }}">
+                <button name="artist" class="button" value="{{artist.qid}}">
+                    {{ artist.label }}
+                </button>
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+<ul style="text-align:center">
+    {% for work in artist %}
+    <li>
+        <a href="{{url_for('view_work_museudoipiranga', qid=work.qid) }}">
+            <img src="{{ work.image }}" style="object-fit:contain;max-widht:1000px; max-height:500px; align:center;"/>
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
