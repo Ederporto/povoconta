@@ -22,7 +22,7 @@
 {% block divright %}
     {% if username %}
         <a class="right" href="{{ url_for('logout', next=request.script_root + request.full_path) }}"><span class="fas fa-sign-out-alt" aria-hidden="true"></span> {{_("Sair")}}</a>
-        <a class="right" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
+        <a class="right" target="_blank" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
     {% else %}
         <a class="right" href="{{ url_for('login', next=request.script_root + request.full_path) }}"><span class="fas fa-sign-in-alt" aria-hidden="true"></span> {{_("Autenticar-se")}}</a>
     {% endif %}
@@ -35,14 +35,14 @@
             {% if artist and artist_data %}
                 {% if artist_data.artist_label and artist_data.total_scope %}
                     Esta é a coleção de obras de
-                    {% if artist_data.artist_article %} <a href="https://pt.wikipedia.org/wiki/{{artist_data.artist_article}}">{{artist_data.artist_label}}</a>
-                    {% else %} {{artist_data.artist_label}}{% endif %} no Museu Paulista que possuem ao menos uma imagem e um descritor no Wikidata.<br>
-                    {% if artist_data.total_scope > 1 %}Atualmente são {{artist_data.total_scope}} obras que cumprem esses critérios.<br>
-                    {% elif artist_data.total_scope == 1 %}Há atualmente somente uma imagem no banco de dados que satisfaz esses critérios.<br>
-                    {% else %}Atualmente não há nenhuma imagem no banco de dados que satisfaz esses critérios.<br>{% endif %}
+                    {% if artist_data.artist_article %} <a target="_blank" href="https://pt.wikipedia.org/wiki/{{artist_data.artist_article}}">{{artist_data.artist_label}}</a>
+                    {% else %} {{artist_data.artist_label}}{% endif %} no Museu Paulista que possuem ao menos uma imagem e um descritor no Wikidata.
+                    {% if artist_data.total_scope > 1 %}Atualmente são {{artist_data.total_scope}} obras que cumprem esses critérios.
+                    {% elif artist_data.total_scope == 1 %}Há atualmente somente uma imagem no banco de dados que satisfaz esses critérios.
+                    {% else %}Atualmente não há nenhuma imagem no banco de dados que satisfaz esses critérios.{% endif %}
                     Há um total de {{artist_data.total}}
-                    {% if artist_data.total == '1' %}obra de {{artist_data.artist_label}} cadastrada no banco de dados do Wikidata.<br>
-                    {% else %}obras de {{artist_data.artist_label}} cadastradas no banco de dados do Wikidata.<br>{% endif %}
+                    {% if artist_data.total == '1' %}obra de {{artist_data.artist_label}} cadastrada no banco de dados do Wikidata.
+                    {% else %}obras de {{artist_data.artist_label}} cadastradas no banco de dados do Wikidata.{% endif %}
                 {% endif %}
             {% else %}
                 {{ _("Escolha um(a) artista para começar a jogar.") }}

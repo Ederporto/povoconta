@@ -24,7 +24,7 @@
         <a class="right" href="{{ url_for('logout', next=request.script_root + request.full_path) }}"><span class="fas fa-sign-out-alt" aria-hidden="true"></span> {{_("Sair")}}</a>
         <a class="right" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
     {% else %}
-        <a class="right" href="{{ url_for('login', next=request.script_root + request.full_path) }}"><span class="fas fa-sign-in-alt" aria-hidden="true"></span> {{_("Autenticar-se")}}</a>
+        <a class="right" target="_blank" href="{{ url_for('login', next=request.script_root + request.full_path) }}"><span class="fas fa-sign-in-alt" aria-hidden="true"></span> {{_("Autenticar-se")}}</a>
     {% endif %}
 {% endblock %}
 
@@ -38,7 +38,7 @@
                 {% endif %}
                 {% if collection_data.named_after_label %}
                     {% if collection_data.named_after_article %}
-                        É nomeada em homenagem a <a href="https://pt.wikipedia.org/wiki/{{collection_data.named_after_article}}">{{collection_data.named_after_label}}</a>.
+                        É nomeada em homenagem a <a target="_blank" href="https://pt.wikipedia.org/wiki/{{collection_data.named_after_article}}">{{collection_data.named_after_label}}</a>.
                     {% else %}
                         É nomeada em homenagem a {{collection_data.named_after_label}}.
                     {% endif %}
@@ -47,13 +47,13 @@
                     <br>Possui {{collection_data.total}} obras registradas no Wikidata, das quais {{collection_data.total_scope}} {% if collection_data.total_scope >1 %} possuem {% else %} possui {% endif %} ao menos uma imagem e um descritor no banco de dados.
                 {% endif %}
                 {% if collection_data.collection_article %}
-                    <br>A coleção possui <a href="https://pt.wikipedia.org/wiki/{{collection_data.collection_article}}">um artigo na Wikipédia</a>
+                    <br>A coleção possui <a target="_blank" href="https://pt.wikipedia.org/wiki/{{collection_data.collection_article}}">um artigo na Wikipédia</a>
                 {% endif %}
                 {% if collection_data.collection_article and collection_data.collection_category %}
-                    e todas as imagens dela podem ser encontradas no <a href="https://commons.wikimedia.org/wiki/{{collection_data.collection_category}}">Wikimedia Commons.</a>
+                    e todas as imagens dela podem ser encontradas no <a target="_blank" href="https://commons.wikimedia.org/wiki/{{collection_data.collection_category}}">Wikimedia Commons.</a>
                 {% endif %}
                 {% if not collection_data.collection_article and collection_data.collection_category %}
-                    Todas as imagens da coleção podem ser encontradas no <a href="https://commons.wikimedia.org/wiki/{{collection_data.collection_category}}">Wikimedia Commons.</a>
+                    Todas as imagens da coleção podem ser encontradas no <a target="_blank" href="https://commons.wikimedia.org/wiki/{{collection_data.collection_category}}">Wikimedia Commons.</a>
                 {% endif %}
             {% else %}
                 {{ _("Escolha uma coleção para começar a jogar.") }}
