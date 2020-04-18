@@ -401,7 +401,7 @@ def change_qualifier(claim, hash, quantity):
         "action": "wbsetqualifier",
         "claim": claim,
         "property": "P1114",
-        "value": "{\"amount\": \"+" + quantity + "\", \"unit\": \"1\"}",
+        "value": "{\"amount\": \"+" + str(quantity) + "\", \"unit\": \"1\"}",
         "snaktype": "value",
         "snakhash": hash,
         "token": token
