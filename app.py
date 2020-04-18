@@ -214,7 +214,7 @@ def view_work_museudoipiranga(qid):
         first = True
 
     work_data_ = get_work_data(qid)
-    work_depicts_ = get_work_depicts(qid)
+    work_depicts_ = get_p180(qid, "pt-br")
 
     if work_data_:
         return render_template("item.html",
@@ -387,13 +387,12 @@ def add_qualifier(claim, quantity):
         "action": "wbsetqualifier",
         "claim": claim,
         "property": "P1114",
-        "value": "{\"amount\": \"+"+quantity+"\", \"unit\": \"1\"}",
+        "value": "{\"amount\":\"+"+str(quantity)+"\", \"unit\": \"1\"}",
         "snaktype": "value",
         "token": token
     }
 
     wikidata_oauth.api_post_request(params)
-    flash(_("Qualificador inserido com sucesso"), "success")
 
 
 def change_qualifier(claim, hash, quantity):

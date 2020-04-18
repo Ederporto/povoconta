@@ -61,9 +61,9 @@ def get_p180(qid, lang):
         for p180 in p180s:
             quantity, quantity_hash, show_validate = get_p1114(p180)
             qid = p180["mainsnak"]["datavalue"]["value"]["id"]
-            id = p180["id"]
+            id_ = p180["id"]
             name = get_name(qid, lang)
-            depict = {"qid": qid, "id": id, "name": name, "quantity": quantity, "hash": quantity_hash}
+            depict = {"depict_qid": qid, "depict_id": id_, "depict_label": name, "quantity_value": quantity, "quantity_hash": quantity_hash}
             depicts.append(depict)
     except:
         pass
@@ -99,6 +99,8 @@ def get_name(qid, lang="pt-br"):
             name = labels["pt"]["value"]
         elif "en" in labels:\
             name = labels["en"]["value"]
+        else:
+            name = qid
     except:
         pass
 
