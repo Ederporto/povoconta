@@ -21,10 +21,7 @@
 
 {% block divright %}
     {% if username %}
-        <a class="right" href="{{ url_for('logout', next=request.script_root + request.full_path) }}"><span class="fas fa-sign-out-alt" aria-hidden="true"></span> {{_("Sair")}}</a>
         <a class="right" target="_blank" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
-    {% else %}
-        <a class="right" href="{{ url_for('login', next=request.script_root + request.full_path) }}"><span class="fas fa-sign-in-alt" aria-hidden="true"></span> {{_("Autenticar-se")}}</a>
     {% endif %}
 {% endblock %}
 
