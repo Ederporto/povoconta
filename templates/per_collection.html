@@ -55,8 +55,10 @@
                 {% if not collection_data.collection_article and collection_data.collection_category %}
                     Todas as imagens da coleção podem ser encontradas no <a target="_blank" href="https://commons.wikimedia.org/wiki/{{collection_data.collection_category}}">Wikimedia Commons.</a>
                 {% endif %}
+                <small><br>{{ _("Para voltar à página anterior, clique ") }} <a href="{{ url_for('show_per_collection') }}">{{_("aqui")}}</a></small>.
             {% else %}
                 {{ _("Escolha uma coleção para começar a jogar.") }}
+                {{ _("Ou volte à ") }} <a href="{{ url_for('museudoipiranga') }}">{{_("página inicial")}}</a>.
             {% endif %}
         </p><br/>
     </div>

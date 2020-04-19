@@ -44,8 +44,10 @@
                     {% if artist_data.total == '1' %}obra de {{artist_data.artist_label}} cadastrada no banco de dados do Wikidata.
                     {% else %}obras de {{artist_data.artist_label}} cadastradas no banco de dados do Wikidata.{% endif %}
                 {% endif %}
+            <small><br>{{ _("Para voltar à página anterior, clique ") }} <a href="{{ url_for('show_per_artist') }}">{{_("aqui")}}</a></small>.
             {% else %}
                 {{ _("Escolha um(a) artista para começar a jogar.") }}
+                {{ _("Ou volte à ") }} <a href="{{ url_for('museudoipiranga') }}">{{_("página inicial")}}</a>.
             {% endif %}
         </p><br/>
     </div>

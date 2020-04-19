@@ -85,9 +85,7 @@
                     <div class="w3-container w3-third">
                         {% if not username %}
                             <a href="{{ url_for('login', next=request.script_root + request.full_path) }}">
-                                <button type="button" class="button" id="confirm_disabled" style="background-color:#848484;width:100%;margin:0;font-size:100%;">
-                                    {{_("AUTENTICAR")}}
-                                </button>
+                                <button type="button" class="button" id="confirm_disabled" style="background-color:#848484;width:100%;margin:0;font-size:95%;">{{_("AUTENTICAR")}}</button>
                             </a>
                         {% else %}
                             <button type="submit" class="button" id="confirm" style="background-color:#547473;width:100%;margin:0;font-size:100%;">

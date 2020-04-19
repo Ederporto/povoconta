@@ -35,8 +35,10 @@
             {% if depict and depict_data %}
                 Esta é uma coleção de obras do Museu Paulista que retratam <a target="_blank" href="https://www.wikidata.org/wiki/{{qid}}">{{depict_data.depict_label}}</a> e que possuem ao menos uma imagem e um descritor no Wikidata.
                 Há atualmente {{depict_data.total_scope}}{% if depict_data.total_scope > 1 %} obras registradas no banco de dados que satisfazem esse critério. {% else %} obra registrada no banco de dados que satisfaz esse critério. {% endif %}
+                <small><br>{{ _("Para voltar à página anterior, clique ") }} <a href="{{ url_for('show_per_depict') }}">{{_("aqui")}}</a></small>.
             {% else %}
                 {{ _("Escolha um descritor para começar a jogar.") }}
+                {{ _("Ou volte à ") }} <a href="{{ url_for('museudoipiranga') }}">{{_("página inicial")}}</a>.
             {% endif %}
         </p><br/>
     </div>
