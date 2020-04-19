@@ -2,8 +2,8 @@ import requests
 from random import random
 
 SESSION = requests.Session()
+SESSION.params["maxAge"] = 0
 WIKIDATA_API_ENDPOINT = 'https://www.wikidata.org/w/api.php'
-COMMONS_API_ENDPOINT = 'https://commons.wikimedia.org/w/api.php'
 
 
 def get_p18(qid):
@@ -27,24 +27,6 @@ def get_p18(qid):
     
     SESSION.close()
     return image
-
-
-def get_image_url(filename):
-    params = {
-        'action': 'query',
-        'prop': 'imageinfo',
-        'iiprop': 'url',
-        'titles': 'File:'+filename,
-        "format": "json"
-    }
-
-    result = SESSION.get(url=COMMONS_API_ENDPOINT, params=params)
-    data = result.json()
-    for key in data["query"]["pages"]:
-        image_url = data["query"]["pages"][key]["imageinfo"][0]["url"]
-
-    SESSION.close()
-    return image_url
 
 
 def get_p180(qid, lang):

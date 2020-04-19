@@ -454,11 +454,9 @@ def get_work_data(qid):
         else:
             work_label = ""
         if "image" in data_work["results"]["bindings"][0]:
-            reduced_image = data_work["results"]["bindings"][0]["image"]["value"] + "?width=1000px"
-            image = data_work["results"]["bindings"][0]["image"]["value"]
+            image = data_work["results"]["bindings"][0]["image"]["value"] + "?width=1000px"
         else:
             image = ""
-            reduced_image = ""
         if "date" in data_work["results"]["bindings"][0]:
             date_aux = data_work["results"]["bindings"][0]["date"]["value"]
             if date_aux.startswith("Século"):
@@ -501,7 +499,6 @@ def get_work_data(qid):
             commissioners_labels_ = []
 
         instances = []
-        instances = []
         if instances_ and instance_labels_ and len(instances_)==len(instance_labels_) and instances!=[""]:
             for i in range(len(instances_)):
                 instances.append({"qid": instances_[i].split("/")[-1],
@@ -524,7 +521,6 @@ def get_work_data(qid):
 
         work_data_ = {"work_label": work_label,
                       "image": image,
-                      "reduced_image": reduced_image,
                       "date": date,
                       "instances": instances,
                       "artists": artists,
