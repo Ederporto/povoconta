@@ -32,11 +32,11 @@
     <br/>
     <div class="container" style="width:100%">
         <p style="text-align:center;font-size:1.2em;">
-            {% if instance and instance_data %}
-                Esta é uma coleção de obras do Museu Paulista do tipo <a target="_blank" href="https://www.wikidata.org/wiki/{{qid}}">{{instance_data.instance_label}}</a> que possuem ao menos uma imagem e um descritor no Wikidata.
-                Há atualmente {{instance_data.total_scope}}{% if instance_data.total_scope > 1 %} obras registradas no banco de dados que satisfazem esse critério. {% else %} obra registrada no banco de dados que satisfaz esse critério. {% endif %}
+            {% if depict and depict_data %}
+                Esta é uma coleção de obras do Museu Paulista que retratam <a target="_blank" href="https://www.wikidata.org/wiki/{{qid}}">{{depict_data.depict_label}}</a> e que possuem ao menos uma imagem e um descritor no Wikidata.
+                Há atualmente {{depict_data.total_scope}}{% if depict_data.total_scope > 1 %} obras registradas no banco de dados que satisfazem esse critério. {% else %} obra registrada no banco de dados que satisfaz esse critério. {% endif %}
             {% else %}
-                {{ _("Escolha um tipo de obra para começar a jogar.") }}
+                {{ _("Escolha um descritor para começar a jogar.") }}
             {% endif %}
         </p><br/>
     </div>
@@ -44,18 +44,18 @@
 
 {% block content %}
 <ul style="text-align:center">
-    {% for instance in instances %}
+    {% for depict in depicts %}
         <li>
-            <a href="{{ url_for('show_works_of_instance', qid=instance.qid) }}">
-                <button name="instance" class="button" value="{{instance.qid}}">
-                    {{ instance.label }}
+            <a href="{{ url_for('show_works_of_depict', qid=depict.qid) }}">
+                <button name="depict" class="button" value="{{depict.qid}}">
+                    {{ depict.label }}
                 </button>
             </a>
         </li>
     {% endfor %}
 </ul>
 <ul style="text-align:center">
-    {% for work in instance %}
+    {% for work in depict %}
     <li>
         <a href="{{url_for('view_work_museudoipiranga', qid=work.qid) }}">
             <img src="{{ work.image }}" style="object-fit:contain;max-widht:1000px; max-height:500px; align:center;"/>

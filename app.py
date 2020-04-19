@@ -313,6 +313,44 @@ def show_works_of_instance(qid):
                            goback="museudoipiranga")
 
 
+@app.route('/p180', methods=['GET'])
+@app.route('/depicts', methods=['GET'])
+@app.route('/descritores', methods=['GET'])
+def show_per_depict():
+    username = wikidata_oauth.get_username()
+    json = per_depict()
+    depicts = []
+    for result in json["results"]["bindings"]:
+        depicts.append({"qid": result["depict"]["value"].split("/")[-1],
+                        "label": result["depict_label"]["value"]})
+    return render_template("per_depict.html", depicts=depicts, username=username)
+
+
+@app.route('/p180/<qid>', methods=['GET'])
+@app.route('/depict/<qid>', methods=['GET'])
+@app.route('/descritor/<qid>', methods=['GET'])
+def show_works_of_depict(qid):
+    username = wikidata_oauth.get_username()
+    json = works_of_depict(qid)
+    depict = []
+
+    for result in json["results"]["bindings"]:
+        depict.append({
+            "qid": result["work"]["value"].split("/")[-1],
+            "label": result["work_label"]["value"],
+            "image": result["image"]["value"] + "?width=200px"})
+
+    depict_data = {"depict_label": get_name(qid),
+                   "total_scope": len(depict)}
+
+    return render_template("per_depict.html",
+                           depict=depict,
+                           qid=qid,
+                           username=username,
+                           depict_data=depict_data,
+                           goback="museudoipiranga")
+
+
 @app.route('/qid/<qid>', methods=['GET'])
 def view_work_museudoipiranga(qid):
     username = wikidata_oauth.get_username()
