@@ -241,6 +241,40 @@ def show_works_of_artist(qid):
                            goback="museudoipiranga")
 
 
+@app.route('/p571', methods=['GET'])
+@app.route('/decades', methods=['GET'])
+@app.route('/décadas', methods=['GET'])
+def show_per_decade():
+    username = wikidata_oauth.get_username()
+    json = per_decade()
+    decades = []
+    for result in json["results"]["bindings"]:
+        decades.append({"label": result["decade"]["value"]})
+    return render_template("per_decade.html", decades=decades, username=username)
+
+
+@app.route('/p571/<decade>', methods=['GET'])
+@app.route('/decade/<decade>', methods=['GET'])
+@app.route('/década/<decade>', methods=['GET'])
+def show_works_of_decade(decade):
+    username = wikidata_oauth.get_username()
+    json = works_of_decade(decade)
+    decade_ = []
+
+    for result in json["results"]["bindings"]:
+        decade_.append({
+            "qid": result["work"]["value"].split("/")[-1],
+            "label": result["work_label"]["value"],
+            "image": result["image"]["value"] + "?width=200px"})
+
+    return render_template("per_decade.html",
+                           decade=decade,
+                           indeterminate="Década indeterminada",
+                           username=username,
+                           decade_data=decade_,
+                           goback="museudoipiranga")
+
+
 @app.route('/qid/<qid>', methods=['GET'])
 def view_work_museudoipiranga(qid):
     username = wikidata_oauth.get_username()
