@@ -28,6 +28,29 @@
     {% endif %}
 {% endblock %}
 
+{% block banner %}
+<div class="w3-container">
+    <div class="w3-row" style="padding-top:30px;padding-bottom:30px">
+        <h1 style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.6em;">{{ _("Museu do Ipiranga") }}</small></h1>
+    </div>
+</div>
+{% endblock %}
+
 {% block content %}
-<h1>{{_("Em construção")}}</h1>
+<div class="w3-row" style="text-align:center">
+    <p><b>Povo Conta</b> é um jogo colaborativo. O propósito é contribuir com a descrição das obras no acervo do Museu Paulista da Universidade de São Paulo.</p>
+    <p>O jogo está conectado à base de dados colaborativa Wikidata, um projeto irmão da Wikipédia. Toda contribuição que é feita no <b>Povo Conta</b> é automaticamente transmitida para o respectivo item da obra editada no Wikidata.</p>
+    <p>As edições são então transpostas para uma série de páginas na internet. Isso inclui livros colaborativos, repositórios de imagens e em alguns casos a própria Wikipédia.</p>
+    <p>O nome do jogo é uma referência à prática no jornalismo de entrevistar pessoas, em geral na rua, para saber o que pensam sobre determinado assunto. No <b>Povo Conta</b>, é o Museu Paulista que espera sua contribuição na descrição de seu acervo.</p>
+
+    <p>Participe e divulgue!</p><br><hr><br>
+    <small>
+        <p>Este jogo foi desenvolvido em <a target='_blank' href='https://pt.wikipedia.org/wiki/Flask_(framework_web)'><i>Flask</i></a>.</p>
+        <p>O código-fonte está disponível no <a target='_blank' href='https://github.com/WikiMovimentoBrasil/povoconta'>GitHub</a>.</p>
+        <p>Licença do cógido-fonte: <a target='_blank' href='https://github.com/WikiMovimentoBrasil/povoconta/blob/master/LICENSE'>GPL v3.0</a>.</p>
+        <p>Licença de textos: <a target='_blank' href='https://creativecommons.org/licenses/by-sa/4.0/'>CC-BY-SA 4.0 Internacional</a>.</p>
+        <p>Licença dos objetos retornados do Wikidata: <a target='_blank' href='https://creativecommons.org/share-your-work/public-domain/cc0/'>CC0</a>.</p>
+        <p>Versão 1.0.1.</p>
+    </small>
+</div>
 {% endblock %}
