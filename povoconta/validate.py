@@ -24,7 +24,8 @@ def get_p18(qid):
         image = get_image_url(image_name)
     except:
         image = ""
-
+    
+    SESSION.close()
     return image
 
 
@@ -42,6 +43,7 @@ def get_image_url(filename):
     for key in data["query"]["pages"]:
         image_url = data["query"]["pages"][key]["imageinfo"][0]["url"]
 
+    SESSION.close()
     return image_url
 
 
@@ -68,6 +70,7 @@ def get_p180(qid, lang):
     except:
         pass
 
+    SESSION.close()
     return depicts
 
 
@@ -104,6 +107,7 @@ def get_name(qid, lang="pt-br"):
     except:
         pass
 
+    SESSION.close()
     return name
 
 
@@ -127,6 +131,7 @@ def search(term, lang):
         description = item["description"]
         possible_terms.append({"qid": qid, "label": label, "description": description})
 
+    SESSION.close()
     return possible_terms
 
 
@@ -138,6 +143,7 @@ def query_wikidata(query):
     }
     result = SESSION.post(url=url, params=params)
     data = result.json()
+    SESSION.close()
     return data
 
 
