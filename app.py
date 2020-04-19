@@ -275,6 +275,44 @@ def show_works_of_decade(decade):
                            goback="museudoipiranga")
 
 
+@app.route('/p31', methods=['GET'])
+@app.route('/instances', methods=['GET'])
+@app.route('/tipos', methods=['GET'])
+def show_per_instance():
+    username = wikidata_oauth.get_username()
+    json = per_instance()
+    instances = []
+    for result in json["results"]["bindings"]:
+        instances.append({"qid": result["instance"]["value"].split("/")[-1],
+                          "label": result["instance_label"]["value"]})
+    return render_template("per_instance.html", instances=instances, username=username)
+
+
+@app.route('/p31/<qid>', methods=['GET'])
+@app.route('/instance/<qid>', methods=['GET'])
+@app.route('/tipo/<qid>', methods=['GET'])
+def show_works_of_instance(qid):
+    username = wikidata_oauth.get_username()
+    json = works_of_instance(qid)
+    instance = []
+
+    for result in json["results"]["bindings"]:
+        instance.append({
+            "qid": result["work"]["value"].split("/")[-1],
+            "label": result["work_label"]["value"],
+            "image": result["image"]["value"] + "?width=200px"})
+
+    instance_data = {"instance_label": get_name(qid),
+                     "total_scope": len(instance)}
+
+    return render_template("per_instance.html",
+                           instance=instance,
+                           qid=qid,
+                           username=username,
+                           instance_data=instance_data,
+                           goback="museudoipiranga")
+
+
 @app.route('/qid/<qid>', methods=['GET'])
 def view_work_museudoipiranga(qid):
     username = wikidata_oauth.get_username()
