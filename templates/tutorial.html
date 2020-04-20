@@ -25,6 +25,276 @@
     {% endif %}
 {% endblock %}
 
+{% block banner %}
+<div class="w3-container">
+    <div class="w3-row" style="padding-top:30px;padding-bottom:30px">
+        <h1 style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.6em;">{{ _("Como jogar?") }}</small></h1>
+    </div>
+</div>
+{% endblock %}
+
 {% block content %}
-<h1>{{_("Em construção")}}</h1>
+<div class="w3-container">
+    <div class="w3-row-padding" style="text-align:center">
+        <p>O Museu Paulista já tem {{total_works}} obras cadastradas no banco de dados do <a href="https://www.wikidata.org/wiki/Wikidata:Página_principal">Wikidata</a>. O <b>Povo Conta</b> organiza essas obras em 5 categorias para facilitar a escolha do usuário. São elas:</p>
+    </div>
+    <div class="w3-row-padding">
+        <div class="w3-col m2" >
+            <button name="per_collection" class="button" style="width:100%;">
+                <a>Coleções</a>
+            </button>
+        </div>
+        <div class="w3-col m2" >
+            <button name="per_creator" class="button" style="width:100%;">
+                <a>Criadores</a>
+            </button>
+        </div>
+        <div class="w3-col m2" >
+            <button name="per_decade" class="button" style="width:100%;">
+                <a>Décadas</a>
+            </button>
+        </div>
+        <div class="w3-col m3" >
+            <button name="per_instance" class="button" style="width:100%;">
+                <a>Tipos de obra</a>
+            </button>
+        </div>
+        <div class="w3-col m3" >
+            <button name="per_depict" class="button" style="width:100%;">
+                <a>Descritores</a>
+            </button>
+        </div>
+    </div><br>
+    <div class="w3-row-padding" style="text-align:center">
+        <p>Elas aparecem na página inicial do <b>Povo Conta</b>. Ao escolher uma das categorias, o usuário é levado a uma página que apresenta as subcategorias dessa categoria principal que escolheu. Por exemplo, ao selecionar a categoria <i>Coleções</i>, o usuário verá:</p><br>
+    </div>
+    <div class="w3-row-padding" style="text-align:center; border: 1px solid black">
+        <br>
+        <p>Escolha uma coleção para começar a jogar. Ou volte à <a href="" onclick="return false;">página inicial</a>.</p>
+        <ul style="text-align:center">
+            {% for collection in collections %}
+            <li>
+                <a href="" onclick="return false;">
+                    <button name="collection" class="button">
+                        {{ collection.label }}
+                    </button>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        <br>
+    </div><br>
+    <div class="w3-row-padding" style="text-align:center;">
+        <p>Ao selecionar uma subcategoria, o usuário então entra na tela de seleção das obras para iniciar o jogo. Por exemplo, escolhendo a coleção <i>Militão Augusto de Azevedo</i>, o usuário verá:</p>
+    </div>
+    <div class="w3-row-padding" style="text-align:center; border: 1px solid black">
+        <p>
+            <br>
+            Esta é a Coleção Militão Augusto de Azevedo. É nomeada em homenagem a Militão Augusto de Azevedo. Possui {{total_collection}} obras registradas no Wikidata, das quais {{total_scope}} possuem ao menos uma imagem e um descritor no banco de dados.
+            <br>
+            A coleção possui <a href="" onclick="return false;">um artigo na Wikipédia</a> e todas as imagens dela podem ser encontradas no <a href="" onclick="return false;">Wikimedia Commons</a>.
+            <br>
+            <small>Para voltar à página anterior, clique <a href="" onclick="return false;">aqui</a></small>.
+        </p>
+        <br>
+        <ul style="text-align:center">
+            {% for work in collection_tutorial %}
+                <li>
+                    <a href="" onclick="return false;">
+                        <img src="{{ work.image }}" style="object-fit:contain;align:center;"/>
+                    </a>
+                </li>
+            {% endfor %}
+            <li>
+                <a href="" onclick="return false;">
+                    <img src="http://commons.wikimedia.org/wiki/Special:FilePath/10165_-_01,_Acervo_do_Museu_Paulista_da_USP.jpg?width=200px" style="object-fit:contain;align:center;"/>
+                </a>
+            </li>
+        </ul>
+        <br>
+    </div>
+    <div class="w3-row-padding" style="text-align:center;">
+        <br>
+        <p>O usuário poderá então escolher qualquer imagem mostrada para jogar. Ao clicar em uma obra, por exemplo <i>10165</i>, o usuário verá:</p>
+    </div>
+    <div class="w3-row-padding" style="text-align:center; border: 1px solid black">
+        <br>
+        <div class="w3-container w3-half">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/eb/10165_-_01,_Acervo_do_Museu_Paulista_da_USP.jpg" width="100%">
+            <a href="" onclick="return false;" style="text-align:center">
+                Veja essa imagem no Wikimedia Commons
+            </a>
+        </div>
+        <div class="w3-container w3-half" style="text-align:left; font-family: 'Josefin Sans', sans-serif; font-size:150%">
+            <div class="w3-row">
+                <b>Obra:</b> <a onclick="return false;" href="">10165</a>
+                <br>
+                <b>Criador(a):</b> <a href="" onclick="return false;">Militão Augusto de Azevedo</a>
+                <br>
+                <b>Data:</b> 1879
+                <br>
+                <b>Instância de:</b> <a href="" onclick="return false;">fotografia</a>
+                <br>
+                <b>Material utilizado:</b> <a href="">papel albuminado</a>
+                <br>
+                <b>Encomendada por:</b> <a onclick="return false;" href="">Photographia Americana</a>
+            </div>
+            <div class="w3-row"><hr></div>
+            <div class="w3-row">
+                <p style="text-align:center;font-size:125%;font-weight:bold;">Quantos itens de cada descritor você vê?</p>
+                <form action="">
+
+                    <div class="form-group">
+                        <label for="homem"><a href="" onclick="return false;">homem</a>:</label>
+                        <input type="number" class="form-control" id="homem" min="1" step="1" value="" style="font-size:100%">
+                        <label for="brasileiro branco"><a href="" onclick="return false;">brasileiro branco</a>:</label>
+                        <input type="number" class="form-control" id="brasileiro branco" min="1" step="1" value="" style="font-size:100%">
+                        <label for="afro-brasileiro"><a href="" onclick="return false;">afro-brasileiro</a>:</label>
+                        <input type="number" class="form-control" id="afro-brasileiro" min="1" step="1" value="" style="font-size:100%">
+                        <label for="chapeu"><a href="" onclick="return false;">chapéu</a>:</label>
+                        <input type="number" class="form-control" id="chapeu" min="1" step="1" value="" style="font-size:100%">
+                    </div>
+                </form>
+                <div class="w3-row">
+                    <div class="w3-container w3-third">
+                        <a href="" onclick="return false;">
+                            <button type="button" class="button" style="background-color:#848484;width:100%;margin:0;font-size:95%;">
+                                AUTENTICAR
+                            </button>
+                        </a>
+                    </div>
+                    <div class="w3-container w3-third">
+                        <a href="" onclick="return false;">
+                            <button type="button" class="button" style="background-color:#848484;width:100%;margin:0;font-size:100%;">
+                                PULAR
+                            </button>
+                        </a>
+                    </div>
+                    <div class="w3-container w3-third">
+                        <a href="" onclick="return false;">
+                            <button type="button" class="button" style="background-color:#e2725b;width:100%;margin:0;font-size:100%;">
+                                INÍCIO
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="w3-row"><br></div>
+        </div>
+    </div>
+    <div class="w3-row-padding" style="text-align:center;">
+        <br>
+        <p>
+            Antes de jogar, o usuário deverá fazer login em sua conta Wiki e autorizar que suas edições sejam feitas usando o <b>Povo Conta</b>.
+            Para isso, o usuário deverá clicar em <i>AUTENTICAR</i> e seguir as intruções de login e autorização que aparecerão na tela.
+            Uma vez feita a autorização, o usuário será redirecionado de volta à página da obra e o botão <i>AUTENTICAR</i> terá se convertido em <i>CONFIRMAR</i>:
+        </p>
+    </div>
+    <div class="w3-row" style="text-align:center; font-family: 'Josefin Sans', sans-serif; font-size:150%">
+        <div class="w3-row w3-half">
+            <br>
+        </div>
+        <div class="w3-row w3-half" style="border: 1px solid black">
+            <br>
+            <div class="w3-container w3-third">
+                <a href="" onclick="return false;">
+                    <button type="button" class="button" style="background-color:#547473;width:100%;margin:0;font-size:95%;">
+                        CONFIRMAR
+                    </button>
+                </a>
+            </div>
+            <div class="w3-container w3-third">
+                <a href="" onclick="return false;">
+                    <button type="button" class="button" style="background-color:#848484;width:100%;margin:0;font-size:100%;">
+                        PULAR
+                    </button>
+                </a>
+            </div>
+            <div class="w3-container w3-third">
+                <a href="" onclick="return false;">
+                    <button type="button" class="button" style="background-color:#e2725b;width:100%;margin:0;font-size:100%;">
+                        INÍCIO
+                    </button>
+                </a>
+            </div>
+            <div class="w3-row">
+                <br>
+            </div>
+        </div>
+    </div>
+    <div class="w3-row-padding" style="text-align:center;">
+        <br>
+        <p>
+            Ao responder a pergunta <i>Quantos itens de cada descritor você vê?</i> e clicar no botão <i>CONFIRMAR</i>, o usuário grava os valores que inseriu no item da obra no Wikidata e é redirecionado a uma outra obra aleatória.
+            Se então o usuário quiser retornar à obra que acabou de melhorar, poderá clicar no botão <i>VOLTAR</i>, que terá surgido no lugar do botão <i>INÍCIO</i>.<br>
+            Caso não queira jogar com uma imagem, o usuário poderá sempre clicar no botão <i>PULAR</i> para ir para a página de outra obra aleatória.
+        </p>
+    </div>
+    <br>
+    <div class="w3-row-padding" style="text-align:center; border: 1px solid black">
+        <br>
+        <div class="w3-container w3-half">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/eb/10165_-_01,_Acervo_do_Museu_Paulista_da_USP.jpg" width="100%">
+            <a href="" onclick="return false;" style="text-align:center">
+                Veja essa imagem no Wikimedia Commons
+            </a>
+        </div>
+        <div class="w3-container w3-half" style="text-align:left; font-family: 'Josefin Sans', sans-serif; font-size:150%">
+            <div class="w3-row">
+                <b>Obra:</b> <a onclick="return false;" href="">10165</a>
+                <br>
+                <b>Criador(a):</b> <a href="" onclick="return false;">Militão Augusto de Azevedo</a>
+                <br>
+                <b>Data:</b> 1879
+                <br>
+                <b>Instância de:</b> <a href="" onclick="return false;">fotografia</a>
+                <br>
+                <b>Material utilizado:</b> <a href="">papel albuminado</a>
+                <br>
+                <b>Encomendada por:</b> <a onclick="return false;" href="">Photographia Americana</a>
+            </div>
+            <div class="w3-row"><hr></div>
+            <div class="w3-row">
+                <p style="text-align:center;font-size:125%;font-weight:bold;">Quantos itens de cada descritor você vê?</p>
+                <form action="">
+
+                    <div class="form-group">
+                        <label for="homem2"><a href="" onclick="return false;">homem</a>:</label>
+                        <input type="number" class="form-control" id="homem2" min="6" max="6" step="1" value="6" style="font-size:100%">
+                        <label for="brasileiro branco2"><a href="" onclick="return false;">brasileiro branco</a>:</label>
+                        <input type="number" class="form-control" id="brasileiro branco2" min="1" max="1" step="1" value="1" style="font-size:100%">
+                        <label for="afro-brasileiro2"><a href="" onclick="return false;">afro-brasileiro</a>:</label>
+                        <input type="number" class="form-control" id="afro-brasileiro2" min="5" max="5" step="1" value="5" style="font-size:100%">
+                        <label for="chapeu2"><a href="" onclick="return false;">chapéu</a>:</label>
+                        <input type="number" class="form-control" id="chapeu2" min="3" max="3" step="1" value="3" style="font-size:100%">
+                    </div>
+                </form>
+                <div class="w3-row">
+                    <div class="w3-container w3-third">
+                        <a href="" onclick="return false;">
+                            <button type="button" class="button" style="background-color:#547473;width:100%;margin:0;font-size:95%;">
+                                CONFIRMAR
+                            </button>
+                        </a>
+                    </div>
+                    <div class="w3-container w3-third">
+                        <a href="" onclick="return false;">
+                            <button type="button" class="button" style="background-color:#848484;width:100%;margin:0;font-size:100%;">
+                                PULAR
+                            </button>
+                        </a>
+                    </div>
+                    <div class="w3-container w3-third">
+                        <a href="" onclick="return false;">
+                            <button type="button" class="button" style="background-color:#e2725b;width:100%;margin:0;font-size:100%;">
+                                INÍCIO
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="w3-row"><br></div>
+        </div>
+    </div>
+</div>
 {% endblock %}

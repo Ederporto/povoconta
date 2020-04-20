@@ -34,7 +34,8 @@ from flask import Flask, render_template, flash, request, redirect, url_for, ses
 from flask_babel import Babel
 from query import per_instance, per_collection, per_creator, per_decade, per_depict,\
     works_of_instance, works_in_collection, works_of_creator, works_of_decade,work_depicts,\
-    collection_data, creator_data, work_data, get_p180, get_next_qid, works_of_depict, get_name
+    collection_data, creator_data, work_data, get_p180, get_next_qid, works_of_depict,\
+    get_name, get_tutorial_collections, get_tutorial_images, get_tutorial_total_qids
 
 
 __dir__ = os.path.dirname(__file__)
@@ -146,7 +147,26 @@ def sobre():
 @app.route('/tutorial', methods=['GET'])
 def tutorial():
     username = wikidata_oauth.get_username()
-    return render_template("tutorial.html", username=username)
+    collection_ = get_tutorial_collections()
+    images_ = get_tutorial_images()
+    total = get_tutorial_total_qids()
+    total_collection = get_tutorial_total_qids("; wdt:P195 wd:Q56677463.")
+
+    collections=[]
+    for result in collection_["results"]["bindings"]:
+        collections.append({"label": result["collection_label"]["value"]})
+
+    collection_tutorial = []
+    for result in images_["results"]["bindings"]:
+        collection_tutorial.append({"image": result["image"]["value"]+"?width=200px"})
+
+    return render_template("tutorial.html",
+                           username=username,
+                           total_works=total,
+                           total_scope=collection_tutorial.__len__(),
+                           total_collection=total_collection,
+                           collections=collections,
+                           collection_tutorial=collection_tutorial)
 
 
 @app.route('/p195', methods=['GET'])

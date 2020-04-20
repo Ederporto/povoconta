@@ -202,3 +202,18 @@ def work_depicts(qid_work, lang="pt-br", lang_fallback="pt"):
 def get_next_qid(qid_from):
     data = query_wikidata("SELECT DISTINCT ?work (MD5(CONCAT(str("+str(random())+"*RAND()),str(?work))) AS ?random_hash) WHERE {?work wdt:P195 wd:Q56677470; wdt:P18 ?image; wdt:P180 ?depicts. MINUS{VALUES ?work {wd:"+qid_from+"}}} ORDER BY ?random_hash LIMIT 1")
     return data["results"]["bindings"][0]["work"]["value"].split("/")[-1]
+
+
+def get_tutorial_collections():
+    data = query_wikidata("SELECT DISTINCT ?collection_label (COUNT(?work) AS ?total) WHERE {?work wdt:P195 wd:Q56677470. ?work wdt:P195 ?collection. ?work wdt:P18 ?image. ?work wdt:P180 ?depict. ?collection rdfs:label ?collection_label_. FILTER(LANG(?collection_label_)='pt-br') FILTER(?collection!=wd:Q56677470) BIND(SUBSTR(?collection_label_,8) AS ?collection_label)} GROUP BY ?collection_label ORDER BY ?total")
+    return data
+
+
+def get_tutorial_images():
+    data = query_wikidata("SELECT DISTINCT ?image (COUNT(?depict) AS ?total) WHERE {BIND(wd:Q56677463 AS ?collection) ?work wdt:P195 ?collection. ?work wdt:P18 ?image. ?work wdt:P180 ?depict. FILTER(?work!=wd:Q56730380)} GROUP BY ?image ORDER BY ?total LIMIT 20")
+    return data
+
+
+def get_tutorial_total_qids(sparql="."):
+    data = query_wikidata("SELECT DISTINCT (COUNT(?work) AS ?total) WHERE {?work wdt:P195 wd:Q56677470"+sparql+"}")
+    return data["results"]["bindings"][0]["total"]["value"]
