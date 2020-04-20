@@ -39,9 +39,9 @@
   <div class="w3-container w3-half" style="text-align:left; font-family: 'Josefin Sans', sans-serif; font-size:150%">
       <div class="w3-row">
           <b>Obra:</b> <a target="_blank" href="https://www.wikidata.org/wiki/{{entity}}">{{work_data.work_label}}</a>
-          {% if work_data.artists and work_data.artists|length > 0 %}
-                <br><b>Artista{% if work_data.artists|length > 1 %}(s){% endif %}:</b> {% for artist in work_data.artists %}
-                <a target="_blank" href="https://www.wikidata.org/wiki/{{artist.qid}}">{{artist.label}}</a>{{ "; " if not loop.last }}
+          {% if work_data.creators and work_data.creators|length > 0 %}
+                <br><b>Criador(a){% if work_data.creators|length > 1 %}(s){% endif %}:</b> {% for creator in work_data.creators %}
+                <a target="_blank" href="https://www.wikidata.org/wiki/{{creator.qid}}">{{creator.label}}</a>{{ "; " if not loop.last }}
                 {% endfor %}
           {% endif %}
           {% if work_data.date %}

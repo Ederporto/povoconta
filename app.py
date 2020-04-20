@@ -199,45 +199,45 @@ def show_works_in_collection(qid):
 @app.route('/p170', methods=['GET'])
 @app.route('/creators', methods=['GET'])
 @app.route('/criadores', methods=['GET'])
-def show_per_artist():
+def show_per_creator():
     username = wikidata_oauth.get_username()
-    json = per_artist()
-    artists = []
+    json = per_creator()
+    creators = []
     for result in json["results"]["bindings"]:
-        artists.append({
-            "qid": result["artist"]["value"].split("/")[-1],
-            "label": result["artist_label"]["value"],
+        creators.append({
+            "qid": result["creator"]["value"].split("/")[-1],
+            "label": result["creator_label"]["value"],
             "quantity": result["total"]["value"]})
-    return render_template("per_artist.html", artists=artists, username=username)
+    return render_template("per_creator.html", creators=creators, username=username)
 
 
 @app.route('/p170/<qid>', methods=['GET'])
 @app.route('/creator/<qid>', methods=['GET'])
 @app.route('/criador/<qid>', methods=['GET'])
-def show_works_of_artist(qid):
+def show_works_of_creator(qid):
     username = wikidata_oauth.get_username()
-    json = works_of_artist(qid)
-    artist = []
-    artist_data_ = artist_data(qid)
+    json = works_of_creator(qid)
+    creator = []
+    creator_data_ = creator_data(qid)
 
     for result in json["results"]["bindings"]:
-        artist.append({
+        creator.append({
             "qid": result["work"]["value"].split("/")[-1],
             "label": result["work_label"]["value"],
             "image": result["image"]["value"] + "?width=200px"})
 
-    artist_data_aux = {
-        "artist_article": artist_data_["results"]["bindings"][0]["artist_article"]["value"] if "artist_article" in artist_data_["results"]["bindings"][0] else "",
-        "artist_label": artist_data_["results"]["bindings"][0]["artist_label"]["value"],
-        "total": artist_data_["results"]["bindings"][0]["total"]["value"],
-        "total_scope": len(artist),
+    creator_data_aux = {
+        "creator_article": creator_data_["results"]["bindings"][0]["creator_article"]["value"] if "creator_article" in creator_data_["results"]["bindings"][0] else "",
+        "creator_label": creator_data_["results"]["bindings"][0]["creator_label"]["value"],
+        "total": creator_data_["results"]["bindings"][0]["total"]["value"],
+        "total_scope": len(creator),
     }
 
-    return render_template("per_artist.html",
-                           artist=artist,
+    return render_template("per_creator.html",
+                           creator=creator,
                            qid=qid,
                            username=username,
-                           artist_data=artist_data_aux,
+                           creator_data=creator_data_aux,
                            goback="museudoipiranga")
 
 
@@ -473,14 +473,14 @@ def get_work_data(qid):
             instance_labels_ = data_work["results"]["bindings"][0]["instance_labels"]["value"].split(";")
         else:
             instance_labels_ = []
-        if "artists" in data_work["results"]["bindings"][0]:
-            artists_ = data_work["results"]["bindings"][0]["artists"]["value"].split(";")
+        if "creators" in data_work["results"]["bindings"][0]:
+            creators_ = data_work["results"]["bindings"][0]["creators"]["value"].split(";")
         else:
-            artists_ = []
-        if "artists_labels" in data_work["results"]["bindings"][0]:
-            artists_labels_ = data_work["results"]["bindings"][0]["artists_labels"]["value"].split(";")
+            creators_ = []
+        if "creators_labels" in data_work["results"]["bindings"][0]:
+            creators_labels_ = data_work["results"]["bindings"][0]["creators_labels"]["value"].split(";")
         else:
-            artists_labels_ = []
+            creators_labels_ = []
         if "materials" in data_work["results"]["bindings"][0]:
             materials_ = data_work["results"]["bindings"][0]["materials"]["value"].split(";")
         else:
@@ -503,11 +503,11 @@ def get_work_data(qid):
             for i in range(len(instances_)):
                 instances.append({"qid": instances_[i].split("/")[-1],
                                   "label": instance_labels_[i]})
-        artists = []
-        if artists_ and artists_labels_ and len(artists_) == len(artists_labels_) and artists_!=[""]:
-            for i in range(len(artists_)):
-                artists.append({"qid": artists_[i].split("/")[-1],
-                                  "label": artists_labels_[i]})
+        creators = []
+        if creators_ and creators_labels_ and len(creators_) == len(creators_labels_) and creators_!=[""]:
+            for i in range(len(creators_)):
+                creators.append({"qid": creators_[i].split("/")[-1],
+                                  "label": creators_labels_[i]})
         materials = []
         if materials_ and materials_labels_ and len(materials_) == len(materials_labels_) and materials_!=[""]:
             for i in range(len(materials_)):
@@ -523,7 +523,7 @@ def get_work_data(qid):
                       "image": image,
                       "date": date,
                       "instances": instances,
-                      "artists": artists,
+                      "creators": creators,
                       "materials": materials,
                       "commissioners": commissioners}
 
