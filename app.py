@@ -31,8 +31,10 @@ from flask_thumbnails import Thumbnail
 from requests_oauthlib import OAuth1Session
 import wikidata_oauth
 from flask import Flask, render_template, flash, request, redirect, url_for, session, g
-from flask_babel import Babel, gettext
-from povoconta.validate import *
+from flask_babel import Babel
+from query import per_instance, per_collection, per_creator, per_decade, per_depict,\
+    works_of_instance, works_in_collection, works_of_creator, works_of_decade,work_depicts,\
+    collection_data, creator_data, work_data, get_p180, get_next_qid, works_of_depict, get_name
 
 
 __dir__ = os.path.dirname(__file__)
