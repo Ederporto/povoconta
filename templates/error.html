@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename= 'static.css') }}">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Josefin+Sans" type='text/css'>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+{% endblock %}
+
+{% block scripts %}
+    function myFunction() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+            x.className += " responsive";
+        } else {
+            x.className = "topnav";
+        }
+    }
+{% endblock %}
+
+{% block divright %}
+    {% if username %}
+        <a class="right" target="_blank" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
+    {% endif %}
+{% endblock %}
+
+{% block banner %}
+<div class="w3-container">
+    <div class="w3-row" style="padding-top:30px;padding-bottom:30px">
+        <h1 style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.6em;">{{ _("Museu do Ipiranga") }}</small></h1>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="w3-row" style="text-align:center">
+    <div class="w3-row" style="text-align:text; font-family: 'Josefin Sans', sans-serif; font-size:150%">
+        <p style="text-align:center"><b>Algo deu errado!</b></p>
+    </div>
+    <br>
+    <div class="w3-container">
+        <div class="w3-row w3-half" style="text-align:text; font-family: 'Josefin Sans', sans-serif; font-size:150%">
+            <a href="https://github.com/WikiMovimentoBrasil/povoconta/issues" target="_blank">
+                <button type="button" class="button" id="report" style="background-color:#848484;width:90%;margin:0;font-size:100%;">
+                    {{_("REPORTAR ERRO")}}
+                </button>
+            </a>
+        </div>
+        <div class="w3-row w3-half" style="text-align:text; font-family: 'Josefin Sans', sans-serif; font-size:150%">
+            <a href="{{url_for('museudoipiranga')}}">
+                <button type="button" class="button" id="goback" style="background-color:#848484;width:90%;margin:0;font-size:100%;">
+                    {{_("VOLTAR À PÁGINA INICIAL")}}
+                </button>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
