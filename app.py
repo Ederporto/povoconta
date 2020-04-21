@@ -49,6 +49,25 @@ consumer_token = mwoauth.ConsumerToken(
 WIKIDATA_API_ENDPOINT = 'https://www.wikidata.org/w/api.php'
 
 
+@BABEL.localeselector
+def get_locale():
+    try:
+        lang = session["language"]
+    except KeyError:
+        lang = None
+    if lang is not None:
+        return lang
+    return request.accept_languages.best_match(app.config["LANGUAGES"])
+
+
+@app.route('/set_locale')
+def set_locale():
+    next_page = request.args.get('return_to')
+    lang = request.args.get('lang')
+    session["language"] = lang
+    return redirect(next_page)
+
+
 ############################################################################
 # LOGIN                                                                    #
 ############################################################################
@@ -159,19 +178,20 @@ def logout():
 @app.errorhandler(504)
 @app.errorhandler(505)
 def page_not_found(e):
-    return render_template('error.html')
+    return render_template('error.html', lang=get_locale())
+
 
 @app.route('/', methods=['GET'])
 def museudoipiranga():
     username = wikidata_oauth.get_username()
-    return render_template("museudoipiranga.html", username=username)
+    return render_template("museudoipiranga.html", username=username, lang=get_locale())
 
 
 @app.route('/about', methods=['GET'])
 @app.route('/sobre', methods=['GET'])
 def sobre():
     username = wikidata_oauth.get_username()
-    return render_template("sobre.html", username=username)
+    return render_template("sobre.html", username=username, lang=get_locale())
 
 
 @app.route('/tutorial', methods=['GET'])
@@ -196,7 +216,8 @@ def tutorial():
                            total_scope=collection_tutorial.__len__(),
                            total_collection=total_collection,
                            collections=collections,
-                           collection_tutorial=collection_tutorial)
+                           collection_tutorial=collection_tutorial,
+                           lang=get_locale())
 
 
 @app.route('/p195', methods=['GET'])
@@ -204,14 +225,15 @@ def tutorial():
 @app.route('/coleções', methods=['GET'])
 def show_per_collection():
     username = wikidata_oauth.get_username()
-    json = per_collection()
+    lang = get_locale()
+    json = per_collection(lang)
     collections = []
     for result in json["results"]["bindings"]:
         collections.append({
             "qid": result["collection"]["value"].split("/")[-1],
             "label": result["collection_label"]["value"],
             "quantity": result["num_works"]["value"]})
-    return render_template("per_collection.html", collections=collections, username=username)
+    return render_template("per_collection.html", collections=collections, username=username, lang=lang)
 
 
 @app.route('/p195/<qid>', methods=['GET'])
@@ -219,14 +241,14 @@ def show_per_collection():
 @app.route('/coleção/<qid>', methods=['GET'])
 def show_works_in_collection(qid):
     username = wikidata_oauth.get_username()
+    lang = get_locale()
     json = works_in_collection(qid)
     collection = []
-    collection_data_ = collection_data(qid)
+    collection_data_ = collection_data(qid, lang)
 
     for result in json["results"]["bindings"]:
         collection.append({
             "qid": result["work"]["value"].split("/")[-1],
-            "label": result["work_label"]["value"],
             "image": result["image"]["value"]+"?width=200px"})
 
     coll_data = {
@@ -245,7 +267,8 @@ def show_works_in_collection(qid):
                            qid=qid,
                            username=username,
                            collection_data=coll_data,
-                           goback="museudoipiranga")
+                           goback="museudoipiranga",
+                           lang=lang)
 
 
 @app.route('/p170', methods=['GET'])
@@ -253,14 +276,15 @@ def show_works_in_collection(qid):
 @app.route('/criadores', methods=['GET'])
 def show_per_creator():
     username = wikidata_oauth.get_username()
-    json = per_creator()
+    lang = get_locale()
+    json = per_creator(lang)
     creators = []
     for result in json["results"]["bindings"]:
         creators.append({
             "qid": result["creator"]["value"].split("/")[-1],
             "label": result["creator_label"]["value"],
             "quantity": result["total"]["value"]})
-    return render_template("per_creator.html", creators=creators, username=username)
+    return render_template("per_creator.html", creators=creators, username=username, lang=lang)
 
 
 @app.route('/p170/<qid>', methods=['GET'])
@@ -268,9 +292,10 @@ def show_per_creator():
 @app.route('/criador/<qid>', methods=['GET'])
 def show_works_of_creator(qid):
     username = wikidata_oauth.get_username()
+    lang = get_locale()
     json = works_of_creator(qid)
     creator = []
-    creator_data_ = creator_data(qid)
+    creator_data_ = creator_data(qid, lang)
 
     for result in json["results"]["bindings"]:
         creator.append({
@@ -290,7 +315,8 @@ def show_works_of_creator(qid):
                            qid=qid,
                            username=username,
                            creator_data=creator_data_aux,
-                           goback="museudoipiranga")
+                           goback="museudoipiranga",
+                           lang=lang)
 
 
 @app.route('/p571', methods=['GET'])
@@ -298,11 +324,13 @@ def show_works_of_creator(qid):
 @app.route('/décadas', methods=['GET'])
 def show_per_decade():
     username = wikidata_oauth.get_username()
-    json = per_decade()
+    lang = get_locale()
+    indefinite = "indefinite decade" if lang == "en" else "Década indeterminada"
+    json = per_decade(indefinite)
     decades = []
     for result in json["results"]["bindings"]:
         decades.append({"label": result["decade"]["value"]})
-    return render_template("per_decade.html", decades=decades, username=username)
+    return render_template("per_decade.html", decades=decades, username=username, lang=lang)
 
 
 @app.route('/p571/<decade>', methods=['GET'])
@@ -310,7 +338,9 @@ def show_per_decade():
 @app.route('/década/<decade>', methods=['GET'])
 def show_works_of_decade(decade):
     username = wikidata_oauth.get_username()
-    json = works_of_decade(decade)
+    lang = get_locale()
+    indefinite = "indefinite decade" if lang == "en" else "Década indeterminada"
+    json = works_of_decade(decade, lang, indefinite)
     decade_ = []
 
     for result in json["results"]["bindings"]:
@@ -321,10 +351,11 @@ def show_works_of_decade(decade):
 
     return render_template("per_decade.html",
                            decade=decade,
-                           indeterminate="Década indeterminada",
+                           indeterminate=indefinite,
                            username=username,
                            decade_data=decade_,
-                           goback="museudoipiranga")
+                           goback="museudoipiranga",
+                           lang=lang)
 
 
 @app.route('/p31', methods=['GET'])
@@ -332,12 +363,13 @@ def show_works_of_decade(decade):
 @app.route('/tipos', methods=['GET'])
 def show_per_instance():
     username = wikidata_oauth.get_username()
-    json = per_instance()
+    lang = get_locale()
+    json = per_instance(lang)
     instances = []
     for result in json["results"]["bindings"]:
         instances.append({"qid": result["instance"]["value"].split("/")[-1],
                           "label": result["instance_label"]["value"]})
-    return render_template("per_instance.html", instances=instances, username=username)
+    return render_template("per_instance.html", instances=instances, username=username, lang=lang)
 
 
 @app.route('/p31/<qid>', methods=['GET'])
@@ -345,7 +377,8 @@ def show_per_instance():
 @app.route('/tipo/<qid>', methods=['GET'])
 def show_works_of_instance(qid):
     username = wikidata_oauth.get_username()
-    json = works_of_instance(qid)
+    lang = get_locale()
+    json = works_of_instance(qid, lang)
     instance = []
 
     for result in json["results"]["bindings"]:
@@ -362,7 +395,8 @@ def show_works_of_instance(qid):
                            qid=qid,
                            username=username,
                            instance_data=instance_data,
-                           goback="museudoipiranga")
+                           goback="museudoipiranga",
+                           lang=lang)
 
 
 @app.route('/p180', methods=['GET'])
@@ -370,12 +404,13 @@ def show_works_of_instance(qid):
 @app.route('/descritores', methods=['GET'])
 def show_per_depict():
     username = wikidata_oauth.get_username()
-    json = per_depict()
+    lang = get_locale()
+    json = per_depict(lang)
     depicts = []
     for result in json["results"]["bindings"]:
         depicts.append({"qid": result["depict"]["value"].split("/")[-1],
                         "label": result["depict_label"]["value"]})
-    return render_template("per_depict.html", depicts=depicts, username=username)
+    return render_template("per_depict.html", depicts=depicts, username=username, lang=lang)
 
 
 @app.route('/p180/<qid>', methods=['GET'])
@@ -383,6 +418,7 @@ def show_per_depict():
 @app.route('/descritor/<qid>', methods=['GET'])
 def show_works_of_depict(qid):
     username = wikidata_oauth.get_username()
+    lang = get_locale()
     json = works_of_depict(qid)
     depict = []
 
@@ -392,7 +428,7 @@ def show_works_of_depict(qid):
             "label": result["work_label"]["value"],
             "image": result["image"]["value"] + "?width=200px"})
 
-    depict_data = {"depict_label": get_name(qid),
+    depict_data = {"depict_label": get_name(qid, lang),
                    "total_scope": len(depict)}
 
     return render_template("per_depict.html",
@@ -400,12 +436,14 @@ def show_works_of_depict(qid):
                            qid=qid,
                            username=username,
                            depict_data=depict_data,
-                           goback="museudoipiranga")
+                           goback="museudoipiranga",
+                           lang=lang)
 
 
 @app.route('/qid/<qid>', methods=['GET'])
 def view_work_museudoipiranga(qid):
     username = wikidata_oauth.get_username()
+    lang = get_locale()
     if "goback" in request.args:
         goback = request.args["goback"]
         if goback == "museudoipiranga":
@@ -421,7 +459,7 @@ def view_work_museudoipiranga(qid):
         first = True
 
     work_data_ = get_work_data(qid)
-    work_depicts_ = get_p180(qid, "pt-br")
+    work_depicts_ = get_p180(qid, lang)
 
     if work_data_:
         return render_template("item.html",
@@ -431,9 +469,10 @@ def view_work_museudoipiranga(qid):
                                username=username,
                                back=goback,
                                skip=get_next_qid(qid),
-                               first=first)
+                               first=first,
+                               lang=lang)
     else:
-        return redirect(url_for("erro"))
+        return redirect(url_for("erro", lang=lang))
 
 
 @app.route('/save/<qid>', methods=['POST'])
@@ -455,7 +494,7 @@ def save_quantities(qid):
                     except:
                         pass
     next_qid = get_next_qid(qid)
-    return redirect(url_for("view_work_museudoipiranga", qid=next_qid, goback=qid))
+    return redirect(url_for("view_work_museudoipiranga", qid=next_qid, goback=qid, lang=get_locale()))
 
 
 def validate_quantity(quantity):
@@ -469,7 +508,8 @@ def validate_quantity(quantity):
 
 
 def get_work_depicts(qid):
-    depicts_work = work_depicts(qid)
+    lang = get_locale()
+    depicts_work = work_depicts(qid, lang,"pt-br")
     work_depicts_ = []
     for result in depicts_work["results"]["bindings"]:
         depicts_id = result["depicts_"]["value"].split("/")[-1]
@@ -499,7 +539,8 @@ def get_work_depicts(qid):
 
 
 def get_work_data(qid):
-    data_work = work_data(qid)
+    lang = get_locale()
+    data_work = work_data(qid, lang, "pt-br")
     if data_work["results"]["bindings"].__len__()>0:
         if "work_label_" in data_work["results"]["bindings"][0]:
             work_label = data_work["results"]["bindings"][0]["work_label_"]["value"]
@@ -614,7 +655,6 @@ def change_qualifier(claim, hash, quantity):
     }
 
     wikidata_oauth.api_post_request(params)
-    flash(_("Qualificador alterado com sucesso"), "success")
 
 
 def remove_qualifier(claim, qualifier):
@@ -627,7 +667,6 @@ def remove_qualifier(claim, qualifier):
     }
 
     wikidata_oauth.api_post_request(params)
-    flash(_("Qualificador removido com sucesso"), "success")
 
 
 ############################################################################

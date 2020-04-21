@@ -23,6 +23,12 @@
 {% endblock %}
 
 {% block divright %}
+    {% if lang != 'en' %}
+        <a class="right" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='en')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Flag-us.svg" width="25px"></a>
+    {% endif %}
+    {% if lang != 'pt' and lang != 'pt-BR' %}
+        <a class="right" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='pt')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Flag-br.svg" width="25px"></a>
+    {% endif %}
     {% if username %}
         <a class="right" target="_blank" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
     {% endif %}
@@ -38,27 +44,27 @@
   </div>
   <div class="w3-container w3-half" style="text-align:left; font-family: 'Josefin Sans', sans-serif; font-size:150%">
       <div class="w3-row">
-          <b>Obra:</b> <a target="_blank" href="https://www.wikidata.org/wiki/{{entity}}">{{work_data.work_label}}</a>
+          <b>{{_("Obra")}}:</b> <a target="_blank" href="https://www.wikidata.org/wiki/{{entity}}">{{work_data.work_label}}</a>
           {% if work_data.creators and work_data.creators|length > 0 %}
-                <br><b>Criador(a){% if work_data.creators|length > 1 %}(s){% endif %}:</b> {% for creator in work_data.creators %}
+                <br><b>{{_("Criador(a)")}}{% if work_data.creators|length > 1 %}(s){% endif %}:</b> {% for creator in work_data.creators %}
                 <a target="_blank" href="https://www.wikidata.org/wiki/{{creator.qid}}">{{creator.label}}</a>{{ "; " if not loop.last }}
                 {% endfor %}
           {% endif %}
           {% if work_data.date %}
-                <br><b>Data:</b> {{work_data.date}}
+                <br><b>{{_("Data")}}:</b> {{work_data.date}}
           {% endif %}
           {% if work_data.instances and work_data.instances|length > 0 %}
-                <br><b>Instância de:</b> {% for instance in work_data.instances %}
+                <br><b>{{_("Instância de")}}:</b> {% for instance in work_data.instances %}
                 <a target="_blank" href="https://www.wikidata.org/wiki/{{instance.qid}}">{{instance.label}}</a>{{ "; " if not loop.last }}
                 {% endfor %}
           {% endif %}
           {% if work_data.materials and work_data.materials|length > 0 %}
-                <br><b>{% if work_data.instances|length > 1 %}Materiais utilizados{% else %}Material utilizado{% endif %}:</b> {% for material in work_data.materials %}
+                <br><b>{% if work_data.instances|length > 1 %}{{_("Materiais utilizados")}}{% else %}{{_("Material utilizado")}}{% endif %}:</b> {% for material in work_data.materials %}
                 <a target="_blank" href="https://www.wikidata.org/wiki/{{material.qid}}">{{material.label}}</a>{{ "; " if not loop.last }}
                 {% endfor %}
           {% endif %}
           {% if work_data.commissioners and work_data.commissioners|length > 0 %}
-                <br><b>Encomendada por:</b> {% for commissioner in work_data.commissioners %}
+                <br><b>{{_("Encomendada por")}}:</b> {% for commissioner in work_data.commissioners %}
                 <a target="_blank" href="https://www.wikidata.org/wiki/{{commissioner.qid}}">{{commissioner.label}}</a>{{ "; " if not loop.last }}
                 {% endfor %}
           {% endif %}
@@ -91,13 +97,25 @@
                         {% endif %}
                     </div>
                     <div class="w3-container w3-third">
-                        <a href="{{ url_for('view_work_museudoipiranga', qid=skip, goback=entity) }}"><button type="button" class="button" id="skip" style="background-color:#848484;width:100%;margin:0;font-size:100%;">{{_("PULAR")}}</button></a>
+                        <a href="{{ url_for('view_work_museudoipiranga', qid=skip, goback=entity) }}">
+                            <button type="button" class="button" id="skip" style="background-color:#848484;width:100%;margin:0;font-size:100%;">
+                                {{_("PULAR")}}
+                            </button>
+                        </a>
                     </div>
                     <div class="w3-container w3-third">
                         {% if not first %}
-                            <a href="{{ url_for('view_work_museudoipiranga', qid=request.args.get('goback')) }}"><button type="button" class="button" id="goback" style="background-color:#e2725b;width:100%;margin:0;font-size:100%;">{{_("VOLTAR")}}</button></a>
+                            <a href="{{ url_for('view_work_museudoipiranga', qid=request.args.get('goback')) }}">
+                                <button type="button" class="button" id="goback" style="background-color:#e2725b;width:100%;margin:0;font-size:100%;">
+                                    {{_("VOLTAR")}}
+                                </button>
+                            </a>
                         {% else %}
-                            <a href="{{ url_for('museudoipiranga') }}"><button type="button" class="button" id="backtobegin" style="background-color:#e2725b;width:100%;margin:0;font-size:100%;">{{_("INÍCIO")}}</button></a>
+                            <a href="{{ url_for('museudoipiranga') }}">
+                                <button type="button" class="button" id="backtobegin" style="background-color:#e2725b;width:100%;margin:0;font-size:100%;">
+                                    {{_("INÍCIO")}}
+                                </button>
+                            </a>
                         {% endif %}
                     </div>
                 </div>

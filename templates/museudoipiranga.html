@@ -20,6 +20,12 @@
 {% endblock %}
 
 {% block divright %}
+    {% if lang != 'en' %}
+        <a class="right" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='en')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Flag-us.svg" width="25px"></a>
+    {% endif %}
+    {% if lang != 'pt' and lang != 'pt-BR' %}
+        <a class="right" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='pt')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Flag-br.svg" width="25px"></a>
+    {% endif %}
     {% if username %}
         <a class="right" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
     {% endif %}

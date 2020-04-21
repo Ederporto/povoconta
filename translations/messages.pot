@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-04-21 06:55-0300\n"
+"POT-Creation-Date: 2020-04-21 06:03-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -165,7 +165,7 @@ msgstr ""
 msgid "Wikimedia Commons"
 msgstr ""
 
-#: templates/per_collection.html:41 templates/per_creator.html:38
+#: templates/per_collection.html:41 templates/per_creator.html:33
 #: templates/per_decade.html:36 templates/per_depict.html:36
 #: templates/per_instance.html:36 templates/tutorial.html:47
 msgid "clique aqui"
@@ -219,7 +219,7 @@ msgid ""
 "%(collection_category)s."
 msgstr ""
 
-#: templates/per_collection.html:66 templates/per_creator.html:58
+#: templates/per_collection.html:66 templates/per_creator.html:59
 #: templates/per_decade.html:49 templates/per_depict.html:45
 #: templates/per_instance.html:46 templates/tutorial.html:119
 #, python-format
@@ -230,59 +230,59 @@ msgstr ""
 msgid "Escolha uma coleção para começar a jogar."
 msgstr ""
 
-#: templates/per_collection.html:69 templates/per_creator.html:61
+#: templates/per_collection.html:69 templates/per_creator.html:62
 #: templates/per_decade.html:52 templates/per_depict.html:48
 #: templates/per_instance.html:49 templates/tutorial.html:89
 #, python-format
 msgid "Ou volte à %(pagina_inicial)s."
 msgstr ""
 
-#: templates/per_creator.html:41
+#: templates/per_creator.html:42
 #, python-format
 msgid ""
 "Esta é a coleção de obras de %(creator_article)s no Museu do Ipiranga que"
 " possuem ao menos uma imagem e um descritor no Wikidata."
 msgstr ""
 
-#: templates/per_creator.html:43
+#: templates/per_creator.html:44
 #, python-format
 msgid ""
 "Esta é a coleção de obras de %(creator_label)s no Museu do Ipiranga que "
 "possuem ao menos uma imagem e um descritor no Wikidata."
 msgstr ""
 
-#: templates/per_creator.html:46
+#: templates/per_creator.html:47
 #, python-format
 msgid "Atualmente são %(total_scope)s obras que cumprem esses critérios."
 msgstr ""
 
-#: templates/per_creator.html:48
+#: templates/per_creator.html:49
 msgid ""
 "Há atualmente somente uma imagem no banco de dados que satisfaz esses "
 "critérios."
 msgstr ""
 
-#: templates/per_creator.html:50
+#: templates/per_creator.html:51
 msgid ""
 "Atualmente não há nenhuma imagem no banco de dados que satisfaz esses "
 "critérios."
 msgstr ""
 
-#: templates/per_creator.html:53
+#: templates/per_creator.html:54
 #, python-format
 msgid ""
 "Há um total de uma obra de %(creator_label)s no Museu do Ipiranga "
 "cadastrada no banco de dados do Wikidata."
 msgstr ""
 
-#: templates/per_creator.html:55
+#: templates/per_creator.html:56
 #, python-format
 msgid ""
 "Há um total de %(total)s obras de %(creator_label)s no Museu do Ipiranga "
 "cadastradas no banco de dados do Wikidata."
 msgstr ""
 
-#: templates/per_creator.html:60
+#: templates/per_creator.html:61
 msgid "Escolha um(a) criador(a) para começar a jogar."
 msgstr ""
 
@@ -410,7 +410,6 @@ msgid "Este jogo foi desenvolvido em %(flask)s."
 msgstr ""
 
 #: templates/sobre.html:52
-#, python-format
 msgid "O código-fonte está disponível no %(github)s."
 msgstr ""
 
@@ -435,11 +434,6 @@ msgstr ""
 
 #: templates/tutorial.html:39
 msgid "Wikidata"
-msgstr ""
-
-#: templates/tutorial.html:42 templates/tutorial.html:156
-#: templates/tutorial.html:270
-msgid "Militão Augusto de Azevedo"
 msgstr ""
 
 #: templates/tutorial.html:50
@@ -478,6 +472,10 @@ msgstr ""
 
 #: templates/tutorial.html:154 templates/tutorial.html:268
 msgid "10165"
+msgstr ""
+
+#: templates/tutorial.html:156 templates/tutorial.html:270
+msgid "Militão Augusto de Azevedo"
 msgstr ""
 
 #: templates/tutorial.html:158 templates/tutorial.html:272

@@ -20,6 +20,12 @@
 {% endblock %}
 
 {% block divright %}
+    {% if lang != 'en' %}
+        <a class="right" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='en')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Flag-us.svg" width="25px"></a>
+    {% endif %}
+    {% if lang != 'pt' and lang != 'pt-BR' %}
+        <a class="right" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='pt')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Flag-br.svg" width="25px"></a>
+    {% endif %}
     {% if username %}
         <a class="right" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
     {% endif %}
@@ -29,33 +35,44 @@
     <br/>
     <div class="container" style="width:100%">
         <p style="text-align:center;font-size:1.2em;">
+            {% set pagina_inicial %}<a href="{{ url_for('museudoipiranga') }}">{{_("página inicial")}}</a>{% endset %}
             {% if collection and collection_data %}
+                {% set collection_label %}{{collection_data.collection_label}}{% endset %}
+                {% set named_after_with_article %}<a target="_blank" href="https://pt.wikipedia.org/wiki/{{collection_data.named_after_article}}">{{collection_data.named_after_label}}</a>{% endset %}
+                {% set named_after_label %}{{collection_data.named_after_label_label}}{% endset %}
+                {% set total %}{{collection_data.total}}{% endset %}
+                {% set total_scope %}{{collection_data.total_scope}}{% endset %}
+                {% set collection_article %}<a target="_blank" href="https://pt.wikipedia.org/wiki/{{collection_data.collection_article}}">{{_("um artigo na Wikipédia")}}</a>{% endset %}
+                {% set collection_category %}<a target="_blank" href="https://commons.wikimedia.org/wiki/{{collection_data.collection_category}}">{{_("Wikimedia Commons")}}</a>{% endset %}
+                {% set clique_aqui %}<a href="{{ url_for('show_per_collection') }}">{{_("clique aqui")}}</a>{% endset %}
                 {% if collection_data.collection_label %}
-                    Esta é a {{collection_data.collection_label}}.
+                    {{_("Esta é a %(collection_label)s.", collection_label=collection_label)}}
                 {% endif %}
                 {% if collection_data.named_after_label %}
                     {% if collection_data.named_after_article %}
-                        É nomeada em homenagem a <a target="_blank" href="https://pt.wikipedia.org/wiki/{{collection_data.named_after_article}}">{{collection_data.named_after_label}}</a>.
+                        {{_("É nomeada em homenagem a %(named_after_with_article)s.", named_after_with_article=named_after_with_article)}}
                     {% else %}
-                        É nomeada em homenagem a {{collection_data.named_after_label}}.
+                        {{_("É nomeada em homenagem a %(named_after_label)s.", named_after_label = named_after_label)}}
                     {% endif %}
                 {% endif %}
                 {% if collection_data.total and collection_data.total_scope %}
-                    <br>Possui {{collection_data.total}} obras registradas no Wikidata, das quais {{collection_data.total_scope}} {% if collection_data.total_scope >1 %} possuem {% else %} possui {% endif %} ao menos uma imagem e um descritor no banco de dados.
-                {% endif %}
-                {% if collection_data.collection_article %}
-                    <br>A coleção possui <a target="_blank" href="https://pt.wikipedia.org/wiki/{{collection_data.collection_article}}">um artigo na Wikipédia</a>
+                    {% if collection_data.total_scope >1 %}
+                        <br>{{_("Possui %(total)s obras registradas no Wikidata, das quais %(total_scope)s possuem ao menos uma imagem e um descritor no banco de dados.", total=total, total_scope=total_scope)}}
+                    {% else %}
+                        <br>{{_("Possui %(total)s obras registradas no Wikidata, das quais %(total_scope)s possui ao menos uma imagem e um descritor no banco de dados.", total=total, total_scope=total_scope)}}
+                    {% endif %}
                 {% endif %}
                 {% if collection_data.collection_article and collection_data.collection_category %}
-                    e todas as imagens dela podem ser encontradas no <a target="_blank" href="https://commons.wikimedia.org/wiki/{{collection_data.collection_category}}">Wikimedia Commons.</a>
+                    <br>{{_("A coleção possui %(collection_article)s e todas as suas imagens podem ser encontradas no %(collection_category)s.", collection_article=collection_article, collection_category=collection_category)}}
+                {% elif collection_data.collection_article and not collection_data.collection_category %}
+                    <br>{{_("A coleção possui %(collection_article)s.", collection_article=collection_article)}}
+                {% elif not collection_data.collection_article and collection_data.collection_category %}
+                    <br>{{_("Todas as imagens da coleção podem ser encontradas no %(collection_category)s.", collection_category=collection_category)}}
                 {% endif %}
-                {% if not collection_data.collection_article and collection_data.collection_category %}
-                    Todas as imagens da coleção podem ser encontradas no <a target="_blank" href="https://commons.wikimedia.org/wiki/{{collection_data.collection_category}}">Wikimedia Commons.</a>
-                {% endif %}
-                <small><br>{{ _("Para voltar à página anterior, clique ") }} <a href="{{ url_for('show_per_collection') }}">{{_("aqui")}}</a></small>.
+                <br><small>{{ _("Para voltar à página anterior, %(clique_aqui)s.", clique_aqui=clique_aqui) }}</small>
             {% else %}
-                {{ _("Escolha uma coleção para começar a jogar.") }}
-                {{ _("Ou volte à ") }} <a href="{{ url_for('museudoipiranga') }}">{{_("página inicial")}}</a>.
+                {{_("Escolha uma coleção para começar a jogar.") }}
+                {{_("Ou volte à %(pagina_inicial)s.", pagina_inicial=pagina_inicial)}}
             {% endif %}
         </p><br/>
     </div>

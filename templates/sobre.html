@@ -20,6 +20,12 @@
 {% endblock %}
 
 {% block divright %}
+    {% if lang != 'en' %}
+        <a class="right" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='en')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Flag-us.svg" width="25px"></a>
+    {% endif %}
+    {% if lang != 'pt' and lang != 'pt-BR' %}
+        <a class="right" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='pt')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Flag-br.svg" width="25px"></a>
+    {% endif %}
     {% if username %}
         <a class="right" target="_blank" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
     {% endif %}
@@ -35,19 +41,26 @@
 
 {% block content %}
 <div class="w3-row" style="text-align:center">
-    <p><b>Povo Conta</b> é um jogo colaborativo. O propósito é contribuir com a descrição das obras no acervo do Museu Paulista da Universidade de São Paulo.</p>
-    <p>O jogo está conectado à base de dados colaborativa Wikidata, um projeto irmão da Wikipédia. Toda contribuição que é feita no <b>Povo Conta</b> é automaticamente transmitida para o respectivo item da obra editada no Wikidata.</p>
-    <p>As edições são então transpostas para uma série de páginas na internet. Isso inclui livros colaborativos, repositórios de imagens e em alguns casos a própria Wikipédia.</p>
-    <p>O nome do jogo é uma referência à prática no jornalismo de entrevistar pessoas, em geral na rua, para saber o que pensam sobre determinado assunto. No <b>Povo Conta</b>, é o Museu Paulista que espera sua contribuição na descrição de seu acervo.</p>
+    <p>{{_("<b>Povo Conta</b> é um jogo colaborativo. O propósito é contribuir com a descrição das obras no acervo do Museu Paulista da Universidade de São Paulo.")}}</p>
+    <p>{{_("O jogo está conectado à base de dados colaborativa Wikidata, um projeto irmão da Wikipédia. Toda contribuição que é feita no <b>Povo Conta</b> é automaticamente transmitida para o respectivo item da obra editada no Wikidata.")}}</p>
+    <p>{{_("As edições são então transpostas para uma série de páginas na internet. Isso inclui livros colaborativos, repositórios de imagens e em alguns casos a própria Wikipédia.")}}</p>
+    <p>{{_("O nome do jogo é uma referência à prática no jornalismo de entrevistar pessoas, em geral na rua, para saber o que pensam sobre determinado assunto. No <b>Povo Conta</b>, é o Museu Paulista que espera sua contribuição na descrição de seu acervo.")}}</p>
 
-    <p>Participe e divulgue!</p><br><hr><br>
-    <small>
-        <p>Este jogo foi desenvolvido em <a target='_blank' href='https://pt.wikipedia.org/wiki/Flask_(framework_web)'><i>Flask</i></a>.</p>
-        <p>O código-fonte está disponível no <a target='_blank' href='https://github.com/WikiMovimentoBrasil/povoconta'>GitHub</a>.</p>
-        <p>Licença do cógido-fonte: <a target='_blank' href='https://github.com/WikiMovimentoBrasil/povoconta/blob/master/LICENSE'>GPL v3.0</a>.</p>
-        <p>Licença de textos: <a target='_blank' href='https://creativecommons.org/licenses/by-sa/4.0/'>CC-BY-SA 4.0 Internacional</a>.</p>
-        <p>Licença dos objetos retornados do Wikidata: <a target='_blank' href='https://creativecommons.org/share-your-work/public-domain/cc0/'>CC0</a>.</p>
-        <p>Versão 1.0.1.</p>
-    </small>
+    <p>{{_("Participe e divulgue!")}}</p><br><hr><br>
+    <p>
+        {% set flask %}<a target='_blank' href='https://pt.wikipedia.org/wiki/Flask_(framework_web)'><i>{{_("Flask")}}</i></a>{% endset %}
+        {% set github %}<a target='_blank' href='https://github.com/WikiMovimentoBrasil/povoconta'>{{_("GitHub")}}</a>{% endset %}
+        {% set license_code %}<a target='_blank' href='https://github.com/WikiMovimentoBrasil/povoconta/blob/master/LICENSE'>{{_("GPL v3.0")}}</a>{% endset %}
+        {% set license_text %}<a target='_blank' href='https://creativecommons.org/licenses/by-sa/4.0/'>{{_("CC-BY-SA 4.0 Internacional")}}</a>{% endset %}
+        {% set license_wikidata %}<a target='_blank' href='https://creativecommons.org/share-your-work/public-domain/cc0/'>{{_("CC0")}}</a>{% endset %}
+        <small>
+            {{_("Este jogo foi desenvolvido em %(flask)s.", flask=flask)}}<br>
+            {{_("O código-fonte está disponível no %(github)s.", github=github)}}<br>
+            {{_("Licença do cógido-fonte: %(license_code)s.", license_code=license_code)}}<br>
+            {{_("Licença de textos: %(license_text)s.", license_text=license_text)}}<br>
+            {{_("Licença dos objetos retornados do Wikidata: %(license_wikidata)s.", license_wikidata=license_wikidata)}}<br>
+            {{_("Versão 1.0.1.")}}
+        </small>
+    </p>
 </div>
 {% endblock %}

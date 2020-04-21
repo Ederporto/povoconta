@@ -20,6 +20,12 @@
 {% endblock %}
 
 {% block divright %}
+    {% if lang != 'en' %}
+        <a class="right" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='en')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Flag-us.svg" width="25px"></a>
+    {% endif %}
+    {% if lang != 'pt' and lang != 'pt-BR' %}
+        <a class="right" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='pt')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Flag-br.svg" width="25px"></a>
+    {% endif %}
     {% if username %}
         <a class="right" target="_blank" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
     {% endif %}
@@ -36,7 +42,7 @@
 {% block content %}
 <div class="w3-row" style="text-align:center">
     <div class="w3-row" style="text-align:text; font-family: 'Josefin Sans', sans-serif; font-size:150%">
-        <p style="text-align:center"><b>Algo deu errado!</b></p>
+        <p style="text-align:center"><b>{{_("Algo deu errado!")}}</b></p>
     </div>
     <br>
     <div class="w3-container">

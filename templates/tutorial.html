@@ -20,6 +20,12 @@
 {% endblock %}
 
 {% block divright %}
+    {% if lang != 'en' %}
+        <a class="right" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='en')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Flag-us.svg" width="25px"></a>
+    {% endif %}
+    {% if lang != 'pt' and lang != 'pt-BR' %}
+        <a class="right" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='pt')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Flag-br.svg" width="25px"></a>
+    {% endif %}
     {% if username %}
         <a class="right" target="_blank" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
     {% endif %}
@@ -35,42 +41,59 @@
 
 {% block content %}
 <div class="w3-container">
+    {% set total_wor %}{{total_works}}{% endset %}
+    {% set wikidata %}<a href="https://www.wikidata.org/wiki/Wikidata:Página_principal">{{_("Wikidata")}}</a>{% endset %}
+    {% set pagina_inicial %}<a href="" onclick="return false;">{{_("página inicial")}}</a>{% endset %}
+    {% set collection_label %}{{collection_label}}{% endset %}
+    {% set named_after_label %}{{_("Militão Augusto de Azevedo")}}{% endset %}
+    {% set total %}{{total_collection}}{% endset %}
+    {% set total_scope %}{{total_scope}}{% endset %}
+    {% set collection_article %}<a href="" onclick="return false;">um artigo na Wikipédia</a>{% endset %}
+    {% set collection_category %}<a href="" onclick="return false;">Wikimedia Commons</a>{% endset %}
+    {% set clique_aqui %}<a href="" onclick="return false;">{{_("clique aqui")}}</a>{% endset %}
     <div class="w3-row-padding" style="text-align:center">
-        <p>O Museu Paulista já tem {{total_works}} obras cadastradas no banco de dados do <a href="https://www.wikidata.org/wiki/Wikidata:Página_principal">Wikidata</a>. O <b>Povo Conta</b> organiza essas obras em 5 categorias para facilitar a escolha do usuário. São elas:</p>
+        <p>
+            {{_("O Museu Paulista já tem %(total_works)s obras cadastradas no banco de dados do %(wikidata)s. O <b>Povo Conta</b> organiza essas obras em 5 categorias para facilitar a escolha do usuário. São elas:", total_works=total_works, wikidata=wikidata)}}
+        </p>
     </div>
     <div class="w3-row-padding">
         <div class="w3-col m2" >
             <button name="per_collection" class="button" style="width:100%;">
-                <a>Coleções</a>
+                <a>{{_("Coleções")}}</a>
             </button>
         </div>
         <div class="w3-col m2" >
             <button name="per_creator" class="button" style="width:100%;">
-                <a>Criadores</a>
+                <a>{{_("Criadores")}}</a>
             </button>
         </div>
         <div class="w3-col m2" >
             <button name="per_decade" class="button" style="width:100%;">
-                <a>Décadas</a>
+                <a>{{_("Décadas")}}</a>
             </button>
         </div>
         <div class="w3-col m3" >
             <button name="per_instance" class="button" style="width:100%;">
-                <a>Tipos de obra</a>
+                <a>{{_("Tipos de obra")}}</a>
             </button>
         </div>
         <div class="w3-col m3" >
             <button name="per_depict" class="button" style="width:100%;">
-                <a>Descritores</a>
+                <a>{{_("Descritores")}}</a>
             </button>
         </div>
     </div><br>
     <div class="w3-row-padding" style="text-align:center">
-        <p>Elas aparecem na página inicial do <b>Povo Conta</b>. Ao escolher uma das categorias, o usuário é levado a uma página que apresenta as subcategorias dessa categoria principal que escolheu. Por exemplo, ao selecionar a categoria <i>Coleções</i>, o usuário verá:</p><br>
+        <p>
+            {{_("Elas aparecem na página inicial do <b>Povo Conta</b>. Ao escolher uma das categorias, o usuário é levado a uma página que apresenta as subcategorias dessa categoria principal que escolheu. Por exemplo, ao selecionar a categoria <i>Coleções</i>, o usuário verá:")}}
+        </p><br>
     </div>
     <div class="w3-row-padding" style="text-align:center; border: 1px solid black">
         <br>
-        <p>Escolha uma coleção para começar a jogar. Ou volte à <a href="" onclick="return false;">página inicial</a>.</p>
+        <p>
+            {{_("Escolha uma coleção para começar a jogar.") }}
+            {{_("Ou volte à %(pagina_inicial)s.", pagina_inicial=pagina_inicial)}}
+        </p>
         <ul style="text-align:center">
             {% for collection in collections %}
             <li>
@@ -85,16 +108,21 @@
         <br>
     </div><br>
     <div class="w3-row-padding" style="text-align:center;">
-        <p>Ao selecionar uma subcategoria, o usuário então entra na tela de seleção das obras para iniciar o jogo. Por exemplo, escolhendo a coleção <i>Militão Augusto de Azevedo</i>, o usuário verá:</p>
+        <p>
+            {{_("Ao selecionar uma subcategoria, o usuário então entra na tela de seleção das obras para iniciar o jogo. Por exemplo, escolhendo a coleção <i>Militão Augusto de Azevedo</i>, o usuário verá:")}}
+        </p>
     </div>
     <div class="w3-row-padding" style="text-align:center; border: 1px solid black">
         <p>
             <br>
-            Esta é a Coleção Militão Augusto de Azevedo. É nomeada em homenagem a Militão Augusto de Azevedo. Possui {{total_collection}} obras registradas no Wikidata, das quais {{total_scope}} possuem ao menos uma imagem e um descritor no banco de dados.
+            {{_("Esta é a %(collection_label)s", collection_label=collection_label)}}
+            {{_("É nomeada em homenagem a %(named_after_label)s.", named_after_label = named_after_label)}}
             <br>
-            A coleção possui <a href="" onclick="return false;">um artigo na Wikipédia</a> e todas as imagens dela podem ser encontradas no <a href="" onclick="return false;">Wikimedia Commons</a>.
+            {{_("Possui %(total)s obras registradas no Wikidata, das quais %(total_scope)s possuem ao menos uma imagem e um descritor no banco de dados.", total=total, total_scope=total_scope)}}
             <br>
-            <small>Para voltar à página anterior, clique <a href="" onclick="return false;">aqui</a></small>.
+            {{_("A coleção possui %(collection_article)s e todas as suas imagens podem ser encontradas no %(collection_category)s.", collection_article=collection_article, collection_category=collection_category)}}
+            <br>
+            <small>{{ _("Para voltar à página anterior, %(clique_aqui)s.", clique_aqui=clique_aqui) }}</small>
         </p>
         <br>
         <ul style="text-align:center">
@@ -115,43 +143,45 @@
     </div>
     <div class="w3-row-padding" style="text-align:center;">
         <br>
-        <p>O usuário poderá então escolher qualquer imagem mostrada para jogar. Ao clicar em uma obra, por exemplo <i>10165</i>, o usuário verá:</p>
+        <p>
+            {{_("O usuário poderá então escolher qualquer imagem mostrada para jogar. Ao clicar em uma obra, por exemplo <i>10165</i>, o usuário verá:")}}
+        </p>
     </div>
     <div class="w3-row-padding" style="text-align:center; border: 1px solid black">
         <br>
         <div class="w3-container w3-half">
             <img src="https://upload.wikimedia.org/wikipedia/commons/e/eb/10165_-_01,_Acervo_do_Museu_Paulista_da_USP.jpg" width="100%">
             <a href="" onclick="return false;" style="text-align:center">
-                Veja essa imagem no Wikimedia Commons
+                {{_("Veja essa imagem no Wikimedia Commons")}}
             </a>
         </div>
         <div class="w3-container w3-half" style="text-align:left; font-family: 'Josefin Sans', sans-serif; font-size:150%">
             <div class="w3-row">
-                <b>Obra:</b> <a onclick="return false;" href="">10165</a>
+                <b>{{_("Obra")}}:</b> <a onclick="return false;" href="">{{_("10165")}}</a>
                 <br>
-                <b>Criador(a):</b> <a href="" onclick="return false;">Militão Augusto de Azevedo</a>
+                <b>{{_("Criador(a)")}}:</b> <a href="" onclick="return false;">{{_("Militão Augusto de Azevedo")}}</a>
                 <br>
-                <b>Data:</b> 1879
+                <b>{{_("Data:")}}</b> {{_("1879")}}
                 <br>
-                <b>Instância de:</b> <a href="" onclick="return false;">fotografia</a>
+                <b>{{_("Instância de:")}}</b> <a href="" onclick="return false;">{{_("fotografia")}}</a>
                 <br>
-                <b>Material utilizado:</b> <a onclick="return false;"href="">papel albuminado</a>
+                <b>{{_("Material utilizado:")}}</b> <a onclick="return false;" href="">{{_("papel albuminado")}}</a>
                 <br>
-                <b>Encomendada por:</b> <a onclick="return false;" href="">Photographia Americana</a>
+                <b>{{_("Encomendada por:")}}</b> <a onclick="return false;" href="">{{_("Photographia Americana")}}</a>
             </div>
             <div class="w3-row"><hr></div>
             <div class="w3-row">
-                <p style="text-align:center;font-size:125%;font-weight:bold;">Quantos itens de cada descritor você vê?</p>
+                <p style="text-align:center;font-size:125%;font-weight:bold;">{{_("Quantos itens de cada descritor você vê?")}}</p>
                 <form action="">
 
                     <div class="form-group">
-                        <label for="homem"><a href="" onclick="return false;">homem</a>:</label>
+                        <label for="homem"><a href="" onclick="return false;">{{_("homem")}}</a>:</label>
                         <input type="number" class="form-control" id="homem" min="1" step="1" value="" style="font-size:100%">
-                        <label for="brasileiro branco"><a href="" onclick="return false;">brasileiro branco</a>:</label>
+                        <label for="brasileiro branco"><a href="" onclick="return false;">{{_("brasileiro branco")}}</a>:</label>
                         <input type="number" class="form-control" id="brasileiro branco" min="1" step="1" value="" style="font-size:100%">
-                        <label for="afro-brasileiro"><a href="" onclick="return false;">afro-brasileiro</a>:</label>
+                        <label for="afro-brasileiro"><a href="" onclick="return false;">{{_("afro-brasileiro")}}</a>:</label>
                         <input type="number" class="form-control" id="afro-brasileiro" min="1" step="1" value="" style="font-size:100%">
-                        <label for="chapeu"><a href="" onclick="return false;">chapéu</a>:</label>
+                        <label for="chapeu"><a href="" onclick="return false;">{{_("chapéu")}}</a>:</label>
                         <input type="number" class="form-control" id="chapeu" min="1" step="1" value="" style="font-size:100%">
                     </div>
                 </form>
@@ -159,21 +189,21 @@
                     <div class="w3-container w3-third">
                         <a href="" onclick="return false;">
                             <button type="button" class="button" style="background-color:#848484;width:100%;margin:0;font-size:95%;">
-                                AUTENTICAR
+                                {{_("AUTENTICAR")}}
                             </button>
                         </a>
                     </div>
                     <div class="w3-container w3-third">
                         <a href="" onclick="return false;">
                             <button type="button" class="button" style="background-color:#848484;width:100%;margin:0;font-size:100%;">
-                                PULAR
+                                {{_("PULAR")}}
                             </button>
                         </a>
                     </div>
                     <div class="w3-container w3-third">
                         <a href="" onclick="return false;">
                             <button type="button" class="button" style="background-color:#e2725b;width:100%;margin:0;font-size:100%;">
-                                INÍCIO
+                                {{_("INÍCIO")}}
                             </button>
                         </a>
                     </div>
@@ -185,9 +215,9 @@
     <div class="w3-row-padding" style="text-align:center;">
         <br>
         <p>
-            Antes de jogar, o usuário deverá fazer login em sua conta Wiki e autorizar que suas edições sejam feitas usando o <b>Povo Conta</b>.
+            {{_("Antes de jogar, o usuário deverá fazer login em sua conta Wiki e autorizar que suas edições sejam feitas usando o <b>Povo Conta</b>.
             Para isso, o usuário deverá clicar em <i>AUTENTICAR</i> e seguir as intruções de login e autorização que aparecerão na tela.
-            Uma vez feita a autorização, o usuário será redirecionado de volta à página da obra e o botão <i>AUTENTICAR</i> terá se convertido em <i>CONFIRMAR</i>:
+            Uma vez feita a autorização, o usuário será redirecionado de volta à página da obra e o botão <i>AUTENTICAR</i> terá se convertido em <i>CONFIRMAR</i>:")}}
         </p>
     </div>
     <div class="w3-row" style="text-align:center; font-family: 'Josefin Sans', sans-serif; font-size:150%">
@@ -199,21 +229,21 @@
             <div class="w3-container w3-third">
                 <a href="" onclick="return false;">
                     <button type="button" class="button" style="background-color:#547473;width:100%;margin:0;font-size:95%;">
-                        CONFIRMAR
+                        {{_("CONFIRMAR")}}
                     </button>
                 </a>
             </div>
             <div class="w3-container w3-third">
                 <a href="" onclick="return false;">
                     <button type="button" class="button" style="background-color:#848484;width:100%;margin:0;font-size:100%;">
-                        PULAR
+                        {{_("PULAR")}}
                     </button>
                 </a>
             </div>
             <div class="w3-container w3-third">
                 <a href="" onclick="return false;">
                     <button type="button" class="button" style="background-color:#e2725b;width:100%;margin:0;font-size:100%;">
-                        INÍCIO
+                        {{_("INÍCIO")}}
                     </button>
                 </a>
             </div>
@@ -225,9 +255,9 @@
     <div class="w3-row-padding" style="text-align:center;">
         <br>
         <p>
-            Ao responder a pergunta <i>Quantos itens de cada descritor você vê?</i> e clicar no botão <i>CONFIRMAR</i>, o usuário grava os valores que inseriu no item da obra no Wikidata e é redirecionado a uma outra obra aleatória.
+            {{_("Ao responder a pergunta <i>Quantos itens de cada descritor você vê?</i> e clicar no botão <i>CONFIRMAR</i>, o usuário grava os valores que inseriu no item da obra no Wikidata e é redirecionado a uma outra obra aleatória.
             Se então o usuário quiser retornar à obra que acabou de melhorar, poderá clicar no botão <i>VOLTAR</i>, que terá surgido no lugar do botão <i>INÍCIO</i>.<br>
-            Caso não queira jogar com uma imagem, o usuário poderá sempre clicar no botão <i>PULAR</i> para ir para a página de outra obra aleatória.
+            Caso não queira jogar com uma imagem, o usuário poderá sempre clicar no botão <i>PULAR</i> para ir para a página de outra obra aleatória.")}}
         </p>
     </div>
     <br>
@@ -236,36 +266,36 @@
         <div class="w3-container w3-half">
             <img src="https://upload.wikimedia.org/wikipedia/commons/e/eb/10165_-_01,_Acervo_do_Museu_Paulista_da_USP.jpg" width="100%">
             <a href="" onclick="return false;" style="text-align:center">
-                Veja essa imagem no Wikimedia Commons
+                {{_("Veja essa imagem no Wikimedia Commons")}}
             </a>
         </div>
         <div class="w3-container w3-half" style="text-align:left; font-family: 'Josefin Sans', sans-serif; font-size:150%">
             <div class="w3-row">
-                <b>Obra:</b> <a onclick="return false;" href="">10165</a>
+                <b>{{_("Obra")}}:</b> <a onclick="return false;" href="">{{_("10165")}}</a>
                 <br>
-                <b>Criador(a):</b> <a href="" onclick="return false;">Militão Augusto de Azevedo</a>
+                <b>{{_("Criador(a)")}}:</b> <a href="" onclick="return false;">{{_("Militão Augusto de Azevedo")}}</a>
                 <br>
-                <b>Data:</b> 1879
+                <b>{{_("Data:")}}</b> {{_("1879")}}
                 <br>
-                <b>Instância de:</b> <a href="" onclick="return false;">fotografia</a>
+                <b>{{_("Instância de:")}}</b> <a href="" onclick="return false;">{{_("fotografia")}}</a>
                 <br>
-                <b>Material utilizado:</b> <a onclick="return false;" href="">papel albuminado</a>
+                <b>{{_("Material utilizado:")}}</b> <a onclick="return false;" href="">{{_("papel albuminado")}}</a>
                 <br>
-                <b>Encomendada por:</b> <a onclick="return false;" href="">Photographia Americana</a>
+                <b>{{_("Encomendada por:")}}</b> <a onclick="return false;" href="">{{_("Photographia Americana")}}</a>
             </div>
             <div class="w3-row"><hr></div>
             <div class="w3-row">
-                <p style="text-align:center;font-size:125%;font-weight:bold;">Quantos itens de cada descritor você vê?</p>
+                <p style="text-align:center;font-size:125%;font-weight:bold;">{{_("Quantos itens de cada descritor você vê?")}}</p>
                 <form action="">
 
                     <div class="form-group">
-                        <label for="homem2"><a href="" onclick="return false;">homem</a>:</label>
+                        <label for="homem2"><a href="" onclick="return false;">{{_("homem")}}</a>:</label>
                         <input type="number" class="form-control" id="homem2" min="6" max="6" step="1" value="6" style="font-size:100%">
-                        <label for="brasileiro branco2"><a href="" onclick="return false;">brasileiro branco</a>:</label>
+                        <label for="brasileiro branco2"><a href="" onclick="return false;">{{_("brasileiro branco")}}</a>:</label>
                         <input type="number" class="form-control" id="brasileiro branco2" min="1" max="1" step="1" value="1" style="font-size:100%">
-                        <label for="afro-brasileiro2"><a href="" onclick="return false;">afro-brasileiro</a>:</label>
+                        <label for="afro-brasileiro2"><a href="" onclick="return false;">{{_("afro-brasileiro")}}</a>:</label>
                         <input type="number" class="form-control" id="afro-brasileiro2" min="5" max="5" step="1" value="5" style="font-size:100%">
-                        <label for="chapeu2"><a href="" onclick="return false;">chapéu</a>:</label>
+                        <label for="chapeu2"><a href="" onclick="return false;">{{_("chapéu")}}</a>:</label>
                         <input type="number" class="form-control" id="chapeu2" min="3" max="3" step="1" value="3" style="font-size:100%">
                     </div>
                 </form>
@@ -273,21 +303,21 @@
                     <div class="w3-container w3-third">
                         <a href="" onclick="return false;">
                             <button type="button" class="button" style="background-color:#547473;width:100%;margin:0;font-size:95%;">
-                                CONFIRMAR
+                                {{_("CONFIRMAR")}}
                             </button>
                         </a>
                     </div>
                     <div class="w3-container w3-third">
                         <a href="" onclick="return false;">
                             <button type="button" class="button" style="background-color:#848484;width:100%;margin:0;font-size:100%;">
-                                PULAR
+                                {{_("PULAR")}}
                             </button>
                         </a>
                     </div>
                     <div class="w3-container w3-third">
                         <a href="" onclick="return false;">
                             <button type="button" class="button" style="background-color:#e2725b;width:100%;margin:0;font-size:100%;">
-                                INÍCIO
+                                {{_("INÍCIO")}}
                             </button>
                         </a>
                     </div>

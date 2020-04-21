@@ -20,6 +20,12 @@
 {% endblock %}
 
 {% block divright %}
+    {% if lang != 'en' %}
+        <a class="right" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='en')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Flag-us.svg" width="25px"></a>
+    {% endif %}
+    {% if lang != 'pt' and lang != 'pt-BR' %}
+        <a class="right" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='pt')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Flag-br.svg" width="25px"></a>
+    {% endif %}
     {% if username %}
         <a class="right" target="_blank" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
     {% endif %}
@@ -29,13 +35,23 @@
     <br/>
     <div class="container" style="width:100%">
         <p style="text-align:center;font-size:1.2em;">
+            {% set pagina_inicial %}<a href="{{ url_for('museudoipiranga') }}">{{_("página inicial")}}</a>{% endset %}
             {% if depict and depict_data %}
-                Esta é uma coleção de obras do Museu Paulista que retratam <a target="_blank" href="https://www.wikidata.org/wiki/{{qid}}">{{depict_data.depict_label}}</a> e que possuem ao menos uma imagem e um descritor no Wikidata.
-                Há atualmente {{depict_data.total_scope}}{% if depict_data.total_scope > 1 %} obras registradas no banco de dados que satisfazem esse critério. {% else %} obra registrada no banco de dados que satisfaz esse critério. {% endif %}
-                <small><br>{{ _("Para voltar à página anterior, clique ") }} <a href="{{ url_for('show_per_depict') }}">{{_("aqui")}}</a></small>.
+                {% set depict_label %}<a target="_blank" href="https://www.wikidata.org/wiki/{{qid}}">{{depict_data.depict_label}}</a>{% endset %}
+                {% set total_scope %}{{depict_data|length}}{% endset %}
+                {% set clique_aqui %}<a href="{{ url_for('show_per_depict') }}">{{_("clique aqui")}}</a>{% endset %}
+                {{_("Esta é uma coleção de obras do Museu do Ipiranga que retratam %(depict_label)s e que possuem ao menos uma imagem e um descritor no Wikidata.", depict_label=depict_label)}}
+                {% if depict_data.total_scope > 1 %}
+                    {{_("Há atualmente %(total_scope)s obras registradas no banco de dados que satisfazem esses critérios.", total_scope=total_scope)}}
+                {% elif depict_data.total_scope == 1 %}
+                    {{_("Há atualmente uma obra registrada no banco de dados que satisfaz esses critérios.")}}
+                {% else %}
+                    {{_("Não há atualmente nenhuma obra registrada no banco de dados que satisfaz esses critérios.")}}
+                {% endif %}
+                <br><small>{{ _("Para voltar à página anterior, %(clique_aqui)s.", clique_aqui=clique_aqui) }}</small>
             {% else %}
                 {{ _("Escolha um descritor para começar a jogar.") }}
-                {{ _("Ou volte à ") }} <a href="{{ url_for('museudoipiranga') }}">{{_("página inicial")}}</a>.
+                {{_("Ou volte à %(pagina_inicial)s.", pagina_inicial=pagina_inicial)}}
             {% endif %}
         </p><br/>
     </div>

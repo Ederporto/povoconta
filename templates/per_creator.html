@@ -20,6 +20,12 @@
 {% endblock %}
 
 {% block divright %}
+    {% if lang != 'en' %}
+        <a class="right" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='en')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Flag-us.svg" width="25px"></a>
+    {% endif %}
+    {% if lang != 'pt' and lang != 'pt-BR' %}
+        <a class="right" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='pt')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Flag-br.svg" width="25px"></a>
+    {% endif %}
     {% if username %}
         <a class="right" target="_blank" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
     {% endif %}
@@ -29,22 +35,37 @@
     <br/>
     <div class="container" style="width:100%">
         <p style="text-align:center;font-size:1.2em;">
+            {% set pagina_inicial %}<a href="{{ url_for('museudoipiranga') }}">{{_("página inicial")}}</a>{% endset %}
             {% if creator and creator_data %}
+                {% set creator_with_article %}<a target="_blank" href="https://pt.wikipedia.org/wiki/{{creator_data.creator_article}}">{{creator_data.creator_label}}</a>{% endset %}
+                {% set creator_label %}{{creator_data.creator_label}}{% endset %}
+                {% set total %}{{creator_data.total}}{% endset %}
+                {% set wikidata %}{{_("Wikidata")}}{% endset %}
+                {% set total_scope %}{{creator_data.total_scope}}{% endset %}
+                {% set clique_aqui %}<a href="{{ url_for('show_per_creator') }}">{{_("clique aqui")}}</a>{% endset %}
                 {% if creator_data.creator_label and creator_data.total_scope %}
-                    Esta é a coleção de obras de
-                    {% if creator_data.creator_article %} <a target="_blank" href="https://pt.wikipedia.org/wiki/{{creator_data.creator_article}}">{{creator_data.creator_label}}</a>
-                    {% else %} {{creator_data.creator_label}}{% endif %} no Museu Paulista que possuem ao menos uma imagem e um descritor no Wikidata.
-                    {% if creator_data.total_scope > 1 %}Atualmente são {{creator_data.total_scope}} obras que cumprem esses critérios.
-                    {% elif creator_data.total_scope == 1 %}Há atualmente somente uma imagem no banco de dados que satisfaz esses critérios.
-                    {% else %}Atualmente não há nenhuma imagem no banco de dados que satisfaz esses critérios.{% endif %}
-                    Há um total de {{creator_data.total}}
-                    {% if creator_data.total == '1' %}obra de {{creator_data.creator_label}} cadastrada no banco de dados do Wikidata.
-                    {% else %}obras de {{creator_data.creator_label}} cadastradas no banco de dados do Wikidata.{% endif %}
+                    {% if creator_data.creator_article %}
+                        {{_("Esta é a coleção de obras de %(creator_article)s no Museu do Ipiranga que possuem ao menos uma imagem e um descritor no Wikidata.", creator_article=creator_with_article)}}
+                    {% else %}
+                        {{_("Esta é a coleção de obras de %(creator_label)s no Museu do Ipiranga que possuem ao menos uma imagem e um descritor no Wikidata.", creator_label=creator_label)}}
+                    {% endif %}
+                    {% if creator_data.total_scope > 1 %}
+                        {{_("Atualmente são %(total_scope)s obras que cumprem esses critérios.", total_scope=total_scope)}}
+                    {% elif creator_data.total_scope == 1 %}
+                        {{_("Há atualmente somente uma imagem no banco de dados que satisfaz esses critérios.")}}
+                    {% else %}
+                        {{_("Atualmente não há nenhuma imagem no banco de dados que satisfaz esses critérios.")}}
+                    {% endif %}
+                    {% if creator_data.total == '1' %}
+                        {{_("Há um total de uma obra de %(creator_label)s no Museu do Ipiranga cadastrada no banco de dados do Wikidata.", creator_label=creator_label)}}
+                    {% else %}
+                        {{_("Há um total de %(total)s obras de %(creator_label)s no Museu do Ipiranga cadastradas no banco de dados do Wikidata.", total=total, creator_label=creator_label, wikidata=wikidata )}}
+                    {% endif %}
                 {% endif %}
-            <small><br>{{ _("Para voltar à página anterior, clique ") }} <a href="{{ url_for('show_per_creator') }}">{{_("aqui")}}</a></small>.
+                <br><small>{{ _("Para voltar à página anterior, %(clique_aqui)s.", clique_aqui=clique_aqui) }}</small>
             {% else %}
                 {{ _("Escolha um(a) criador(a) para começar a jogar.") }}
-                {{ _("Ou volte à ") }} <a href="{{ url_for('museudoipiranga') }}">{{_("página inicial")}}</a>.
+                {{_("Ou volte à %(pagina_inicial)s.", pagina_inicial=pagina_inicial)}}
             {% endif %}
         </p><br/>
     </div>
