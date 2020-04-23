@@ -50,14 +50,18 @@ WIKIDATA_API_ENDPOINT = 'https://www.wikidata.org/w/api.php'
 
 
 @BABEL.localeselector
-def get_locale():
-    try:
-        lang = session["language"]
-    except KeyError:
-        lang = None
+def get_locale(lang=None):
     if lang is not None:
         return lang
-    return request.accept_languages.best_match(app.config["LANGUAGES"])
+    else:
+        try:
+            lang = session["language"]
+        except KeyError:
+            lang = None
+
+        if lang is not None:
+            return lang
+        return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 
 @app.route('/set_locale')
