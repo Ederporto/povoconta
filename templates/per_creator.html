@@ -86,7 +86,7 @@
 <ul style="text-align:center">
     {% for work in creator %}
     <li>
-        <a href="{{url_for('view_work_museudoipiranga', qid=work.qid) }}">
+        <a href="{{url_for('view_work_museudoipiranga', qid=work.qid, lang=lang) }}">
             <img src="{{ work.image }}" style="object-fit:contain;max-widht:1000px; max-height:500px; align:center;"/>
         </a>
     </li>

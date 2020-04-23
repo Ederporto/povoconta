@@ -62,8 +62,14 @@ def get_locale():
 
 @app.route('/set_locale')
 def set_locale():
+    langs = ["pt?", "en?"]
     next_page = request.args.get('return_to')
-    lang = request.args.get('lang')
+    lang_from = next_page.split("/")[-1]
+    if lang_from in langs:
+        lang = request.args.get('lang')
+        next_page = "/".join(next_page.split("/")[:-1])+"/"+lang
+    else:
+        lang = request.args.get('lang')
     session["language"] = lang
     return redirect(next_page)
 
@@ -440,10 +446,9 @@ def show_works_of_depict(qid):
                            lang=lang)
 
 
-@app.route('/qid/<qid>', methods=['GET'])
-def view_work_museudoipiranga(qid):
+@app.route('/qid/<qid>/<lang>', methods=['GET'])
+def view_work_museudoipiranga(qid, lang="pt"):
     username = wikidata_oauth.get_username()
-    lang = get_locale()
     if "goback" in request.args:
         goback = request.args["goback"]
         if goback == "museudoipiranga":
@@ -458,7 +463,7 @@ def view_work_museudoipiranga(qid):
         goback = "museudoipiranga"
         first = True
 
-    work_data_ = get_work_data(qid)
+    work_data_ = get_work_data(qid, lang)
     work_depicts_ = get_p180(qid, lang)
 
     if work_data_:
@@ -475,8 +480,8 @@ def view_work_museudoipiranga(qid):
         return redirect(url_for("erro", lang=lang))
 
 
-@app.route('/save/<qid>', methods=['POST'])
-def save_quantities(qid):
+@app.route('/save/<qid>/<lang>', methods=['POST'])
+def save_quantities(qid, lang):
     form = request.form
     if form and form.__len__() > 0:
         for action in form:
@@ -494,7 +499,7 @@ def save_quantities(qid):
                     except:
                         pass
     next_qid = get_next_qid(qid)
-    return redirect(url_for("view_work_museudoipiranga", qid=next_qid, goback=qid, lang=get_locale()))
+    return redirect(url_for("view_work_museudoipiranga", qid=next_qid, goback=qid, lang=lang))
 
 
 def validate_quantity(quantity):
@@ -507,9 +512,8 @@ def validate_quantity(quantity):
             return "", False
 
 
-def get_work_depicts(qid):
-    lang = get_locale()
-    depicts_work = work_depicts(qid, lang,"pt-br")
+def get_work_depicts(qid, lang):
+    depicts_work = work_depicts(qid, lang, "pt-br")
     work_depicts_ = []
     for result in depicts_work["results"]["bindings"]:
         depicts_id = result["depicts_"]["value"].split("/")[-1]
@@ -538,8 +542,7 @@ def get_work_depicts(qid):
     return work_depicts_
 
 
-def get_work_data(qid):
-    lang = get_locale()
+def get_work_data(qid, lang):
     data_work = work_data(qid, lang, "pt-br")
     if data_work["results"]["bindings"].__len__()>0:
         if "work_label_" in data_work["results"]["bindings"][0]:
