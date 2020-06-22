@@ -1,35 +1,36 @@
-<html lang="pt">
+<html lang="pt" style="height: 100%">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'static.css') }}" type='text/css'>
     <title>{% block title%}{{_("Povo Conta")}}{% endblock %}</title>
     {% block styles %}{% endblock %}
     <script>
     {% block scripts %}{% endblock %}
     </script>
 </head>
-<body>
-{% block navbar %}
-<div class="topnav" id="myTopnav">
-    <a href="{{url_for('museudoipiranga')}}" class="active">{{_("Povo Conta")}}</a>
-    <a href="{{url_for('sobre')}}">{{_("Sobre")}}</a>
-    <a href="{{url_for('tutorial')}}">{{_("Como jogar?")}}</a>
-    {% block divright %}{% endblock %}
-    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-        <i class="fa fa-bars"></i>
-    </a>
-</div>
-{% endblock %}
-<div class="w3-container">
+<body style="height: 100%">
+<div class="w3-container" style="min-height: 87.5%;overflow: auto">
+    {% block navbar %}
+    <div class="topnav" id="myTopnav">
+        <a href="{{url_for('museudoipiranga')}}" class="active">{{_("Povo Conta")}}</a>
+        <a href="{{url_for('sobre')}}">{{_("Sobre")}}</a>
+        <a href="{{url_for('tutorial')}}">{{_("Como jogar?")}}</a>
+        {% block divright %}{% endblock %}
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </div>
+    {% endblock %}
     {% block banner %}{% endblock banner %}
     {% block content %}{% endblock %}
-    <div class="w3-row w3-padding" style="text-align:center;">
-        <hr>
-        <p style="font-size:85%;">
-            {% set projeto %}<a target='_blank' href='https://pt.wikipedia.org/wiki/Wikip%C3%A9dia:GLAM/Museu_Paulista#Projeto_Novo_Museu_do_Ipiranga'>Projeto Novo Museu do Ipiranga</a>{% endset %}
-            {{_("<i>Povo Conta</i> é um jogo desenvolvido no contexto do <i><b>%(projeto)s</b></i>, organizado pelo <b>Grupo de Usuários Wiki Movimento Brasil</b> e o <b>Museu do Ipiranga</b>, em parceria com a <b>Fundação Banco do Brasil</b> e com realização da <b>Universidade de São Paulo</b> e a <b>Fundação de Apoio à Universidade de São Paulo</b>.", projeto=projeto)}}
-        </p>
-    </div>
 </div>
+<footer style="text-align:center;position: relative" id="footer">
+    <hr>
+    <p style="font-size:85%;">
+        {% set projeto %}<a target='_blank' href='https://pt.wikipedia.org/wiki/Wikip%C3%A9dia:GLAM/Museu_Paulista#Projeto_Novo_Museu_do_Ipiranga'>Projeto Novo Museu do Ipiranga</a>{% endset %}
+        {{_("<i>Povo Conta</i> é um jogo desenvolvido no contexto do <i><b>%(projeto)s</b></i>, organizado pelo <b>Grupo de Usuários Wiki Movimento Brasil</b> e o <b>Museu do Ipiranga</b>, em parceria com a <b>Fundação Banco do Brasil</b> e com realização da <b>Universidade de São Paulo</b> e a <b>Fundação de Apoio à Universidade de São Paulo</b>.", projeto=projeto)}}
+    </p>
+</footer>
 </body>
 </html>
