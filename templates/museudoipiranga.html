@@ -47,36 +47,29 @@
     <div class="w3-row" style="padding-bottom:30px;">
         <p style="text-align:center">{{ _("Escolha uma opção:") }}</p>
     </div>
-    <div class="w3-row-padding">
-        <div class="w3-col m2" >
+    <div class="w3-row">
+        <div class="w3-container w3-third"></div>
+        <div class="w3-container w3-third">
             <a href="{{ url_for('show_per_collection') }}">
                 <button name="per_collection" class="button" value="per_collection" style="width:100%;">
                     {{ _("Coleções") }}
                 </button>
             </a>
-        </div>
-        <div class="w3-col m2">
             <a href="{{ url_for('show_per_creator') }}">
                 <button name="per_creator" class="button" value="per_creator" style="width:100%;">
                     {{ _("Criadores") }}
                 </button>
             </a>
-        </div>
-        <div class="w3-col m2">
             <a href="{{ url_for('show_per_decade') }}">
                 <button name="per_decade" class="button" value="per_decade" style="width:100%;">
                     {{ _("Décadas") }}
                 </button>
             </a>
-        </div>
-        <div class="w3-col m3">
             <a href="{{ url_for('show_per_instance') }}">
                 <button name="per_instance" class="button" value="per_instance" style="width:100%;">
                     {{ _("Tipos de obra") }}
                 </button>
             </a>
-        </div>
-        <div class="w3-col m3">
             <a href="{{ url_for('show_per_depict') }}">
                 <button name="per_depict" class="button" value="per_depict" style="width:100%;">
                     {{ _("Descritores") }}
