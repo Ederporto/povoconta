@@ -32,9 +32,11 @@
 {% endblock %}
 
 {% block banner %}
-    <br/>
+    <div class="w3-row" style="padding-top:30px;padding-bottom:30px">
+        <h1 style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.6em;">{{ _("Museu do Ipiranga") }}</small></h1>
+    </div>
     <div class="container" style="width:100%">
-        <p style="text-align:center;font-size:1.2em;">
+        <p style="text-align:center;">
             {% set pagina_inicial %}<a href="{{ url_for('museudoipiranga') }}">{{_("página inicial")}}</a>{% endset %}
             {% if creator and creator_data %}
                 {% set creator_with_article %}<a target="_blank" href="https://pt.wikipedia.org/wiki/{{creator_data.creator_article}}">{{creator_data.creator_label}}</a>{% endset %}

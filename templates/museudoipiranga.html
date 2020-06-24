@@ -31,46 +31,38 @@
     {% endif %}
 {% endblock %}
 
-{% block banner %}
+{% block content %}
 <div class="w3-container">
-    <div class="w3-row" style="padding-top:30px;padding-bottom:30px">
-        <h1 style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.6em;">{{ _("Museu do Ipiranga") }}</small></h1>
-    </div>
     <div class="w3-row" style="padding-bottom:30px">
         <p style="text-align:center">{{ _("Navegue pelo acervo do Museu do Ipiranga e ajude a melhorar as descrições das obras.") }}</p>
     </div>
-</div>
-{% endblock %}
-
-{% block content %}
-<div class="w3-container">
     <div class="w3-row" style="padding-bottom:30px;">
         <p style="text-align:center">{{ _("Escolha uma opção:") }}</p>
     </div>
     <div class="w3-row">
         <div class="w3-container w3-third"></div>
         <div class="w3-container w3-third">
-            <a href="{{ url_for('show_per_collection') }}">
+            <a href="{{ url_for('show_per_collection') }}" style="font-size: 135%;">
                 <button name="per_collection" class="button" value="per_collection" style="width:100%;">
                     {{ _("Coleções") }}
                 </button>
             </a>
-            <a href="{{ url_for('show_per_creator') }}">
+            <a href="{{ url_for('show_per_creator') }}" style="font-size: 135%;">
                 <button name="per_creator" class="button" value="per_creator" style="width:100%;">
                     {{ _("Criadores") }}
                 </button>
             </a>
-            <a href="{{ url_for('show_per_decade') }}">
+            <a href="{{ url_for('show_per_decade') }}" style="font-size: 135%;">
                 <button name="per_decade" class="button" value="per_decade" style="width:100%;">
                     {{ _("Décadas") }}
                 </button>
             </a>
-            <a href="{{ url_for('show_per_instance') }}">
+            <a href="{{ url_for('show_per_instance') }}" style="font-size: 135%;">
                 <button name="per_instance" class="button" value="per_instance" style="width:100%;">
                     {{ _("Tipos de obra") }}
                 </button>
             </a>
-            <a href="{{ url_for('show_per_depict') }}">
+            <a href="{{ url_for('show_per_depict') }}" style="font-size: 135%;">
                 <button name="per_depict" class="button" value="per_depict" style="width:100%;">
                     {{ _("Descritores") }}
                 </button>

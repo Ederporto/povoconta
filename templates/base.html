@@ -10,7 +10,7 @@
     </script>
 </head>
 <body style="height: 100%">
-<div class="w3-container" style="min-height: 87.5%;overflow: auto">
+<div class="w3-container" style="min-height: 82.5%;overflow: auto;padding: 0">
     {% block navbar %}
     <div class="topnav" id="myTopnav">
         <a href="{{url_for('museudoipiranga')}}" class="active">{{_("Povo Conta")}}</a>
@@ -22,12 +22,16 @@
         </a>
     </div>
     {% endblock %}
-    {% block banner %}{% endblock banner %}
+    {% block banner %}
+    <div class="w3-row" style="padding-top:30px;padding-bottom:30px">
+        <h1 style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.6em;">{{ _("Museu do Ipiranga") }}</small></h1>
+    </div>
+    {% endblock %}
     {% block content %}{% endblock %}
 </div>
-<footer style="text-align:center;position: relative" id="footer">
+<footer style="text-align:center;position: relative;padding: 14px 16px" id="footer">
     <hr>
-    <p style="font-size:85%;">
+    <p style="font-size:100%;">
         {% set projeto %}<a target='_blank' href='https://pt.wikipedia.org/wiki/Wikip%C3%A9dia:GLAM/Museu_Paulista#Projeto_Novo_Museu_do_Ipiranga'>Projeto Novo Museu do Ipiranga</a>{% endset %}
         {{_("<i>Povo Conta</i> é um jogo desenvolvido no contexto do <i><b>%(projeto)s</b></i>, organizado pelo <b>Grupo de Usuários Wiki Movimento Brasil</b> e o <b>Museu do Ipiranga</b>, em parceria com a <b>Fundação Banco do Brasil</b> e com realização da <b>Universidade de São Paulo</b> e a <b>Fundação de Apoio à Universidade de São Paulo</b>.", projeto=projeto)}}
     </p>
