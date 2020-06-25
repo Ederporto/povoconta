@@ -74,24 +74,26 @@
 {% endblock %}
 
 {% block content %}
-<ul style="text-align:center">
-    {% for creator in creators %}
+<div class="container" style="width:66%;">
+    <ul style="text-align:center; column-count: 3;column-fill: auto;">
+        {% for creator in creators %}
+            <li>
+                <a href="{{ url_for('show_works_of_creator',qid=creator.qid) }}">
+                    <button name="creator" class="button" value="{{creator.qid}}" style="width:100%;">
+                        {{ creator.label }}
+                    </button>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    <ul style="text-align:center">
+        {% for work in creator %}
         <li>
-            <a href="{{ url_for('show_works_of_creator',qid=creator.qid) }}">
-                <button name="creator" class="button" value="{{creator.qid}}">
-                    {{ creator.label }}
-                </button>
+            <a href="{{url_for('view_work_museudoipiranga', qid=work.qid, lang=lang) }}">
+                <img src="{{ work.image }}" style="object-fit:contain;max-widht:1000px; max-height:500px; align:center;"/>
             </a>
         </li>
-    {% endfor %}
-</ul>
-<ul style="text-align:center">
-    {% for work in creator %}
-    <li>
-        <a href="{{url_for('view_work_museudoipiranga', qid=work.qid, lang=lang) }}">
-            <img src="{{ work.image }}" style="object-fit:contain;max-widht:1000px; max-height:500px; align:center;"/>
-        </a>
-    </li>
-    {% endfor %}
-</ul>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}

@@ -81,24 +81,26 @@
 {% endblock %}
 
 {% block content %}
-<ul style="text-align:center">
-    {% for collection in collections %}
+<div class="container" style="width:66%">
+    <ul style="text-align:center; column-count: 2;column-fill: auto;">
+        {% for collection in collections %}
+            <li>
+                <a href="{{ url_for('show_works_in_collection',qid=collection.qid) }}">
+                    <button name="collection" class="button" value="{{collection.qid}}" style="width:100%">
+                        {{ collection.label }}
+                    </button>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    <ul style="text-align:center">
+        {% for work in collection %}
         <li>
-            <a href="{{ url_for('show_works_in_collection',qid=collection.qid) }}">
-                <button name="collection" class="button" value="{{collection.qid}}">
-                    {{ collection.label }}
-                </button>
+            <a href="{{url_for('view_work_museudoipiranga', qid=work.qid, lang=lang) }}">
+                <img src="{{ work.image }}" style="object-fit:contain;max-widht:1000px; max-height:500px; align:center;"/>
             </a>
         </li>
-    {% endfor %}
-</ul>
-<ul style="text-align:center">
-    {% for work in collection %}
-    <li>
-        <a href="{{url_for('view_work_museudoipiranga', qid=work.qid, lang=lang) }}">
-            <img src="{{ work.image }}" style="object-fit:contain;max-widht:1000px; max-height:500px; align:center;"/>
-        </a>
-    </li>
-    {% endfor %}
-</ul>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}

@@ -64,24 +64,26 @@
 {% endblock %}
 
 {% block content %}
-<ul style="text-align:center">
-    {% for decade in decades %}
+<div class="container" style="width:66%;">
+    <ul style="text-align:center; column-count: 3;column-fill: auto;">
+        {% for decade in decades %}
+            <li>
+                <a href="{{ url_for('show_works_of_decade',decade=decade.label) }}">
+                    <button name="decade" class="button" value="{{decade.label}}" style="width:100%;">
+                        {{ decade.label }}
+                    </button>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    <ul style="text-align:center">
+        {% for work in decade_data %}
         <li>
-            <a href="{{ url_for('show_works_of_decade',decade=decade.label) }}">
-                <button name="decade" class="button" value="{{decade.label}}">
-                    {{ decade.label }}
-                </button>
+            <a href="{{url_for('view_work_museudoipiranga', qid=work.qid, lang=lang) }}">
+                <img src="{{ work.image }}" style="object-fit:contain;max-widht:1000px; max-height:500px; align:center;"/>
             </a>
         </li>
-    {% endfor %}
-</ul>
-<ul style="text-align:center">
-    {% for work in decade_data %}
-    <li>
-        <a href="{{url_for('view_work_museudoipiranga', qid=work.qid, lang=lang) }}">
-            <img src="{{ work.image }}" style="object-fit:contain;max-widht:1000px; max-height:500px; align:center;"/>
-        </a>
-    </li>
-    {% endfor %}
-</ul>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}

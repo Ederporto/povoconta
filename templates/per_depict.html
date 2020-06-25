@@ -60,24 +60,26 @@
 {% endblock %}
 
 {% block content %}
-<ul style="text-align:center">
-    {% for depict in depicts %}
+<div class="container" style="width:66%;">
+    <ul style="text-align:center; column-count: 4;column-fill: auto;">
+        {% for depict in depicts %}
+            <li>
+                <a href="{{ url_for('show_works_of_depict', qid=depict.qid) }}">
+                    <button name="depict" class="button" value="{{depict.qid}}" style="width:100%;">
+                        {{ depict.label }}
+                    </button>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    <ul style="text-align:center">
+        {% for work in depict %}
         <li>
-            <a href="{{ url_for('show_works_of_depict', qid=depict.qid) }}">
-                <button name="depict" class="button" value="{{depict.qid}}">
-                    {{ depict.label }}
-                </button>
+            <a href="{{url_for('view_work_museudoipiranga', qid=work.qid, lang=lang) }}">
+                <img src="{{ work.image }}" style="object-fit:contain;max-widht:1000px; max-height:500px; align:center;"/>
             </a>
         </li>
-    {% endfor %}
-</ul>
-<ul style="text-align:center">
-    {% for work in depict %}
-    <li>
-        <a href="{{url_for('view_work_museudoipiranga', qid=work.qid, lang=lang) }}">
-            <img src="{{ work.image }}" style="object-fit:contain;max-widht:1000px; max-height:500px; align:center;"/>
-        </a>
-    </li>
-    {% endfor %}
-</ul>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}

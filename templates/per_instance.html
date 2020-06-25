@@ -61,24 +61,26 @@
 {% endblock %}
 
 {% block content %}
-<ul style="text-align:center">
-    {% for instance in instances %}
+<div class="container" style="width:66%;">
+    <ul style="text-align:center; column-count: 4;column-fill: auto;">
+        {% for instance in instances %}
+            <li>
+                <a href="{{ url_for('show_works_of_instance', qid=instance.qid) }}">
+                    <button name="instance" class="button" value="{{instance.qid}}" style="width:100%;">
+                        {{ instance.label }}
+                    </button>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    <ul style="text-align:center">
+        {% for work in instance %}
         <li>
-            <a href="{{ url_for('show_works_of_instance', qid=instance.qid) }}">
-                <button name="instance" class="button" value="{{instance.qid}}">
-                    {{ instance.label }}
-                </button>
+            <a href="{{url_for('view_work_museudoipiranga', qid=work.qid, lang=lang) }}">
+                <img src="{{ work.image }}" style="object-fit:contain;max-widht:1000px; max-height:500px; align:center;"/>
             </a>
         </li>
-    {% endfor %}
-</ul>
-<ul style="text-align:center">
-    {% for work in instance %}
-    <li>
-        <a href="{{url_for('view_work_museudoipiranga', qid=work.qid, lang=lang) }}">
-            <img src="{{ work.image }}" style="object-fit:contain;max-widht:1000px; max-height:500px; align:center;"/>
-        </a>
-    </li>
-    {% endfor %}
-</ul>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
