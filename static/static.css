@@ -17,6 +17,15 @@
     padding-bottom: 2.5rem;
 }
 
+.buttons_list {
+    overflow:hidden;
+    text-align:center;
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-gap: 15px;
+}
+
 h1 {
     color: #547473;
     font-family: 'Josefin Sans', sans-serif;
@@ -59,6 +68,19 @@ a {
 .button:hover {
   background-color: #394d4c;
   color: white;
+}
+
+.grid_image {
+    overflow: hidden;
+    margin-bottom:10px;
+}
+
+.grid_image img {
+    display:block;
+}
+
+.grid_image img:hover {
+    transform : scale(1.1);
 }
 
 /* NAVBAR */
