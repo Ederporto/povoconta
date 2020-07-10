@@ -47,6 +47,7 @@ consumer_token = mwoauth.ConsumerToken(
     app.config['CONSUMER_KEY'],
     app.config['CONSUMER_SECRET'])
 WIKIDATA_API_ENDPOINT = 'https://www.wikidata.org/w/api.php'
+THUMBNAIL_SIZE = '300px'
 
 
 @BABEL.localeselector
@@ -218,7 +219,7 @@ def tutorial():
 
     collection_tutorial = []
     for result in images_["results"]["bindings"]:
-        collection_tutorial.append({"image": result["image"]["value"]+"?width=500px"})
+        collection_tutorial.append({"image": result["image"]["value"]+"?width="+THUMBNAIL_SIZE})
 
     return render_template("tutorial.html",
                            username=username,
@@ -259,7 +260,8 @@ def show_works_in_collection(qid):
     for result in json["results"]["bindings"]:
         collection.append({
             "qid": result["work"]["value"].split("/")[-1],
-            "image": result["image"]["value"]+"?width=500px"})
+            "image": result["image"]["value"]+"?width="+THUMBNAIL_SIZE,
+            "label": result["work_label"]["value"]})
 
     coll_data = {
         "collection_label": collection_data_["results"]["bindings"][0]["collection_label"]["value"],
@@ -311,7 +313,7 @@ def show_works_of_creator(qid):
         creator.append({
             "qid": result["work"]["value"].split("/")[-1],
             "label": result["work_label"]["value"],
-            "image": result["image"]["value"] + "?width=500px"})
+            "image": result["image"]["value"] + "?width="+THUMBNAIL_SIZE})
 
     creator_data_aux = {
         "creator_article": creator_data_["results"]["bindings"][0]["creator_article"]["value"] if "creator_article" in creator_data_["results"]["bindings"][0] else "",
@@ -357,7 +359,7 @@ def show_works_of_decade(decade):
         decade_.append({
             "qid": result["work"]["value"].split("/")[-1],
             "label": result["work_label"]["value"],
-            "image": result["image"]["value"] + "?width=500px"})
+            "image": result["image"]["value"] + "?width="+THUMBNAIL_SIZE})
 
     return render_template("per_decade.html",
                            decade=decade,
@@ -395,7 +397,7 @@ def show_works_of_instance(qid):
         instance.append({
             "qid": result["work"]["value"].split("/")[-1],
             "label": result["work_label"]["value"],
-            "image": result["image"]["value"] + "?width=500px"})
+            "image": result["image"]["value"] + "?width="+THUMBNAIL_SIZE})
 
     instance_data = {"instance_label": get_name(qid),
                      "total_scope": len(instance)}
@@ -436,7 +438,7 @@ def show_works_of_depict(qid):
         depict.append({
             "qid": result["work"]["value"].split("/")[-1],
             "label": result["work_label"]["value"],
-            "image": result["image"]["value"] + "?width=500px"})
+            "image": result["image"]["value"] + "?width="+THUMBNAIL_SIZE})
 
     depict_data = {"depict_label": get_name(qid, lang),
                    "total_scope": len(depict)}

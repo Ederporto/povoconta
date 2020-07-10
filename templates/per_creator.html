@@ -92,7 +92,7 @@
         {% for work in creator %}
             <a href="{{url_for('view_work_museudoipiranga', qid=work.qid, lang=lang) }}">
                 <div class="grid_image">
-                    <img src="{{ work.image }}" width="100%"
+                    <img src="{{ work.image }}" width="100%" alt="{{ work.label }}
                          style="object-fit:contain;max-widht:1000px; max-height:500px; align:center;"/>
                 </div>
             </a>
