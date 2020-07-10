@@ -33,15 +33,15 @@
 
 {% block banner %}
     <div class="w3-row" style="padding-top:30px;padding-bottom:30px">
-        <h1 style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.6em;">{{ _("Museu do Ipiranga") }}</small></h1>
+        <div id="logo" style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.6em;">{{ _("Museu do Ipiranga") }}</small></div>
     </div>
     <div class="container" style="width:100%">
         <p style="text-align:center;">
-            {% set pagina_inicial %}<a href="{{ url_for('museudoipiranga') }}">{{_("página inicial")}}</a>{% endset %}
+            {% set pagina_inicial %}<a tabindex="0" href="{{ url_for('museudoipiranga') }}">{{_("página inicial")}}</a>{% endset %}
             {% if instance and instance_data %}
-                {% set instance_label %}<a target="_blank" href="https://www.wikidata.org/wiki/{{qid}}">{{instance_data.instance_label}}</a>{% endset %}
+                {% set instance_label %}<a tabindex="0" target="_blank" href="https://www.wikidata.org/wiki/{{qid}}">{{instance_data.instance_label}}</a>{% endset %}
                 {% set total_scope %}{{instance_data.total_scope}}{% endset %}
-                {% set clique_aqui %}<a href="{{ url_for('show_per_instance') }}">{{_("clique aqui")}}</a>{% endset %}
+                {% set clique_aqui %}<a tabindex="0" href="{{ url_for('show_per_instance') }}">{{_("clique aqui")}}</a>{% endset %}
 
                 {{_("Esta é uma coleção de obras do Museu do Ipiranga do tipo %(instance_label)s que possuem ao menos uma imagem e um descritor no Wikidata.", instance_label=instance_label)}}
                 {% if instance_data.total_scope > 1 %}
@@ -65,7 +65,7 @@
     <ul class="buttons_list">
         {% for instance in instances %}
             <li>
-                <a href="{{ url_for('show_works_of_instance', qid=instance.qid) }}">
+                <a tabindex="0" href="{{ url_for('show_works_of_instance', qid=instance.qid) }}">
                     <button name="instance" class="button" value="{{instance.qid}}" style="width:100%;height:100%">
                         {{ instance.label }}
                     </button>
@@ -77,7 +77,7 @@
 <div class="container" style="width:100%;">
     <div class="container" style="column-width:200px;">
         {% for work in instance %}
-            <a href="{{url_for('view_work_museudoipiranga', qid=work.qid, lang=lang) }}">
+            <a tabindex="0" href="{{url_for('view_work_museudoipiranga', qid=work.qid, lang=lang) }}">
                 <div class="grid_image">
                     <img src="{{ work.image }}" width="100%" alt="{{ work.label }}
                          style="object-fit:contain;max-widht:1000px; max-height:500px; align:center;"/>

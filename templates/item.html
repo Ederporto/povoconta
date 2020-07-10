@@ -93,18 +93,18 @@
 <div class="w3-row" style="padding-top:30px;overflow: hidden;z-index: 1">
   <div class="w3-container w3-half">
       <div class="img-magnifier-container">
-          <img id="image_item" src="{{work_data.image}}" width="100%" style="align-self: center;" >
+          <img id="image_item" alt="{{work_data.work_label}}" src="{{work_data.image}}" width="100%" style="align-self: center;" >
       </div>
-      <a href="{{work_data.image}}" target="_blank" style="text-align:center">
+      <a tabindex="0" href="{{work_data.image}}" target="_blank" style="text-align:center">
           {{_("Veja essa imagem no Wikimedia Commons")}}
       </a>
   </div>
   <div class="w3-container w3-half" style="text-align:left; font-family: 'Josefin Sans', sans-serif; font-size:150%">
       <div class="w3-row">
-          <b>{{_("Obra")}}:</b> <a target="_blank" href="https://www.wikidata.org/wiki/{{entity}}">{{work_data.work_label}}</a>
+          <b>{{_("Obra")}}:</b> <a tabindex="0" target="_blank" href="https://www.wikidata.org/wiki/{{entity}}">{{work_data.work_label}}</a>
           {% if work_data.creators and work_data.creators|length > 0 %}
                 <br><b>{{_("Criador(a)")}}{% if work_data.creators|length > 1 %}(s){% endif %}:</b> {% for creator in work_data.creators %}
-                <a target="_blank" href="https://www.wikidata.org/wiki/{{creator.qid}}">{{creator.label}}</a>{{ "; " if not loop.last }}
+                <a tabindex="0" target="_blank" href="https://www.wikidata.org/wiki/{{creator.qid}}">{{creator.label}}</a>{{ "; " if not loop.last }}
                 {% endfor %}
           {% endif %}
           {% if work_data.date %}
@@ -112,17 +112,17 @@
           {% endif %}
           {% if work_data.instances and work_data.instances|length > 0 %}
                 <br><b>{{_("Instância de")}}:</b> {% for instance in work_data.instances %}
-                <a target="_blank" href="https://www.wikidata.org/wiki/{{instance.qid}}">{{instance.label}}</a>{{ "; " if not loop.last }}
+                <a tabindex="0" target="_blank" href="https://www.wikidata.org/wiki/{{instance.qid}}">{{instance.label}}</a>{{ "; " if not loop.last }}
                 {% endfor %}
           {% endif %}
           {% if work_data.materials and work_data.materials|length > 0 %}
                 <br><b>{% if work_data.instances|length > 1 %}{{_("Materiais utilizados")}}{% else %}{{_("Material utilizado")}}{% endif %}:</b> {% for material in work_data.materials %}
-                <a target="_blank" href="https://www.wikidata.org/wiki/{{material.qid}}">{{material.label}}</a>{{ "; " if not loop.last }}
+                <a tabindex="0" target="_blank" href="https://www.wikidata.org/wiki/{{material.qid}}">{{material.label}}</a>{{ "; " if not loop.last }}
                 {% endfor %}
           {% endif %}
           {% if work_data.commissioners and work_data.commissioners|length > 0 %}
                 <br><b>{{_("Encomendada por")}}:</b> {% for commissioner in work_data.commissioners %}
-                <a target="_blank" href="https://www.wikidata.org/wiki/{{commissioner.qid}}">{{commissioner.label}}</a>{{ "; " if not loop.last }}
+                <a tabindex="0" target="_blank" href="https://www.wikidata.org/wiki/{{commissioner.qid}}">{{commissioner.label}}</a>{{ "; " if not loop.last }}
                 {% endfor %}
           {% endif %}
       </div>
@@ -133,7 +133,7 @@
             <form action="{{ url_for('save_quantities', qid=entity, lang=lang) }}" method="post">
                 {% for depict in work_depicts %}
                     <div class="form-group">
-                        <label for="{{depict.depict_id}};{{depict.quantity_hash}}"><a target="_blank" href="https://www.wikidata.org/wiki/{{depict.depict_qid}}">{{depict.depict_label}}</a>:{% if depict.depict_desc %}<br><small><i>{{depict.depict_desc}}</i></small> {% endif %}</label>
+                        <label for="{{depict.depict_id}};{{depict.quantity_hash}}"><a tabindex="0" target="_blank" href="https://www.wikidata.org/wiki/{{depict.depict_qid}}">{{depict.depict_label}}</a>:{% if depict.depict_desc %}<br><small><i>{{depict.depict_desc}}</i></small> {% endif %}</label>
                         {% if depict.quantity_value == 0%}
                             <input type="number" class="form-control" name="{{depict.depict_id}};{{depict.quantity_hash}}" min="0" step="1" value="" style="font-size:100%">
                         {% else %}
@@ -144,7 +144,7 @@
                 <div class="w3-row">
                     <div class="w3-container w3-third">
                         {% if not username %}
-                            <a href="{{ url_for('login', next=request.script_root + request.full_path) }}">
+                            <a tabindex="0" href="{{ url_for('login', next=request.script_root + request.full_path) }}">
                                 <button type="button" class="button" id="confirm_disabled" style="background-color:#848484;width:100%;margin:0;font-size:95%;">{{_("AUTENTICAR")}}</button>
                             </a>
                         {% else %}
@@ -154,7 +154,7 @@
                         {% endif %}
                     </div>
                     <div class="w3-container w3-third">
-                        <a href="{{ url_for('view_work_museudoipiranga', qid=skip, goback=entity, lang=lang) }}">
+                        <a tabindex="0" href="{{ url_for('view_work_museudoipiranga', qid=skip, goback=entity, lang=lang) }}">
                             <button type="button" class="button" id="skip" style="background-color:#848484;width:100%;margin:0;font-size:100%;">
                                 {{_("PULAR")}}
                             </button>
@@ -162,13 +162,13 @@
                     </div>
                     <div class="w3-container w3-third">
                         {% if not first %}
-                            <a href="{{ url_for('view_work_museudoipiranga', qid=request.args.get('goback'), lang=lang) }}">
+                            <a tabindex="0" href="{{ url_for('view_work_museudoipiranga', qid=request.args.get('goback'), lang=lang) }}">
                                 <button type="button" class="button" id="goback" style="background-color:#e2725b;width:100%;margin:0;font-size:100%;">
                                     {{_("VOLTAR")}}
                                 </button>
                             </a>
                         {% else %}
-                            <a href="{{ url_for('museudoipiranga') }}">
+                            <a tabindex="0" href="{{ url_for('museudoipiranga') }}">
                                 <button type="button" class="button" id="backtobegin" style="background-color:#e2725b;width:100%;margin:0;font-size:100%;">
                                     {{_("INÍCIO")}}
                                 </button>

@@ -33,15 +33,15 @@
 
 {% block banner %}
     <div class="w3-row" style="padding-top:30px;padding-bottom:30px">
-        <h1 style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.6em;">{{ _("Museu do Ipiranga") }}</small></h1>
+        <div id="logo" style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.6em;">{{ _("Museu do Ipiranga") }}</small></div>
     </div>
     <div class="container" style="width:100%">
         <p style="text-align:center;">
-            {% set pagina_inicial %}<a href="{{ url_for('museudoipiranga') }}">{{_("página inicial")}}</a>{% endset %}
+            {% set pagina_inicial %}<a tabindex="0" href="{{ url_for('museudoipiranga') }}">{{_("página inicial")}}</a>{% endset %}
             {% if decade %}
                 {% set decade %}{{decade}}{% endset %}
                 {% set total_scope %}{{decade_data|length}}{% endset %}
-                {% set clique_aqui %}<a href="{{ url_for('show_per_decade') }}">{{_("clique aqui")}}</a>{% endset %}
+                {% set clique_aqui %}<a tabindex="0" href="{{ url_for('show_per_decade') }}">{{_("clique aqui")}}</a>{% endset %}
                 {% if decade == indeterminate %}
                     {{_("Esta é uma coleção de obras do Museu do Ipiranga com a década de produção indeterminada que possuem ao menos uma imagem e um descritor no Wikidata.")}}
                 {% else %}
@@ -68,7 +68,7 @@
     <ul class="buttons_list">
         {% for decade in decades %}
             <li>
-                <a href="{{ url_for('show_works_of_decade',decade=decade.label) }}">
+                <a tabindex="0" href="{{ url_for('show_works_of_decade',decade=decade.label) }}">
                     <button name="decade" class="button" value="{{decade.label}}" style="width:100%;height:100%">
                         {{ decade.label }}
                     </button>
@@ -80,7 +80,7 @@
 <div class="container" style="width:100%">
     <div class="container" style="column-width:200px;">
         {% for work in decade_data %}
-        <a href="{{url_for('view_work_museudoipiranga', qid=work.qid, lang=lang) }}">
+        <a tabindex="0" href="{{url_for('view_work_museudoipiranga', qid=work.qid, lang=lang) }}">
             <div class="grid_image">
                 <img src="{{ work.image }}" width="100%" alt="{{ work.label }}
                      style="object-fit:contain;max-widht:1000px; max-height:500px; align:center;"/>

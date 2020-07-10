@@ -33,20 +33,20 @@
 
 {% block banner %}
     <div class="w3-row" style="padding-top:30px;padding-bottom:30px">
-        <h1 style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.6em;">{{ _("Museu do Ipiranga") }}</small></h1>
+        <div id="logo" style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.6em;">{{ _("Museu do Ipiranga") }}</small></div>
     </div>
     <div class="container" style="width:100%">
         <p style="text-align:center;">
-            {% set pagina_inicial %}<a href="{{ url_for('museudoipiranga') }}">{{_("página inicial")}}</a>{% endset %}
+            {% set pagina_inicial %}<a tabindex="0" href="{{ url_for('museudoipiranga') }}">{{_("página inicial")}}</a>{% endset %}
             {% if collection and collection_data %}
                 {% set collection_label %}{{collection_data.collection_label}}{% endset %}
-                {% set named_after_with_article %}<a target="_blank" href="https://pt.wikipedia.org/wiki/{{collection_data.named_after_article}}">{{collection_data.named_after_label}}</a>{% endset %}
+                {% set named_after_with_article %}<a tabindex="0" target="_blank" href="https://pt.wikipedia.org/wiki/{{collection_data.named_after_article}}">{{collection_data.named_after_label}}</a>{% endset %}
                 {% set named_after_label %}{{collection_data.named_after_label_label}}{% endset %}
                 {% set total %}{{collection_data.total}}{% endset %}
                 {% set total_scope %}{{collection_data.total_scope}}{% endset %}
-                {% set collection_article %}<a target="_blank" href="https://pt.wikipedia.org/wiki/{{collection_data.collection_article}}">{{_("um artigo na Wikipédia")}}</a>{% endset %}
-                {% set collection_category %}<a target="_blank" href="https://commons.wikimedia.org/wiki/{{collection_data.collection_category}}">{{_("Wikimedia Commons")}}</a>{% endset %}
-                {% set clique_aqui %}<a href="{{ url_for('show_per_collection') }}">{{_("clique aqui")}}</a>{% endset %}
+                {% set collection_article %}<a tabindex="0" target="_blank" href="https://pt.wikipedia.org/wiki/{{collection_data.collection_article}}">{{_("um artigo na Wikipédia")}}</a>{% endset %}
+                {% set collection_category %}<a tabindex="0" target="_blank" href="https://commons.wikimedia.org/wiki/{{collection_data.collection_category}}">{{_("Wikimedia Commons")}}</a>{% endset %}
+                {% set clique_aqui %}<a tabindex="0" href="{{ url_for('show_per_collection') }}">{{_("clique aqui")}}</a>{% endset %}
                 {% if collection_data.collection_label %}
                     {{_("Esta é a %(collection_label)s.", collection_label=collection_label)}}
                 {% endif %}
@@ -85,7 +85,7 @@
     <ul class="buttons_list">
         {% for collection in collections %}
             <li>
-                <a href="{{ url_for('show_works_in_collection',qid=collection.qid) }}">
+                <a tabindex="0" href="{{ url_for('show_works_in_collection',qid=collection.qid) }}">
                     <button name="collection" class="button" value="{{collection.qid}}" style="width:100%;height:100%">
                         {{ collection.label }}
                     </button>
@@ -97,7 +97,7 @@
 <div class="container" style="width:100%">
     <div class="container" style="column-width:200px;">
         {% for work in collection %}
-        <a href="{{url_for('view_work_museudoipiranga', qid=work.qid, lang=lang) }}">
+        <a tabindex="0" href="{{url_for('view_work_museudoipiranga', qid=work.qid, lang=lang) }}">
             <div class="grid_image">
                 <img src="{{ work.image }}" width="100%" alt="{{ work.label }}"
                      style="object-fit:contain;max-widht:1000px; max-height:500px; align:center;"/>
