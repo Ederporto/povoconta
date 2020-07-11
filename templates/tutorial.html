@@ -8,17 +8,6 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 {% endblock %}
 
-{% block scripts %}
-    function menuFunction() {
-        var x = document.getElementById("myTopnav");
-        if (x.className === "topnav") {
-            x.className += " responsive";
-        } else {
-            x.className = "topnav";
-        }
-    }
-{% endblock %}
-
 {% block divright %}
     {% if lang != 'en' %}
         <a class="right" tabindex="0" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='en')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Flag-us.svg" width="25px" alt="en"></a>
@@ -30,6 +19,8 @@
         <a class="right" tabindex="0" target="_blank" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
     {% endif %}
 {% endblock %}
+
+{% block title %}{{_("Como jogar?")}} | {{ _("Povo Conta") }}{% endblock %}
 
 {% block content %}
 <div class="w3-container">
@@ -180,21 +171,21 @@
                 <div class="w3-row">
                     <div class="w3-container w3-third">
                         <a href="" onclick="return false;">
-                            <button type="button" class="button" style="background-color:#848484;width:100%;margin:0;font-size:95%;">
+                            <button type="button" class="button" style="background-color:#525252;width:100%;margin:0;font-size:95%;">
                                 {{_("AUTENTICAR")}}
                             </button>
                         </a>
                     </div>
                     <div class="w3-container w3-third">
                         <a href="" onclick="return false;">
-                            <button type="button" class="button" style="background-color:#848484;width:100%;margin:0;font-size:100%;">
+                            <button type="button" class="button" style="background-color:#525252;width:100%;margin:0;font-size:100%;">
                                 {{_("PULAR")}}
                             </button>
                         </a>
                     </div>
                     <div class="w3-container w3-third">
                         <a href="" onclick="return false;">
-                            <button type="button" class="button" style="background-color:#e2725b;width:100%;margin:0;font-size:100%;">
+                            <button type="button" class="button" style="background-color:#D04125;width:100%;margin:0;font-size:100%;">
                                 {{_("INÍCIO")}}
                             </button>
                         </a>
@@ -227,14 +218,14 @@
             </div>
             <div class="w3-container w3-third">
                 <a href="" onclick="return false;">
-                    <button type="button" class="button" style="background-color:#848484;width:100%;margin:0;font-size:100%;">
+                    <button type="button" class="button" style="background-color:#525252;width:100%;margin:0;font-size:100%;">
                         {{_("PULAR")}}
                     </button>
                 </a>
             </div>
             <div class="w3-container w3-third">
                 <a href="" onclick="return false;">
-                    <button type="button" class="button" style="background-color:#e2725b;width:100%;margin:0;font-size:100%;">
+                    <button type="button" class="button" style="background-color:#D04125;width:100%;margin:0;font-size:100%;">
                         {{_("INÍCIO")}}
                     </button>
                 </a>
@@ -301,14 +292,14 @@
                     </div>
                     <div class="w3-container w3-third">
                         <a href="" onclick="return false;">
-                            <button type="button" class="button" style="background-color:#848484;width:100%;margin:0;font-size:100%;">
+                            <button type="button" class="button" style="background-color:#525252;width:100%;margin:0;font-size:100%;">
                                 {{_("PULAR")}}
                             </button>
                         </a>
                     </div>
                     <div class="w3-container w3-third">
                         <a href="" onclick="return false;">
-                            <button type="button" class="button" style="background-color:#e2725b;width:100%;margin:0;font-size:100%;">
+                            <button type="button" class="button" style="background-color:#D04125;width:100%;margin:0;font-size:100%;">
                                 {{_("INÍCIO")}}
                             </button>
                         </a>

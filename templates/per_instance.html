@@ -8,17 +8,6 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 {% endblock %}
 
-{% block scripts %}
-    function menuFunction() {
-        var x = document.getElementById("myTopnav");
-        if (x.className === "topnav") {
-            x.className += " responsive";
-        } else {
-            x.className = "topnav";
-        }
-    }
-{% endblock %}
-
 {% block divright %}
     {% if lang != 'en' %}
         <a class="right" tabindex="0" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='en')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Flag-us.svg" width="25px" alt="en"></a>
@@ -31,9 +20,13 @@
     {% endif %}
 {% endblock %}
 
+{% block title %}{{_("Tipos de obra")}} | {{ _("Povo Conta") }}{% endblock %}
+
 {% block initial_text %}
-    <div class="container" style="width:100%">
-        <p style="text-align:center;">
+<div class="w3-row" id="initial_text" style="text-align: center">
+    <div class="w3-container w3-quarter"></div>
+    <div class="w3-container w3-half">
+        <p>
             {% set pagina_inicial %}<a tabindex="0" href="{{ url_for('museudoipiranga') }}">{{_("página inicial")}}</a>{% endset %}
             {% if instance and instance_data %}
                 {% set instance_label %}<a tabindex="0" target="_blank" href="https://www.wikidata.org/wiki/{{qid}}">{{instance_data.instance_label}}</a>{% endset %}
@@ -53,8 +46,9 @@
                 {{ _("Escolha um tipo de obra para começar a jogar.") }}
                 {{_("Ou volte à %(pagina_inicial)s.", pagina_inicial=pagina_inicial)}}
             {% endif %}
-        </p><br/>
+        </p>
     </div>
+</div>
 {% endblock %}
 
 {% block content %}
@@ -71,7 +65,7 @@
         {% endfor %}
     </ul>
 </div>
-<div class="container" style="width:100%;">
+<div id="image_list" class="container" style="width:100%;">
     <div class="container" style="column-width:200px;">
         {% for work in instance %}
             <a tabindex="0" href="{{url_for('view_work_museudoipiranga', qid=work.qid, lang=lang) }}">

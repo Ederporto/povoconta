@@ -1,26 +1,11 @@
 {% extends "base.html" %}
 
-{% block styles %}
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="{{ url_for('static', filename= 'static.css') }}">
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Josefin+Sans" type='text/css'>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% block external_scripts %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 {% endblock %}
 
 {% block scripts %}
-    function menuFunction() {
-        var x = document.getElementById("myTopnav");
-        if (x.className === "topnav") {
-            x.className += " responsive";
-        } else {
-            x.className = "topnav";
-        }
-    }
-
     /* Code copied and adapted from How TO - Image Magnifier Glass, copyrighted */
     function magnify(imgID, zoom) {
         var img, glass, w, h, bw;
@@ -89,11 +74,14 @@
     {% endif %}
 {% endblock %}
 
+{% block title %}{{work_data.work_label}} | {{ _("Povo Conta") }}{% endblock %}
+
 {% block content %}
 <div class="w3-row" style="padding-top:30px;overflow: hidden;z-index: 1">
-  <div class="w3-container w3-half">
+  <div id="image" class="w3-container w3-half">
       <div class="img-magnifier-container">
-          <img id="image_item" alt="{{work_data.work_label}}" src="{{work_data.image}}" width="100%" style="align-self: center;" >
+          <img id="image_item" alt="{{work_data.work_label}}"
+               src="{{work_data.image}}" width="100%" style="align-self: center;" >
       </div>
       <a tabindex="0" href="{{work_data.image}}" target="_blank" style="text-align:center">
           {{_("Veja essa imagem no Wikimedia Commons")}}
@@ -125,59 +113,68 @@
                 <a tabindex="0" target="_blank" href="https://www.wikidata.org/wiki/{{commissioner.qid}}">{{commissioner.label}}</a>{{ "; " if not loop.last }}
                 {% endfor %}
           {% endif %}
+          {% if work_data.audios and work_data.audios|length > 0 %}
+                <br><b>{{_("Versão audível")}}:</b>
+          {% for audio in work_data.audios %}
+                <audio controls tabindex="0">
+                    <source src="{{audio.file}}">
+                   {{_("Seu navegador não suporta o elemento de áudio")}}
+                </audio>
+          {% endfor %}
+          {% endif %}
       </div>
       <div class="w3-row"><hr></div>
       {% if work_depicts %}
-        <div class="w3-row">
-            <p style="text-align:center;font-size:125%;font-weight:bold;">{{ _("Quantos itens de cada descritor você vê?") }}</p>
-            <form action="{{ url_for('save_quantities', qid=entity, lang=lang) }}" method="post">
-                {% for depict in work_depicts %}
-                    <div class="form-group">
-                        <label for="{{depict.depict_label}}"><a tabindex="0" target="_blank" href="https://www.wikidata.org/wiki/{{depict.depict_qid}}">{{depict.depict_label}}</a>:{% if depict.depict_desc %}<br><small><i>{{depict.depict_desc}}</i></small> {% endif %}</label>
-                        {% if depict.quantity_value == 0%}
-                            <input type="number" id="{{depict.depict_label}}" class="form-control" name="{{depict.depict_id}};{{depict.quantity_hash}}" min="0" step="1" value="" style="font-size:100%">
-                        {% else %}
-                            <input type="number" class="form-control" name="{{depict.depict_id}};{{depict.quantity_hash}}" min="0" step="1" value="{{depict.quantity_value}}" style="font-size:100%">
-                        {% endif %}
-                    </div>
-                {% endfor %}
-                <div class="w3-row">
-                    <div class="w3-container w3-third">
-                        {% if not username %}
-                            <a tabindex="0" href="{{ url_for('login', next=request.script_root + request.full_path) }}">
-                                <button type="button" class="button" id="confirm_disabled" style="background-color:#848484;width:100%;margin:0;font-size:95%;">{{_("AUTENTICAR")}}</button>
-                            </a>
-                        {% else %}
-                            <button type="submit" class="button" id="confirm" style="background-color:#547473;width:100%;margin:0;font-size:100%;">
-                                {{_("CONFIRMAR")}}
-                            </button>
-                        {% endif %}
-                    </div>
-                    <div class="w3-container w3-third">
-                        <a tabindex="0" href="{{ url_for('view_work_museudoipiranga', qid=skip, goback=entity, lang=lang) }}">
-                            <button type="button" class="button" id="skip" style="background-color:#848484;width:100%;margin:0;font-size:100%;">
-                                {{_("PULAR")}}
-                            </button>
-                        </a>
-                    </div>
-                    <div class="w3-container w3-third">
-                        {% if not first %}
-                            <a tabindex="0" href="{{ url_for('view_work_museudoipiranga', qid=request.args.get('goback'), lang=lang) }}">
-                                <button type="button" class="button" id="goback" style="background-color:#e2725b;width:100%;margin:0;font-size:100%;">
-                                    {{_("VOLTAR")}}
+            <div class="w3-row">
+                <h2 style="text-align:center;font-size:125%;font-weight:bold;">{{ _("Quantos itens de cada descritor você vê?") }}</h2>
+                <form action="{{ url_for('save_quantities', qid=entity, lang=lang) }}" method="post">
+                    {% for depict in work_depicts %}
+                        <div class="form-group">
+                            <label for="{{depict.depict_label}}"><a tabindex="0" target="_blank" href="https://www.wikidata.org/wiki/{{depict.depict_qid}}">{{depict.depict_label}}</a>:{% if depict.depict_desc %}<br><small><i>{{depict.depict_desc}}</i></small> {% endif %}</label>
+                            {% if depict.quantity_value == 0%}
+                                <input type="number" id="{{depict.depict_label}}" class="form-control" name="{{depict.depict_id}};{{depict.quantity_hash}}" min="0" step="1" value="" style="font-size:100%">
+                            {% else %}
+                                <input type="number" class="form-control" name="{{depict.depict_id}};{{depict.quantity_hash}}" min="0" step="1" value="{{depict.quantity_value}}" style="font-size:100%">
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <div class="w3-row">
+                        <div class="w3-container w3-third">
+                            {% if not username %}
+                                <a tabindex="0" href="{{ url_for('login', next=request.script_root + request.full_path) }}">
+                                    <button type="button" class="button" id="confirm_disabled" style="background-color:#525252;width:100%;margin:0;font-size:95%;">{{_("AUTENTICAR")}}</button>
+                                </a>
+                            {% else %}
+                                <button type="submit" class="button" id="confirm" style="background-color:#547473;width:100%;margin:0;font-size:100%;">
+                                    {{_("CONFIRMAR")}}
+                                </button>
+                            {% endif %}
+                        </div>
+                        <div class="w3-container w3-third">
+                            <a tabindex="0" href="{{ url_for('view_work_museudoipiranga', qid=skip, goback=entity, lang=lang) }}">
+                                <button type="button" class="button" id="skip" style="background-color:#525252;width:100%;margin:0;font-size:100%;">
+                                    {{_("PULAR")}}
                                 </button>
                             </a>
-                        {% else %}
-                            <a tabindex="0" href="{{ url_for('museudoipiranga') }}">
-                                <button type="button" class="button" id="backtobegin" style="background-color:#e2725b;width:100%;margin:0;font-size:100%;">
-                                    {{_("INÍCIO")}}
-                                </button>
-                            </a>
-                        {% endif %}
+                        </div>
+                        <div class="w3-container w3-third">
+                            {% if not first %}
+                                <a tabindex="0" href="{{ url_for('view_work_museudoipiranga', qid=request.args.get('goback'), lang=lang) }}">
+                                    <button type="button" class="button" id="goback" style="background-color:#D04125;width:100%;margin:0;font-size:100%;">
+                                        {{_("VOLTAR")}}
+                                    </button>
+                                </a>
+                            {% else %}
+                                <a tabindex="0" href="{{ url_for('museudoipiranga') }}">
+                                    <button type="button" class="button" id="backtobegin" style="background-color:#D04125;width:100%;margin:0;font-size:100%;">
+                                        {{_("INÍCIO")}}
+                                    </button>
+                                </a>
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
-            </form>
-        </div>
+                </form>
+            </div>
       {% endif %}
   </div>
 </div>

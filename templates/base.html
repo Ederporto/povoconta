@@ -2,40 +2,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Josefin+Sans" type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename= 'static.css') }}" type='text/css'>
-    <title>{% block title%}{{_("Povo Conta")}}{% endblock %}</title>
-    {% block styles %}{% endblock %}
+    {% block external_scripts %}{% endblock %}
     <script>
-    {% block scripts %}{% endblock %}
+        function menuFunction() {
+            var x = document.getElementById("topnavbar");
+            if (x.className === "topnav") {
+                x.className += " responsive";
+            } else {
+                x.className = "topnav";
+            }
+        }
+        {% block scripts %}{% endblock %}
     </script>
+    <title>{% block title%}{{_("Povo Conta")}}{% endblock %}</title>
 </head>
+
 <body style="height: 100%">
-<div class="w3-container" style="min-height: 82.5%;overflow: auto;padding: 0">
-    {% block navbar %}
-    <div class="topnav" id="myTopnav">
-        <a href="{{url_for('museudoipiranga')}}" class="active">{{_("Povo Conta")}}</a>
-        <a href="{{url_for('sobre')}}">{{_("Sobre")}}</a>
-        <a href="{{url_for('tutorial')}}">{{_("Como jogar?")}}</a>
+{% block navbar %}
+<nav class="topnav" id="topnavbar">
+    <ul>
+        <li><a tabindex="0" id="início" href="{{url_for('museudoipiranga')}}" class="active">{{_("Povo Conta")}}</a></li>
+        <li><a tabindex="0" id="sobre" href="{{url_for('sobre')}}">{{_("Sobre")}}</a></li>
+        <li><a tabindex="0" id="tutorial" href="{{url_for('tutorial')}}">{{_("Como jogar?")}}</a></li>
         {% block divright %}{% endblock %}
-        <a href="javascript:void(0);" class="icon" onclick="menuFunction()" aria-describedby='{{_("Menu")}}'>
-            <i class="fa fa-bars"></i>
-        </a>
-    </div>
-    {% endblock %}
+        <li><a tabindex="0" id="menu" href="javascript:void(0);" class="icon" onclick="menuFunction()" aria-label='{{_("Menu")}}'><i class="fa fa-bars"></i></a></li>
+    </ul>
+</nav>
+{% endblock %}
+
+{% block main %}
+<main class="w3-container" style="min-height: 82.5%;overflow: auto;padding: 0">
     {% block banner %}
-    <div class="w3-row" style="padding:30px;">
-        <div id="logo" style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.6em;">{{ _("Museu do Ipiranga") }}</small></div>
+    <div id="banner" class="w3-row" style="padding:30px">
+        <h1 id="logo" style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.6em;">{{ _("Museu do Ipiranga") }}</small></h1>
     </div>
     {% endblock %}
     {% block initial_text %}{% endblock %}
     {% block content %}{% endblock %}
-</div>
-<footer style="text-align:left;position: relative;padding: 14px 16px" id="footer">
+</main>
+{% endblock %}
+
+{% block footer %}
+<footer style="text-align:left;position: relative;padding: 15px" id="footer">
     <hr>
     <p style="font-size:100%;">
-        {% set projeto %}<a tabindex="0" target='_blank' href='https://pt.wikipedia.org/wiki/Wikip%C3%A9dia:GLAM/Museu_Paulista#Projeto_Novo_Museu_do_Ipiranga'>Projeto Novo Museu do Ipiranga</a>{% endset %}
+        {% set projeto %}<a tabindex="0" target='_blank' aria-label='{{_("Projeto Novo Museu do Ipiranga")}}' href='https://pt.wikipedia.org/wiki/Wikip%C3%A9dia:GLAM/Museu_Paulista#Projeto_Novo_Museu_do_Ipiranga'>{{_("Projeto Novo Museu do Ipiranga")}}</a>{% endset %}
         {{_("<i>Povo Conta</i> é um jogo desenvolvido no contexto do <i><b>%(projeto)s</b></i>, organizado pelo <b>Grupo de Usuários Wiki Movimento Brasil</b> e o <b>Museu do Ipiranga</b>, em parceria com a <b>Fundação Banco do Brasil</b> e com realização da <b>Universidade de São Paulo</b> e a <b>Fundação de Apoio à Universidade de São Paulo</b>.", projeto=projeto)}}
     </p>
 </footer>
+{% endblock %}
 </body>
 </html>
