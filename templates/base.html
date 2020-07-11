@@ -26,13 +26,11 @@
 <body style="height: 100%">
 {% block navbar %}
 <nav class="topnav" id="topnavbar">
-    <ul>
-        <li><a tabindex="0" id="início" href="{{url_for('museudoipiranga')}}" class="active">{{_("Povo Conta")}}</a></li>
-        <li><a tabindex="0" id="sobre" href="{{url_for('sobre')}}">{{_("Sobre")}}</a></li>
-        <li><a tabindex="0" id="tutorial" href="{{url_for('tutorial')}}">{{_("Como jogar?")}}</a></li>
-        {% block divright %}{% endblock %}
-        <li><a tabindex="0" id="menu" href="javascript:void(0);" class="icon" onclick="menuFunction()" aria-label='{{_("Menu")}}'><i class="fa fa-bars"></i></a></li>
-    </ul>
+    <a tabindex="0" id="início" href="{{url_for('museudoipiranga')}}" class="active">{{_("Povo Conta")}}</a>
+    <a tabindex="0" id="sobre" href="{{url_for('sobre')}}">{{_("Sobre")}}</a>
+    <a tabindex="0" id="tutorial" href="{{url_for('tutorial')}}">{{_("Como jogar?")}}</a>
+    {% block divright %}{% endblock %}
+    <a tabindex="0" id="menu" href="javascript:void(0);" class="icon" onclick="menuFunction()" aria-label='{{_("Menu")}}'><i class="fa fa-bars"></i></a>
 </nav>
 {% endblock %}
 
