@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block scripts %}
-    function myFunction() {
+    function menuFunction() {
         var x = document.getElementById("myTopnav");
         if (x.className === "topnav") {
             x.className += " responsive";
@@ -31,7 +31,7 @@
     {% endif %}
 {% endblock %}
 
-{% block banner %}
+{% block initial_text %}
     <div class="w3-row" style="padding-top:30px;padding-bottom:30px">
         <div id="logo" style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.6em;">{{ _("Museu do Ipiranga") }}</small></div>
     </div>
@@ -74,7 +74,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container" style="width:66%;">
+<div id="button_list" class="container">
     <ul class="buttons_list">
         {% for creator in creators %}
             <li>
@@ -92,7 +92,7 @@
         {% for work in creator %}
             <a tabindex="0" href="{{url_for('view_work_museudoipiranga', qid=work.qid, lang=lang) }}">
                 <div class="grid_image">
-                    <img src="{{ work.image }}" width="100%" alt="{{ work.label }}
+                    <img src="{{ work.image }}" width="100%" alt="{{ work.label }}"
                          style="object-fit:contain;max-widht:1000px; max-height:500px; align:center;"/>
                 </div>
             </a>

@@ -177,3 +177,10 @@ div:hover .img-magnifier-glass{
     text-align: left;
   }
 }
+
+#button_list {
+    width:66%;
+}
+@media screen and (max-width: 600px) {
+    #button_list {width:100%;}
+}

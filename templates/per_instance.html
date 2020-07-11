@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block scripts %}
-    function myFunction() {
+    function menuFunction() {
         var x = document.getElementById("myTopnav");
         if (x.className === "topnav") {
             x.className += " responsive";
@@ -31,10 +31,7 @@
     {% endif %}
 {% endblock %}
 
-{% block banner %}
-    <div class="w3-row" style="padding-top:30px;padding-bottom:30px">
-        <div id="logo" style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.6em;">{{ _("Museu do Ipiranga") }}</small></div>
-    </div>
+{% block initial_text %}
     <div class="container" style="width:100%">
         <p style="text-align:center;">
             {% set pagina_inicial %}<a tabindex="0" href="{{ url_for('museudoipiranga') }}">{{_("página inicial")}}</a>{% endset %}
@@ -61,7 +58,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container" style="width:66%;">
+<div id="button_list" class="container">
     <ul class="buttons_list">
         {% for instance in instances %}
             <li>
