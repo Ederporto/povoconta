@@ -24,8 +24,8 @@ def get_p180(qid, lang):
             quantity, quantity_hash, show_validate = get_p1114(p180)
             qid = p180["mainsnak"]["datavalue"]["value"]["id"]
             id_ = p180["id"]
-            name = get_name(qid, lang)
-            depict = {"depict_qid": qid, "depict_id": id_, "depict_label": name, "quantity_value": quantity, "quantity_hash": quantity_hash}
+            name, description = get_name(qid, lang, "name|description")
+            depict = {"depict_qid": qid, "depict_id": id_, "depict_label": name, "depict_desc": description, "quantity_value": quantity, "quantity_hash": quantity_hash}
             depicts.append(depict)
     except:
         pass
@@ -41,11 +41,11 @@ def get_p1114(snak):
         return 0, "", False
 
 
-def get_name(qid, lang="pt-br"):
+def get_name(qid, lang="pt-br", object="name"):
     params = {
         "action": "wbgetentities",
         "ids": qid,
-        "props": "labels",
+        "props": "labels|descriptions",
         "format": "json"
     }
     result = SESSION.get(url=WIKIDATA_API_ENDPOINT, params=params)
@@ -53,22 +53,34 @@ def get_name(qid, lang="pt-br"):
     name = ""
     try:
         labels = data["entities"][qid]["labels"]
+        descriptions = data["entities"][qid]["descriptions"]
 
         if lang in labels:
             name = labels[lang]["value"]
-        elif "pt-br" in labels:\
+            if "descriptions" in data["entities"][qid] and lang in descriptions:
+                description = descriptions[lang]["value"] or ""
+        elif "pt-br" in labels:
             name = labels["pt-br"]["value"]
-        elif "pt" in labels:\
+            if "descriptions" in data["entities"][qid] and "pt-br" in descriptions:
+                description = descriptions["pt-br"]["value"] or ""
+        elif "pt" in labels:
             name = labels["pt"]["value"]
-        elif "en" in labels:\
+            if "descriptions" in data["entities"][qid] and "pt" in descriptions:
+                description = descriptions["pt"]["value"] or ""
+        elif "en" in labels:
             name = labels["en"]["value"]
+            if "descriptions" in data["entities"][qid] and "en" in descriptions:
+                description = descriptions["en"]["value"] or ""
         else:
             name = qid
     except:
         pass
 
     SESSION.close()
-    return name
+    if object=="name":
+        return name
+    else:
+        return name, description
 
 
 # Query

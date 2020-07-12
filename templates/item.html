@@ -130,11 +130,12 @@
                 <form action="{{ url_for('save_quantities', qid=entity, lang=lang) }}" method="post">
                     {% for depict in work_depicts %}
                         <div class="form-group">
-                            <label for="{{depict.depict_label}}"><a tabindex="0" target="_blank" href="https://www.wikidata.org/wiki/{{depict.depict_qid}}">{{depict.depict_label}}</a>:{% if depict.depict_desc %}<br><small><i>{{depict.depict_desc}}</i></small> {% endif %}</label>
                             {% if depict.quantity_value == 0%}
+                                <label for="{{depict.depict_label}}"><a tabindex="0" target="_blank" href="https://www.wikidata.org/wiki/{{depict.depict_qid}}">{{depict.depict_label}}</a>{% if depict.depict_desc %}: <small>{{depict.depict_desc}}</small> {% endif %}</label>
                                 <input type="number" id="{{depict.depict_label}}" class="form-control" name="{{depict.depict_id}};{{depict.quantity_hash}}" min="0" step="1" value="" style="font-size:100%">
                             {% else %}
-                                <input type="number" class="form-control" name="{{depict.depict_id}};{{depict.quantity_hash}}" min="0" step="1" value="{{depict.quantity_value}}" style="font-size:100%">
+                                <label for="{{depict.depict_label}}_with_quantity"><a tabindex="0" target="_blank" href="https://www.wikidata.org/wiki/{{depict.depict_qid}}">{{depict.depict_label}}</a>{% if depict.depict_desc %}: <small>{{depict.depict_desc}}</small> {% endif %}</label>
+                                <input type="number" id="{{depict.depict_label}}_with_quantity" class="form-control" name="{{depict.depict_id}};{{depict.quantity_hash}}" min="0" step="1" value="{{depict.quantity_value}}" style="font-size:100%">
                             {% endif %}
                         </div>
                     {% endfor %}
