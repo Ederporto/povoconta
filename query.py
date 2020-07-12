@@ -51,6 +51,7 @@ def get_name(qid, lang="pt-br", object="name"):
     result = SESSION.get(url=WIKIDATA_API_ENDPOINT, params=params)
     data = result.json()
     name = ""
+    description = ""
     try:
         labels = data["entities"][qid]["labels"]
         descriptions = data["entities"][qid]["descriptions"]
@@ -58,21 +59,30 @@ def get_name(qid, lang="pt-br", object="name"):
         if lang in labels:
             name = labels[lang]["value"]
             if "descriptions" in data["entities"][qid] and lang in descriptions:
-                description = descriptions[lang]["value"] or ""
+                description = descriptions[lang]["value"]
         elif "pt-br" in labels:
             name = labels["pt-br"]["value"]
             if "descriptions" in data["entities"][qid] and "pt-br" in descriptions:
-                description = descriptions["pt-br"]["value"] or ""
+                description = descriptions["pt-br"]["value"]
         elif "pt" in labels:
             name = labels["pt"]["value"]
             if "descriptions" in data["entities"][qid] and "pt" in descriptions:
-                description = descriptions["pt"]["value"] or ""
+                description = descriptions["pt"]["value"]
         elif "en" in labels:
             name = labels["en"]["value"]
             if "descriptions" in data["entities"][qid] and "en" in descriptions:
-                description = descriptions["en"]["value"] or ""
+                description = descriptions["en"]["value"]
         else:
             name = qid
+
+        if lang in descriptions:
+            description = descriptions[lang]["value"]
+        elif "pt-br" in descriptions:
+            description = descriptions["pt-br"]["value"]
+        elif "pt" in descriptions:
+            description = descriptions["pt"]["value"]
+        else:
+            description = ""
     except:
         pass
 
