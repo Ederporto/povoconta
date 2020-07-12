@@ -74,14 +74,38 @@ a {
 .grid_image {
     overflow: hidden;
     margin-bottom:10px;
+    position:relative;
+    float:left;
 }
 
 .grid_image img {
     display:block;
+    width:100%;
+    height:auto;
 }
 
-.grid_image img:hover {
-    transform : scale(1.1);
+.overlay {
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color: #394d4c;
+    overflow: hidden;
+    width:100%;
+    height:0;
+}
+
+.text-area {
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    color: white;
+    text-align: center;
+}
+
+.grid_image:hover .overlay {
+    height: 100%;
 }
 
 .img-magnifier-container {
