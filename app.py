@@ -422,7 +422,7 @@ def show_per_depict():
     for result in json["results"]["bindings"]:
         depicts.append({"qid": result["depict"]["value"].split("/")[-1],
                         "label": result["depict_label"]["value"]})
-    return render_template("per_depict.html", depicts=depicts, username=username, lang=lang)
+    return render_template("per_depict.html", depicts=depicts, username=username, lang=lang, depict="")
 
 
 @app.route('/p180/<qid>', methods=['GET'])
@@ -438,7 +438,7 @@ def show_works_of_depict(qid):
         depict.append({
             "qid": result["work"]["value"].split("/")[-1],
             "label": result["work_label"]["value"],
-            "image": result["image"]["value"] + "?width="+THUMBNAIL_SIZE})
+            "image": result["image"]["value"][51:]})
 
     depict_data = {"depict_label": get_name(qid, lang),
                    "total_scope": len(depict)}
