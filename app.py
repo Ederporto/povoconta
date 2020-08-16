@@ -244,7 +244,7 @@ def show_per_collection():
             "qid": result["collection"]["value"].split("/")[-1],
             "label": result["collection_label"]["value"],
             "quantity": result["num_works"]["value"]})
-    return render_template("per_collection.html", collections=collections, username=username, lang=lang)
+    return render_template("per_collection.html", collections=collections, username=username, lang=lang, collection="")
 
 
 @app.route('/p195/<qid>', methods=['GET'])
@@ -260,7 +260,7 @@ def show_works_in_collection(qid):
     for result in json["results"]["bindings"]:
         collection.append({
             "qid": result["work"]["value"].split("/")[-1],
-            "image": result["image"]["value"]+"?width="+THUMBNAIL_SIZE,
+            "image": result["image"]["value"][51:],
             "label": result["work_label"]["value"]})
 
     coll_data = {

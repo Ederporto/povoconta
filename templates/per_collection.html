@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 
 {% block styles %}
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="{{ url_for('static', filename= 'static.css') }}">
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Josefin+Sans" type='text/css'>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+<link rel="stylesheet" href="{{ url_for('static', filename= 'pagination.css') }}" type='text/css'>
+{% endblock %}
+
+{% block external_scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename= 'pagination.js') }}"></script>
 {% endblock %}
 
 {% block divright %}
@@ -31,7 +32,7 @@
             {% if collection and collection_data %}
                 {% set collection_label %}{{collection_data.collection_label}}{% endset %}
                 {% set named_after_with_article %}<a tabindex="0" target="_blank" href="https://pt.wikipedia.org/wiki/{{collection_data.named_after_article}}">{{collection_data.named_after_label}}</a>{% endset %}
-                {% set named_after_label %}{{collection_data.named_after_label_label}}{% endset %}
+                {% set named_after_label %}{{collection_data.named_after_label}}{% endset %}
                 {% set total %}{{collection_data.total}}{% endset %}
                 {% set total_scope %}{{collection_data.total_scope}}{% endset %}
                 {% set collection_article %}<a tabindex="0" target="_blank" href="https://pt.wikipedia.org/wiki/{{collection_data.collection_article}}">{{_("um artigo na Wikipédia")}}</a>{% endset %}
@@ -42,7 +43,7 @@
                 {% endif %}
                 {% if collection_data.named_after_label %}
                     {% if collection_data.named_after_article %}
-                        {{_("É nomeada em homenagem a %(named_after_with_article)s.", named_after_with_article=named_after_with_article)}}
+                        {{_("É nomeada em homenagem a %(named_after_with_article)s.", named_after_with_article = named_after_with_article)}}
                     {% else %}
                         {{_("É nomeada em homenagem a %(named_after_label)s.", named_after_label = named_after_label)}}
                     {% endif %}
@@ -86,17 +87,40 @@
         {% endfor %}
     </ul>
 </div>
-<div id="image_list" class="container" style="width:100%">
-    <div class="container" style="column-width:200px;">
-        {% for work in collection %}
-        <a tabindex="0" href="{{url_for('view_work_museudoipiranga', qid=work.qid, lang=lang) }}">
-            <div class="grid_image">
-                <img src="{{ work.image }}" width="100%" alt="{{ work.label }}"
-                     style="object-fit:contain;max-widht:1000px; max-height:500px; align:center;"/>
-                <div class="overlay"><div class="text-area">{{work.label}}</div></div>
-            </div>
-        </a>
-        {% endfor %}
+{% if collection %}
+    <div id="pagination-container" style="padding: 30px"></div>
+    <div id="image_list" class="container" style="width:100%">
+        <div class="container" id="image_container"style="column-width:200px;">
+        </div>
     </div>
-</div>
+{% endif %}
+
+<script>
+    $('#pagination-container').pagination({
+        dataSource: {{ collection|tojson }},
+        pageSize: 20,
+        pageRange: null,
+        callback: function(data, pagination) {
+            var html = simpleTemplating(data);
+            $("#image_container").html(html);
+        }
+    });
+
+    function simpleTemplating(data) {
+        var html = "";
+        var lang = {{ lang|tojson }}
+        ;
+        $.each(data, function (index, item) {
+            html += '<a tabindex="0" href="/qid/' + item.qid + '/' + lang + '">' +
+                '<div class="grid_image" style="width:100%">' +
+                '<img src="https://commons.wikimedia.org/wiki/Special:FilePath/' +
+                item.image +
+                '?width=500px" width="100%" height=auto alt="' +
+                item.label +
+                '" style="object-fit:contain;max-widht:1000px; align:center;"/>' +
+                '<div class="overlay"><div class="text-area">' + item.label + '</div></div></div></a>';
+        });
+        return html;
+    }
+</script>
 {% endblock %}
