@@ -556,7 +556,7 @@ def get_work_data(qid, lang):
         else:
             work_label = ""
         if "image" in data_work["results"]["bindings"][0]:
-            image = data_work["results"]["bindings"][0]["image"]["value"] + "?width=1000px"
+            image = data_work["results"]["bindings"][0]["image"]["value"][51:]
         else:
             image = ""
         if "date" in data_work["results"]["bindings"][0]:
