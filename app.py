@@ -381,7 +381,7 @@ def show_per_instance():
     for result in json["results"]["bindings"]:
         instances.append({"qid": result["instance"]["value"].split("/")[-1],
                           "label": result["instance_label"]["value"]})
-    return render_template("per_instance.html", instances=instances, username=username, lang=lang)
+    return render_template("per_instance.html", instances=instances, username=username, lang=lang, instance="")
 
 
 @app.route('/p31/<qid>', methods=['GET'])
@@ -397,7 +397,7 @@ def show_works_of_instance(qid):
         instance.append({
             "qid": result["work"]["value"].split("/")[-1],
             "label": result["work_label"]["value"],
-            "image": result["image"]["value"] + "?width="+THUMBNAIL_SIZE})
+            "image": result["image"]["value"][51:]})
 
     instance_data = {"instance_label": get_name(qid),
                      "total_scope": len(instance)}
