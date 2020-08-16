@@ -296,7 +296,7 @@ def show_per_creator():
             "qid": result["creator"]["value"].split("/")[-1],
             "label": result["creator_label"]["value"],
             "quantity": result["total"]["value"]})
-    return render_template("per_creator.html", creators=creators, username=username, lang=lang)
+    return render_template("per_creator.html", creators=creators, username=username, lang=lang, creator="")
 
 
 @app.route('/p170/<qid>', methods=['GET'])
@@ -313,7 +313,7 @@ def show_works_of_creator(qid):
         creator.append({
             "qid": result["work"]["value"].split("/")[-1],
             "label": result["work_label"]["value"],
-            "image": result["image"]["value"] + "?width="+THUMBNAIL_SIZE})
+            "image": result["image"]["value"][51:]})
 
     creator_data_aux = {
         "creator_article": creator_data_["results"]["bindings"][0]["creator_article"]["value"] if "creator_article" in creator_data_["results"]["bindings"][0] else "",
