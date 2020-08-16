@@ -342,7 +342,7 @@ def show_per_decade():
     decades = []
     for result in json["results"]["bindings"]:
         decades.append({"label": result["decade"]["value"]})
-    return render_template("per_decade.html", decades=decades, username=username, lang=lang)
+    return render_template("per_decade.html", decades=decades, username=username, lang=lang, decade_data="")
 
 
 @app.route('/p571/<decade>', methods=['GET'])
@@ -359,7 +359,7 @@ def show_works_of_decade(decade):
         decade_.append({
             "qid": result["work"]["value"].split("/")[-1],
             "label": result["work_label"]["value"],
-            "image": result["image"]["value"] + "?width="+THUMBNAIL_SIZE})
+            "image": result["image"]["value"][51:]})
 
     return render_template("per_decade.html",
                            decade=decade,
