@@ -1,88 +1,69 @@
 {% extends "base.html" %}
 
-{% block styles %}
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="{{ url_for('static', filename= 'static.css') }}">
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Josefin+Sans" type='text/css'>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-{% endblock %}
-
-{% block scripts %}
-    function myFunction() {
-        var x = document.getElementById("myTopnav");
-        if (x.className === "topnav") {
-            x.className += " responsive";
-        } else {
-            x.className = "topnav";
-        }
-    }
-{% endblock %}
-
 {% block divright %}
     {% if lang != 'en' %}
-        <a class="right" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='en')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Flag-us.svg" width="25px"></a>
+        <a class="right" tabindex="0" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='en')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Flag-us.svg" width="25px" alt="en"></a>
     {% endif %}
     {% if lang != 'pt' and lang != 'pt-BR' %}
-        <a class="right" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='pt')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Flag-br.svg" width="25px"></a>
+        <a class="right" tabindex="0" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='pt')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Flag-br.svg" width="25px" alt="pt"></a>
     {% endif %}
     {% if username %}
-        <a class="right" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
+        <a class="right" tabindex="0" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
     {% endif %}
 {% endblock %}
 
-{% block banner %}
-<div class="w3-container">
-    <div class="w3-row" style="padding-top:30px;padding-bottom:30px">
-        <h1 style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.6em;">{{ _("Museu do Ipiranga") }}</small></h1>
-    </div>
-    <div class="w3-row" style="padding-bottom:30px">
-        <p style="text-align:center">{{ _("Navegue pelo acervo do Museu do Ipiranga e ajude a melhorar as descrições das obras.") }}</p>
+{% block initial_text %}
+<div class="w3-row" id="instruções" style="text-align: center">
+    <div class="w3-container w3-quarter"></div>
+    <div class="w3-container w3-half">
+        <p>{{ _("Navegue pelo acervo do Museu do Ipiranga e ajude a melhorar as descrições das obras.") }}
+            <br><br>
+            {{ _("Escolha uma opção:") }}</p>
     </div>
 </div>
-{% endblock %}
+{% endblock%}
 
 {% block content %}
-<div class="w3-container">
-    <div class="w3-row" style="padding-bottom:30px;">
-        <p style="text-align:center">{{ _("Escolha uma opção:") }}</p>
-    </div>
-    <div class="w3-row-padding">
-        <div class="w3-col m2" >
-            <a href="{{ url_for('show_per_collection') }}">
-                <button name="per_collection" class="button" value="per_collection" style="width:100%;">
-                    {{ _("Coleções") }}
-                </button>
-            </a>
-        </div>
-        <div class="w3-col m2">
-            <a href="{{ url_for('show_per_creator') }}">
-                <button name="per_creator" class="button" value="per_creator" style="width:100%;">
-                    {{ _("Criadores") }}
-                </button>
-            </a>
-        </div>
-        <div class="w3-col m2">
-            <a href="{{ url_for('show_per_decade') }}">
-                <button name="per_decade" class="button" value="per_decade" style="width:100%;">
-                    {{ _("Décadas") }}
-                </button>
-            </a>
-        </div>
-        <div class="w3-col m3">
-            <a href="{{ url_for('show_per_instance') }}">
-                <button name="per_instance" class="button" value="per_instance" style="width:100%;">
-                    {{ _("Tipos de obra") }}
-                </button>
-            </a>
-        </div>
-        <div class="w3-col m3">
-            <a href="{{ url_for('show_per_depict') }}">
-                <button name="per_depict" class="button" value="per_depict" style="width:100%;">
-                    {{ _("Descritores") }}
-                </button>
-            </a>
-        </div>
+<div class="w3-row" id="buttons" style="text-align: center">
+    <div class="w3-container w3-third"></div>
+    <div class="w3-container w3-third">
+        <ul>
+            <li>
+                <a href="{{ url_for('show_per_collection') }}" tabindex="0" style="font-size: 135%;">
+                    <button name="per_collection" class="button" value="per_collection" style="width:100%;">
+                        {{ _("Coleções") }}
+                    </button>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('show_per_creator') }}" tabindex="0" style="font-size: 135%;">
+                    <button name="per_creator" class="button" value="per_creator" style="width:100%;">
+                        {{ _("Criadores") }}
+                    </button>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('show_per_decade') }}" tabindex="0" style="font-size: 135%;">
+                    <button name="per_decade" class="button" value="per_decade" style="width:100%;">
+                        {{ _("Décadas") }}
+                    </button>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('show_per_instance') }}" tabindex="0" style="font-size: 135%;">
+                    <button name="per_instance" class="button" value="per_instance" style="width:100%;">
+                        {{ _("Tipos de obra") }}
+                    </button>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('show_per_depict') }}" tabindex="0" style="font-size: 135%;">
+                    <button name="per_depict" class="button" value="per_depict" style="width:100%;">
+                        {{ _("Descritores") }}
+                    </button>
+                </a>
+            </li>
+        </ul>
     </div>
 </div>
 {% endblock %}

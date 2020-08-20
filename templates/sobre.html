@@ -8,59 +8,45 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 {% endblock %}
 
-{% block scripts %}
-    function myFunction() {
-        var x = document.getElementById("myTopnav");
-        if (x.className === "topnav") {
-            x.className += " responsive";
-        } else {
-            x.className = "topnav";
-        }
-    }
-{% endblock %}
-
 {% block divright %}
     {% if lang != 'en' %}
-        <a class="right" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='en')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Flag-us.svg" width="25px"></a>
+        <a class="right" tabindex="0" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='en')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Flag-us.svg" width="25px" alt="en"></a>
     {% endif %}
     {% if lang != 'pt' and lang != 'pt-BR' %}
-        <a class="right" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='pt')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Flag-br.svg" width="25px"></a>
+        <a class="right" tabindex="0" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='pt')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Flag-br.svg" width="25px" alt="pt"></a>
     {% endif %}
     {% if username %}
-        <a class="right" target="_blank" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
+        <a class="right" tabindex="0" target="_blank" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
     {% endif %}
 {% endblock %}
 
-{% block banner %}
-<div class="w3-container">
-    <div class="w3-row" style="padding-top:30px;padding-bottom:30px">
-        <h1 style="text-align:center;">{{ _("Povo Conta") }}<br><small style="font-size: 0.6em;">{{ _("Museu do Ipiranga") }}</small></h1>
-    </div>
-</div>
-{% endblock %}
+{% block title %}{{_("Sobre")}} | {{ _("Povo Conta") }}{% endblock %}
 
 {% block content %}
-<div class="w3-row" style="text-align:center">
-    <p>{{_("<b>Povo Conta</b> é um jogo colaborativo. O propósito é contribuir com a descrição das obras no acervo do Museu Paulista da Universidade de São Paulo.")}}</p>
-    <p>{{_("O jogo está conectado à base de dados colaborativa Wikidata, um projeto irmão da Wikipédia. Toda contribuição que é feita no <b>Povo Conta</b> é automaticamente transmitida para o respectivo item da obra editada no Wikidata.")}}</p>
-    <p>{{_("As edições são então transpostas para uma série de páginas na internet. Isso inclui livros colaborativos, repositórios de imagens e em alguns casos a própria Wikipédia.")}}</p>
-    <p>{{_("O nome do jogo é uma referência à prática no jornalismo de entrevistar pessoas, em geral na rua, para saber o que pensam sobre determinado assunto. No <b>Povo Conta</b>, é o Museu Paulista que espera sua contribuição na descrição de seu acervo.")}}</p>
-
-    <p>{{_("Participe e divulgue!")}}</p><br><hr><br>
-    <p>
-        {% set flask %}<a target='_blank' href='https://pt.wikipedia.org/wiki/Flask_(framework_web)'><i>{{_("Flask")}}</i></a>{% endset %}
-        {% set github %}<a target='_blank' href='https://github.com/WikiMovimentoBrasil/povoconta'>{{_("GitHub")}}</a>{% endset %}
-        {% set license_code %}<a target='_blank' href='https://github.com/WikiMovimentoBrasil/povoconta/blob/master/LICENSE'>{{_("GPL v3.0")}}</a>{% endset %}
-        {% set license_text %}<a target='_blank' href='https://creativecommons.org/licenses/by-sa/4.0/'>{{_("CC-BY-SA 4.0 Internacional")}}</a>{% endset %}
-        {% set license_wikidata %}<a target='_blank' href='https://creativecommons.org/share-your-work/public-domain/cc0/'>{{_("CC0")}}</a>{% endset %}
-        <small>
-            {{_("Este jogo foi desenvolvido em %(flask)s.", flask=flask)}}<br>
-            {{_("O código-fonte está disponível no %(github)s.", github=github)}}<br>
-            {{_("Licença do cógido-fonte: %(license_code)s.", license_code=license_code)}}<br>
-            {{_("Licença de textos: %(license_text)s.", license_text=license_text)}}<br>
-            {{_("Licença dos objetos retornados do Wikidata: %(license_wikidata)s.", license_wikidata=license_wikidata)}}<br>
-            {{_("Versão 1.0.1.")}}
-        </small>
-    </p>
+<div class="w3-row" id="sobre" style="text-align: center">
+    <div class="w3-container w3-quarter"></div>
+    <div class="w3-container w3-half" style="text-align: left">
+        <p>
+            {{_("<b>Povo Conta</b> é um jogo colaborativo. O propósito é contribuir com a descrição das obras no acervo do Museu Paulista da Universidade de São Paulo.")}}<br><br>
+            {{_("O jogo está conectado à base de dados colaborativa Wikidata, um projeto irmão da Wikipédia. Toda contribuição que é feita no <b>Povo Conta</b> é automaticamente transmitida para o respectivo item da obra editada no Wikidata.")}}<br><br>
+            {{_("As edições são então transpostas para uma série de páginas na internet. Isso inclui livros colaborativos, repositórios de imagens e em alguns casos a própria Wikipédia.")}}<br><br>
+            {{_("O nome do jogo é uma referência à prática no jornalismo de entrevistar pessoas, em geral na rua, para saber o que pensam sobre determinado assunto. No <b>Povo Conta</b>, é o Museu Paulista que espera sua contribuição na descrição de seu acervo.")}}<br><br>
+            {{_("Participe e divulgue!")}}<br><br>
+        </p><hr><p>
+            {% set flask %}<a target='_blank' href='https://pt.wikipedia.org/wiki/Flask_(framework_web)'><i>{{_("Flask")}}</i></a>{% endset %}
+            {% set github %}<a target='_blank' href='https://github.com/WikiMovimentoBrasil/povoconta'>{{_("GitHub")}}</a>{% endset %}
+            {% set license_code %}<a target='_blank' href='https://github.com/WikiMovimentoBrasil/povoconta/blob/master/LICENSE'>{{_("GPL v3.0")}}</a>{% endset %}
+            {% set license_text %}<a target='_blank' href='https://creativecommons.org/licenses/by-sa/4.0/'>{{_("CC-BY-SA 4.0 Internacional")}}</a>{% endset %}
+            {% set license_wikidata %}<a target='_blank' href='https://creativecommons.org/share-your-work/public-domain/cc0/'>{{_("CC0")}}</a>{% endset %}
+            <small>
+                {{_("Este jogo foi desenvolvido em %(flask)s.", flask=flask)}}<br>
+                {{_("O código-fonte está disponível no %(github)s.", github=github)}}<br>
+                {{_("Licença do cógido-fonte: %(license_code)s.", license_code=license_code)}}<br>
+                {{_("Licença de textos: %(license_text)s.", license_text=license_text)}}<br>
+                {{_("Licença dos objetos retornados do Wikidata: %(license_wikidata)s.", license_wikidata=license_wikidata)}}<br>
+                {{_("Versão 1.0.1.")}}
+            </small>
+        </p>
+    </div>
 </div>
 {% endblock %}

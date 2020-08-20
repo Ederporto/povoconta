@@ -1,45 +1,38 @@
 {% extends "base.html" %}
 
 {% block styles %}
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="{{ url_for('static', filename= 'static.css') }}">
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Josefin+Sans" type='text/css'>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+<link rel="stylesheet" href="{{ url_for('static', filename= 'pagination.css') }}" type='text/css'>
 {% endblock %}
 
-{% block scripts %}
-    function myFunction() {
-        var x = document.getElementById("myTopnav");
-        if (x.className === "topnav") {
-            x.className += " responsive";
-        } else {
-            x.className = "topnav";
-        }
-    }
+{% block external_scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename= 'pagination.js') }}"></script>
 {% endblock %}
 
 {% block divright %}
     {% if lang != 'en' %}
-        <a class="right" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='en')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Flag-us.svg" width="25px"></a>
+        <a class="right" tabindex="0" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='en')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Flag-us.svg" width="25px" alt="en"></a>
     {% endif %}
     {% if lang != 'pt' and lang != 'pt-BR' %}
-        <a class="right" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='pt')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Flag-br.svg" width="25px"></a>
+        <a class="right" tabindex="0" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='pt')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Flag-br.svg" width="25px" alt="pt"></a>
     {% endif %}
     {% if username %}
-        <a class="right" target="_blank" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
+        <a class="right" tabindex="0" target="_blank" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
     {% endif %}
 {% endblock %}
 
-{% block banner %}
-    <br/>
-    <div class="container" style="width:100%">
-        <p style="text-align:center;font-size:1.2em;">
-            {% set pagina_inicial %}<a href="{{ url_for('museudoipiranga') }}">{{_("página inicial")}}</a>{% endset %}
+{% block title %}{{_("Tipos de obra")}} | {{ _("Povo Conta") }}{% endblock %}
+
+{% block initial_text %}
+<div class="w3-row" id="initial_text" style="text-align: center">
+    <div class="w3-container w3-quarter"></div>
+    <div class="w3-container w3-half">
+        <p>
+            {% set pagina_inicial %}<a tabindex="0" href="{{ url_for('museudoipiranga') }}">{{_("página inicial")}}</a>{% endset %}
             {% if instance and instance_data %}
-                {% set instance_label %}<a target="_blank" href="https://www.wikidata.org/wiki/{{qid}}">{{instance_data.instance_label}}</a>{% endset %}
+                {% set instance_label %}<a tabindex="0" target="_blank" href="https://www.wikidata.org/wiki/{{qid}}">{{instance_data.instance_label}}</a>{% endset %}
                 {% set total_scope %}{{instance_data.total_scope}}{% endset %}
-                {% set clique_aqui %}<a href="{{ url_for('show_per_instance') }}">{{_("clique aqui")}}</a>{% endset %}
+                {% set clique_aqui %}<a tabindex="0" href="{{ url_for('show_per_instance') }}">{{_("clique aqui")}}</a>{% endset %}
 
                 {{_("Esta é uma coleção de obras do Museu do Ipiranga do tipo %(instance_label)s que possuem ao menos uma imagem e um descritor no Wikidata.", instance_label=instance_label)}}
                 {% if instance_data.total_scope > 1 %}
@@ -54,29 +47,59 @@
                 {{ _("Escolha um tipo de obra para começar a jogar.") }}
                 {{_("Ou volte à %(pagina_inicial)s.", pagina_inicial=pagina_inicial)}}
             {% endif %}
-        </p><br/>
+        </p>
     </div>
+</div>
 {% endblock %}
 
 {% block content %}
-<ul style="text-align:center">
-    {% for instance in instances %}
-        <li>
-            <a href="{{ url_for('show_works_of_instance', qid=instance.qid) }}">
-                <button name="instance" class="button" value="{{instance.qid}}">
-                    {{ instance.label }}
-                </button>
-            </a>
-        </li>
-    {% endfor %}
-</ul>
-<ul style="text-align:center">
-    {% for work in instance %}
-    <li>
-        <a href="{{url_for('view_work_museudoipiranga', qid=work.qid, lang=lang) }}">
-            <img src="{{ work.image }}" style="object-fit:contain;max-widht:1000px; max-height:500px; align:center;"/>
-        </a>
-    </li>
-    {% endfor %}
-</ul>
+<div id="button_list" class="container">
+    <ul class="buttons_list">
+        {% for instance in instances %}
+            <li>
+                <a tabindex="0" href="{{ url_for('show_works_of_instance', qid=instance.qid) }}">
+                    <button name="instance" class="button" value="{{instance.qid}}" style="width:100%;height:100%">
+                        {{ instance.label }}
+                    </button>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% if instance %}
+    <div id="pagination-container" style="padding: 30px"></div>
+    <div id="image_list" class="container" style="width:100%;">
+        <div class="container" id="image_container" style="column-width:200px;">
+        </div>
+    </div>
+{% endif %}
+
+<script>
+    $('#pagination-container').pagination({
+        dataSource: {{ instance|tojson }},
+        pageSize: 20,
+        pageRange: null,
+        callback: function(data, pagination) {
+            var html = simpleTemplating(data);
+            $("#image_container").html(html);
+        }
+    });
+
+    function simpleTemplating(data) {
+        var html = "";
+        var lang = {{ lang|tojson }}
+        ;
+        $.each(data, function (index, item) {
+            html += '<a tabindex="0" href="/qid/' + item.qid + '/' + lang + '">' +
+                '<div class="grid_image" style="width:100%">' +
+                '<img src="https://commons.wikimedia.org/wiki/Special:FilePath/' +
+                item.image +
+                '?width=500px" width="100%" height=auto alt="' +
+                item.label +
+                '" style="object-fit:contain;max-widht:1000px; align:center;"/>' +
+                '<div class="overlay"><div class="text-area">' + item.label + '</div></div></div></a>';
+        });
+        return html;
+    }
+</script>
 {% endblock %}

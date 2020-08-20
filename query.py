@@ -24,8 +24,8 @@ def get_p180(qid, lang):
             quantity, quantity_hash, show_validate = get_p1114(p180)
             qid = p180["mainsnak"]["datavalue"]["value"]["id"]
             id_ = p180["id"]
-            name = get_name(qid, lang)
-            depict = {"depict_qid": qid, "depict_id": id_, "depict_label": name, "quantity_value": quantity, "quantity_hash": quantity_hash}
+            name, description = get_name(qid, lang, "name|description")
+            depict = {"depict_qid": qid, "depict_id": id_, "depict_label": name, "depict_desc": description, "quantity_value": quantity, "quantity_hash": quantity_hash}
             depicts.append(depict)
     except:
         pass
@@ -41,34 +41,56 @@ def get_p1114(snak):
         return 0, "", False
 
 
-def get_name(qid, lang="pt-br"):
+def get_name(qid, lang="pt-br", object="name"):
     params = {
         "action": "wbgetentities",
         "ids": qid,
-        "props": "labels",
+        "props": "labels|descriptions",
         "format": "json"
     }
     result = SESSION.get(url=WIKIDATA_API_ENDPOINT, params=params)
     data = result.json()
     name = ""
+    description = ""
     try:
         labels = data["entities"][qid]["labels"]
+        descriptions = data["entities"][qid]["descriptions"]
 
         if lang in labels:
             name = labels[lang]["value"]
-        elif "pt-br" in labels:\
+            if "descriptions" in data["entities"][qid] and lang in descriptions:
+                description = descriptions[lang]["value"]
+        elif "pt-br" in labels:
             name = labels["pt-br"]["value"]
-        elif "pt" in labels:\
+            if "descriptions" in data["entities"][qid] and "pt-br" in descriptions:
+                description = descriptions["pt-br"]["value"]
+        elif "pt" in labels:
             name = labels["pt"]["value"]
-        elif "en" in labels:\
+            if "descriptions" in data["entities"][qid] and "pt" in descriptions:
+                description = descriptions["pt"]["value"]
+        elif "en" in labels:
             name = labels["en"]["value"]
+            if "descriptions" in data["entities"][qid] and "en" in descriptions:
+                description = descriptions["en"]["value"]
         else:
             name = qid
+
+        if lang in descriptions:
+            description = descriptions[lang]["value"]
+        elif "pt-br" in descriptions:
+            description = descriptions["pt-br"]["value"]
+        elif "pt" in descriptions:
+            description = descriptions["pt"]["value"]
+        else:
+            description = ""
     except:
         pass
 
     SESSION.close()
-    return name
+    if object=="name":
+        return name
+    else:
+        return name, description
 
 
 # Query
@@ -78,7 +100,7 @@ def query_wikidata(query):
         "query": query,
         "format": "json"
     }
-    result = SESSION.post(url=url, params=params)
+    result = SESSION.post(url=url, params=params, headers={'User-agent': 'Povo Conta 1.0.1'})
     data = result.json()
     SESSION.close()
     return data
@@ -100,14 +122,15 @@ def per_collection(lang="pt-br"):
 
 
 def works_in_collection(qid_collection):
-    data = query_wikidata("SELECT DISTINCT ?work ?image"
+    data = query_wikidata("SELECT DISTINCT ?work ?image ?work_label"
                           "(COUNT(DISTINCT (?depicts_p)) AS ?count_depicts) WHERE {"
+                          "SERVICE wikibase:label { bd:serviceParam wikibase:language 'pt-br,pt,en'. ?work rdfs:label ?work_label}"
                           "?work wdt:P195 wd:"+qid_collection+";"
                           "wdt:P180 ?depicts;"
                           "wdt:P18 ?image."
                           "OPTIONAL {?work p:P180 ?depicts_p."
                           "?depicts_p pq:P1114 ?depicts_quantity.}"
-                          "} GROUP BY ?work ?image ORDER BY (?count_depicts)")
+                          "} GROUP BY ?work ?image ?work_label ORDER BY (?count_depicts)")
     return data
 
 
@@ -200,7 +223,7 @@ def per_decade(indeterminate="Década indeterminada"):
 
 
 def works_of_decade(decade, lang="pt-br", indeterminate="Década indeterminada"):
-    data = query_wikidata("SELECT DISTINCT ?work ?work_label ?image (COUNT(?depicts) AS ?total) WHERE {?work wdt:P195 wd:Q56677470; wdt:P18 ?image; wdt:P180 ?depicts. ?work p:P571 ?decade_aux. ?decade_aux psv:P571 ?decade_. ?decade_ wikibase:timeValue ?value. ?decade_ wikibase:timePrecision ?precision. ?work rdfs:label ?work_label. FILTER((LANG(?work_label)) = \""+lang+"\") BIND(IF(?precision = 7,CONCAT('"+indeterminate+"'), STR(10*FLOOR(YEAR(?value)/10))) AS ?decade) FILTER(?decade=\""+decade+"\")} GROUP BY ?work ?work_label ?image ORDER BY ?total")
+    data = query_wikidata("SELECT DISTINCT ?work ?work_label ?image (COUNT(?depicts) AS ?total) WHERE { SERVICE wikibase:label { bd:serviceParam wikibase:language 'pt-br,pt,en'. } ?work wdt:P195 wd:Q56677470; wdt:P18 ?image; wdt:P180 ?depicts. ?work p:P571 ?decade_aux. ?decade_aux psv:P571 ?decade_. ?decade_ wikibase:timeValue ?value. ?decade_ wikibase:timePrecision ?precision. ?work rdfs:label ?work_label. FILTER((LANG(?work_label)) = \""+lang+"\") BIND(IF(?precision = 7,CONCAT('"+indeterminate+"'), STR(10*FLOOR(YEAR(?value)/10))) AS ?decade) FILTER(?decade=\""+decade+"\")} GROUP BY ?work ?work_label ?image ORDER BY ?total")
     return data
 
 
@@ -210,7 +233,7 @@ def per_instance(lang="pt-br"):
 
 
 def works_of_instance(qid_instance, lang="pt-br"):
-    data = query_wikidata("SELECT DISTINCT ?work ?work_label ?image (COUNT(DISTINCT(?depict)) AS ?total) WHERE {BIND(wd:"+qid_instance+" AS ?instance) ?work wdt:P195 wd:Q56677470. {?work wdt:P18 ?image; wdt:P180 ?depict; wdt:P31 ?instance.} UNION {?work_ wdt:P31 ?instance. ?work wdt:P195 ?work_; wdt:P18 ?image; wdt:P180 ?depict.} ?work rdfs:label ?work_label. FILTER((LANG(?work_label)) = \""+lang+"\")} GROUP BY ?work ?work_label ?image ORDER BY ?total")
+    data = query_wikidata("SELECT DISTINCT ?work ?work_label ?image (COUNT(DISTINCT(?depict)) AS ?total) WHERE { SERVICE wikibase:label { bd:serviceParam wikibase:language 'pt-br,pt,en'. } BIND(wd:"+qid_instance+" AS ?instance) ?work wdt:P195 wd:Q56677470. {?work wdt:P18 ?image; wdt:P180 ?depict; wdt:P31 ?instance.} UNION {?work_ wdt:P31 ?instance. ?work wdt:P195 ?work_; wdt:P18 ?image; wdt:P180 ?depict.} ?work rdfs:label ?work_label. FILTER((LANG(?work_label)) = \""+lang+"\")} GROUP BY ?work ?work_label ?image ORDER BY ?total")
     return data
 
 

@@ -47,6 +47,7 @@ consumer_token = mwoauth.ConsumerToken(
     app.config['CONSUMER_KEY'],
     app.config['CONSUMER_SECRET'])
 WIKIDATA_API_ENDPOINT = 'https://www.wikidata.org/w/api.php'
+THUMBNAIL_SIZE = '300px'
 
 
 @BABEL.localeselector
@@ -218,7 +219,7 @@ def tutorial():
 
     collection_tutorial = []
     for result in images_["results"]["bindings"]:
-        collection_tutorial.append({"image": result["image"]["value"]+"?width=200px"})
+        collection_tutorial.append({"image": result["image"]["value"]+"?width="+THUMBNAIL_SIZE})
 
     return render_template("tutorial.html",
                            username=username,
@@ -243,7 +244,7 @@ def show_per_collection():
             "qid": result["collection"]["value"].split("/")[-1],
             "label": result["collection_label"]["value"],
             "quantity": result["num_works"]["value"]})
-    return render_template("per_collection.html", collections=collections, username=username, lang=lang)
+    return render_template("per_collection.html", collections=collections, username=username, lang=lang, collection="")
 
 
 @app.route('/p195/<qid>', methods=['GET'])
@@ -259,7 +260,8 @@ def show_works_in_collection(qid):
     for result in json["results"]["bindings"]:
         collection.append({
             "qid": result["work"]["value"].split("/")[-1],
-            "image": result["image"]["value"]+"?width=200px"})
+            "image": result["image"]["value"][51:],
+            "label": result["work_label"]["value"]})
 
     coll_data = {
         "collection_label": collection_data_["results"]["bindings"][0]["collection_label"]["value"],
@@ -294,7 +296,7 @@ def show_per_creator():
             "qid": result["creator"]["value"].split("/")[-1],
             "label": result["creator_label"]["value"],
             "quantity": result["total"]["value"]})
-    return render_template("per_creator.html", creators=creators, username=username, lang=lang)
+    return render_template("per_creator.html", creators=creators, username=username, lang=lang, creator="")
 
 
 @app.route('/p170/<qid>', methods=['GET'])
@@ -311,7 +313,7 @@ def show_works_of_creator(qid):
         creator.append({
             "qid": result["work"]["value"].split("/")[-1],
             "label": result["work_label"]["value"],
-            "image": result["image"]["value"] + "?width=200px"})
+            "image": result["image"]["value"][51:]})
 
     creator_data_aux = {
         "creator_article": creator_data_["results"]["bindings"][0]["creator_article"]["value"] if "creator_article" in creator_data_["results"]["bindings"][0] else "",
@@ -340,7 +342,7 @@ def show_per_decade():
     decades = []
     for result in json["results"]["bindings"]:
         decades.append({"label": result["decade"]["value"]})
-    return render_template("per_decade.html", decades=decades, username=username, lang=lang)
+    return render_template("per_decade.html", decades=decades, username=username, lang=lang, decade_data="")
 
 
 @app.route('/p571/<decade>', methods=['GET'])
@@ -357,7 +359,7 @@ def show_works_of_decade(decade):
         decade_.append({
             "qid": result["work"]["value"].split("/")[-1],
             "label": result["work_label"]["value"],
-            "image": result["image"]["value"] + "?width=200px"})
+            "image": result["image"]["value"][51:]})
 
     return render_template("per_decade.html",
                            decade=decade,
@@ -379,7 +381,7 @@ def show_per_instance():
     for result in json["results"]["bindings"]:
         instances.append({"qid": result["instance"]["value"].split("/")[-1],
                           "label": result["instance_label"]["value"]})
-    return render_template("per_instance.html", instances=instances, username=username, lang=lang)
+    return render_template("per_instance.html", instances=instances, username=username, lang=lang, instance="")
 
 
 @app.route('/p31/<qid>', methods=['GET'])
@@ -395,7 +397,7 @@ def show_works_of_instance(qid):
         instance.append({
             "qid": result["work"]["value"].split("/")[-1],
             "label": result["work_label"]["value"],
-            "image": result["image"]["value"] + "?width=200px"})
+            "image": result["image"]["value"][51:]})
 
     instance_data = {"instance_label": get_name(qid),
                      "total_scope": len(instance)}
@@ -420,7 +422,7 @@ def show_per_depict():
     for result in json["results"]["bindings"]:
         depicts.append({"qid": result["depict"]["value"].split("/")[-1],
                         "label": result["depict_label"]["value"]})
-    return render_template("per_depict.html", depicts=depicts, username=username, lang=lang)
+    return render_template("per_depict.html", depicts=depicts, username=username, lang=lang, depict="")
 
 
 @app.route('/p180/<qid>', methods=['GET'])
@@ -436,7 +438,7 @@ def show_works_of_depict(qid):
         depict.append({
             "qid": result["work"]["value"].split("/")[-1],
             "label": result["work_label"]["value"],
-            "image": result["image"]["value"] + "?width=200px"})
+            "image": result["image"]["value"][51:]})
 
     depict_data = {"depict_label": get_name(qid, lang),
                    "total_scope": len(depict)}
@@ -554,7 +556,7 @@ def get_work_data(qid, lang):
         else:
             work_label = ""
         if "image" in data_work["results"]["bindings"][0]:
-            image = data_work["results"]["bindings"][0]["image"]["value"] + "?width=1000px"
+            image = data_work["results"]["bindings"][0]["image"]["value"][51:]
         else:
             image = ""
         if "date" in data_work["results"]["bindings"][0]:
