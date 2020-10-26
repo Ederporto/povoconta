@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  1.0.1\n"
 "Report-Msgid-Bugs-To: eder.porto@wmnobrasil.org\n"
-"POT-Creation-Date: 2020-10-26 18:26-0300\n"
+"POT-Creation-Date: 2020-10-26 18:42-0300\n"
 "PO-Revision-Date: 2020-04-21 04:36-0300\n"
 "Last-Translator: Éder Porto <eder.porto@wmnobrasil.org>\n"
 "Language: en\n"
@@ -498,5 +498,9 @@ msgid "Licença dos objetos retornados do Wikidata: %(license_wikidata)s."
 msgstr "License of objects returned from Wikidata: %(license_wikidata)s."
 
 #: templates/sobre.html:35
-msgid "Versão 1.0.2."
-msgstr "Version 1.0.2."
+msgid "Versão 1.0.1."
+msgstr "Version 1.0.1"
+
+#~ msgid "Versão 1.0.2."
+#~ msgstr "Version 1.0.2."
+
