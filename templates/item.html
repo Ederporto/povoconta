@@ -5,22 +5,10 @@
 <script src="{{ url_for('static', filename= 'jquery.zoom.js') }}"></script>
 {% endblock %}
 
-{% block divright %}
-    {% if lang != 'en' %}
-        <a class="right" tabindex="0" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='en')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Flag-us.svg" width="25px" alt="en"></a>
-    {% endif %}
-    {% if lang != 'pt' and lang != 'pt-BR' %}
-        <a class="right" tabindex="0" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='pt')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Flag-br.svg" width="25px" alt="pt"></a>
-    {% endif %}
-    {% if username %}
-        <a class="right" tabindex="0" target="_blank" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
-    {% endif %}
-{% endblock %}
-
-{% block title %}{{work_data.work_label}} | {{ _("Povo Conta") }}{% endblock %}
+{% block title %}{{work_data.work_label}} | {{ _("Wiki Museu do Ipiranga - Quantos tem?") }}{% endblock %}
 
 {% block content %}
-<div class="w3-row" style="padding-top:30px;overflow: hidden;z-index: 1">
+<div class="w3-row" style="overflow: hidden;z-index: 1">
     <div id="image" class="w3-container w3-half">
         <div class="img-magnifier-container">
             <img id="image_item" alt="{{work_data.work_label}}"
@@ -30,7 +18,7 @@
             {{_("Veja essa imagem no Wikimedia Commons")}}
         </a>
     </div>
-    <div id="metadata" class="w3-container w3-half" style="text-align:left; font-family: 'Josefin Sans', sans-serif; font-size:150%">
+    <div id="metadata" class="w3-container w3-half" style="text-align:left; font-family: 'Josefin Sans', sans-serif; font-size:115%">
         <table class="table table-responsive table-striped" style="overflow: hidden; width: 100%; font-size: 115%; table-layout: fixed; overflow-wrap: break-word;">
             <tr>
                 <th>{{ _("Obra") }}</th>

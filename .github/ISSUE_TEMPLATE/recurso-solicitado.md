@@ -1,6 +1,6 @@
 ---
 name: Recurso solicitado
-about: Sugira uma ideia para este jogo
+about: Sugira uma ideia para este aplicativo
 title: PEDIDO
 labels: enhancement
 assignees: Ederporto

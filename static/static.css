@@ -1,3 +1,13 @@
+body {
+    font-family: Josefin Sans, sans-serif;
+    font-size: 115%;
+    padding-right: 0 !important;
+}
+
+h1, h2, h3 {
+    font-family: Josefin Sans, sans-serif;
+}
+
 .nav {
     padding-left: 0;
     margin-bottom: 0;
@@ -46,7 +56,7 @@ li {
 
 p {
     font-family: 'Josefin Sans', sans-serif;
-    font-size: 150%;
+    font-size: 125%;
 }
 
 a {
@@ -60,7 +70,7 @@ a {
     border: none;
     border-radius: 5px;
     color: white;
-    font-size: 135%;
+    font-size: 125%;
     margin: 5px;
     padding: 20px;
     align: center;

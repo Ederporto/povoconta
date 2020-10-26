@@ -9,19 +9,7 @@
     <script src="{{ url_for('static', filename= 'pagination.js') }}"></script>
 {% endblock %}
 
-{% block divright %}
-    {% if lang != 'en' %}
-        <a class="right" tabindex="0" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='en')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Flag-us.svg" width="25px" alt="en"></a>
-    {% endif %}
-    {% if lang != 'pt' and lang != 'pt-BR' %}
-        <a class="right" tabindex="0" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='pt')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Flag-br.svg" width="25px" alt="pt"></a>
-    {% endif %}
-    {% if username %}
-        <a class="right" tabindex="0" target="_blank" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
-    {% endif %}
-{% endblock %}
-
-{% block title %}{{_("Descritores")}} | {{ _("Povo Conta") }}{% endblock %}
+{% block title %}{{_("Descritores")}} | {{ _("Wiki Museu do Ipiranga - Quantos tem?") }}{% endblock %}
 
 {% block initial_text %}
 <div class="w3-row" id="initial_text" style="text-align: center">

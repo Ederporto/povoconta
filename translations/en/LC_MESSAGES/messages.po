@@ -1,11 +1,11 @@
-# English translations for Povo Conta.
-# Éder POrto <eder.porto@wmnobrasil.org>, 2020.
+# English translations for Wiki Museu do Ipiranga - Quantos tem?.
+# Éder Porto <eder.porto@wmnobrasil.org>, 2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version:  1.0.1\n"
 "Report-Msgid-Bugs-To: eder.porto@wmnobrasil.org\n"
-"POT-Creation-Date: 2020-04-21 06:55-0300\n"
+"POT-Creation-Date: 2020-10-26 18:26-0300\n"
 "PO-Revision-Date: 2020-04-21 04:36-0300\n"
 "Last-Translator: Éder Porto <eder.porto@wmnobrasil.org>\n"
 "Language: en\n"
@@ -16,183 +16,207 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
 
-#: templates/base.html:5 templates/base.html:14 templates/error.html:31
-#: templates/museudoipiranga.html:31 templates/sobre.html:31
-#: templates/tutorial.html:31
-msgid "Povo Conta"
-msgstr "Povo Conta"
+#: templates/base.html:25 templates/error.html:11 templates/item.html:8
+#: templates/per_collection.html:12 templates/per_creator.html:12
+#: templates/per_decade.html:12 templates/per_depict.html:12
+#: templates/per_instance.html:12 templates/sobre.html:11
+#: templates/tutorial.html:3
+msgid "Wiki Museu do Ipiranga - Quantos tem?"
+msgstr "Wiki Museu do Ipiranga - How many?"
 
-#: templates/base.html:15
+#: templates/base.html:31
+msgid "Página inicial"
+msgstr "Homepage"
+
+#: templates/base.html:32 templates/sobre.html:11
 msgid "Sobre"
 msgstr "About"
 
-#: templates/base.html:16 templates/tutorial.html:31
-msgid "Como jogar?"
-msgstr "How to play?"
+#: templates/base.html:33 templates/tutorial.html:3
+msgid "Ajuda"
+msgstr "Help"
 
-#: templates/base.html:30
+#: templates/base.html:43
+msgid "Autenticar-se"
+msgstr "Authenticate"
+
+#: templates/base.html:45
+msgid "Menu"
+msgstr "Menu"
+
+#: templates/base.html:56 templates/base.html:58
+msgid "Logotipo Wiki Museu do Ipiranga - Quantos tem?"
+msgstr "Logo of Wiki Museu do Ipiranga - How many?"
+
+#: templates/base.html:72
+msgid "Projeto Novo Museu do Ipiranga"
+msgstr "Novo Museu do Ipiranga Project"
+
+#: templates/base.html:73
 #, python-format
 msgid ""
-"<i>Povo Conta</i> é um jogo desenvolvido no contexto do "
-"<i><b>%(projeto)s</b></i>, organizado pelo <b>Grupo de Usuários Wiki "
-"Movimento Brasil</b> e o <b>Museu do Ipiranga</b>, em parceria com a "
-"<b>Fundação Banco do Brasil</b> e com realização da <b>Universidade de "
-"São Paulo</b> e a <b>Fundação de Apoio à Universidade de São Paulo</b>."
+"<i>Wiki Museu do Ipiranga - Quantos tem?</i> é um aplicativo desenvolvido"
+" no contexto do <i><b>%(projeto)s</b></i>, organizado pelo <b>Grupo de "
+"Usuários Wiki Movimento Brasil</b> e o <b>Museu do Ipiranga</b>, em "
+"parceria com a <b>Fundação Banco do Brasil</b> e com realização da "
+"<b>Universidade de São Paulo</b> e a <b>Fundação de Apoio à Universidade "
+"de São Paulo</b>."
 msgstr ""
-"<i>Povo Conta</i> is a game developed in the context of the "
-"<i><b>%(projeto)s</b></i>, organized by the <b>User Group Wiki Movement "
-"Brazil</b> and <b>Museu do Ipiranga</b>, in partnership with the <b>Banco"
-" do Brasil Foundation</b> and organized by the <b>University of São "
-"Paulo</b> and the <b>University of São Paulo Support Foundation</b>."
+"<i>Wiki Museu do Ipiranga - How many?</i> is an application developed in "
+"the context of the <i><b>%(projeto)s</b></i>, organized by the <b>Wiki "
+"Movimento Brasil User Group</b> and the <b>Museu do Ipiranga</b>, in "
+"partnership with the <b>Banco do Brasil Foundation</b> and organized by "
+"the <b>University of São Paulo</b> and <b>University of São Paulo Support"
+" Foundation</b>."
 
-#: templates/error.html:31 templates/museudoipiranga.html:31
-#: templates/sobre.html:31
-msgid "Museu do Ipiranga"
-msgstr "Museu do Ipiranga"
-
-#: templates/error.html:39
+#: templates/error.html:11 templates/error.html:16
 msgid "Algo deu errado!"
 msgstr "Something went wrong!"
 
-#: templates/error.html:46
+#: templates/error.html:23
 msgid "REPORTAR ERRO"
 msgstr "REPORT ERROR"
 
-#: templates/error.html:53
+#: templates/error.html:30
 msgid "VOLTAR À PÁGINA INICIAL"
 msgstr "RETURN TO HOMEPAGE"
 
-#: templates/item.html:36 templates/tutorial.html:149
-#: templates/tutorial.html:263
+#: templates/item.html:18
 msgid "Veja essa imagem no Wikimedia Commons"
 msgstr "See this image at Wikimedia Commons"
 
-#: templates/item.html:41 templates/tutorial.html:154
-#: templates/tutorial.html:268
+#: templates/item.html:24
 msgid "Obra"
 msgstr "Work"
 
-#: templates/item.html:43 templates/tutorial.html:156
-#: templates/tutorial.html:270
+#: templates/item.html:29
 msgid "Criador(a)"
 msgstr "Creator"
 
-#: templates/item.html:48
+#: templates/item.html:39
 msgid "Data"
 msgstr "Date"
 
-#: templates/item.html:51
+#: templates/item.html:47
 msgid "Instância de"
 msgstr "Instance of"
 
-#: templates/item.html:56
+#: templates/item.html:57
 msgid "Materiais utilizados"
 msgstr "Materials used"
 
-#: templates/item.html:56
+#: templates/item.html:57
 msgid "Material utilizado"
 msgstr "Material used"
 
-#: templates/item.html:61
+#: templates/item.html:67
 msgid "Encomendada por"
 msgstr "Commissioned by"
 
-#: templates/item.html:69 templates/tutorial.html:168
-#: templates/tutorial.html:282
+#: templates/item.html:77
+msgid "Versão audível"
+msgstr "Audible version"
+
+#: templates/item.html:82
+msgid "Seu navegador não suporta o elemento de áudio"
+msgstr "Your browser does not suppor the audio element"
+
+#: templates/item.html:92
 msgid "Quantos itens de cada descritor você vê?"
 msgstr "How many items from each descriptor do you see?"
 
-#: templates/item.html:85 templates/tutorial.html:186
+#: templates/item.html:112
 msgid "AUTENTICAR"
 msgstr "LOG IN"
 
-#: templates/item.html:89 templates/tutorial.html:226
-#: templates/tutorial.html:300
+#: templates/item.html:116
 msgid "CONFIRMAR"
 msgstr "CONFIRM"
 
-#: templates/item.html:96 templates/tutorial.html:193
-#: templates/tutorial.html:233 templates/tutorial.html:307
+#: templates/item.html:123
 msgid "PULAR"
 msgstr "SKIP"
 
-#: templates/item.html:104
+#: templates/item.html:131
 msgid "VOLTAR"
 msgstr "GO BACK"
 
-#: templates/item.html:110 templates/tutorial.html:200
-#: templates/tutorial.html:240 templates/tutorial.html:314
+#: templates/item.html:137
 msgid "INÍCIO"
 msgstr "HOMEPAGE"
 
-#: templates/museudoipiranga.html:34
+#: templates/museudoipiranga.html:8
+msgid "Bem-vindo(a) ao <i>Wiki Museu do Ipiranga - Quantos tem?</i>"
+msgstr "Welcome to the <i>Wiki Museu do Ipiranga - How many?</i>"
+
+#: templates/museudoipiranga.html:11
 msgid ""
-"Navegue pelo acervo do Museu do Ipiranga e ajude a melhorar as descrições"
-" das obras."
+"Neste aplicativo, você participa do trabalho de pesquisa do Museu do "
+"Ipiranga. Sua tarefa: contar quantos elementos estão presentes nas obras "
+"do acervo. Para participar, é preciso autenticar-se; depois, escolha uma "
+"categoria abaixo para começar."
 msgstr ""
-"Browse through the Museu do Ipiranga collection and help improve the "
-"descriptions of the works."
+"In this application, you participate in the research work of the Ipiranga"
+" Museum. Your task: to count elements present in the works of the "
+"collection. To participate, you need to authenticate yourself; then "
+"choose a category below to start."
 
-#: templates/museudoipiranga.html:42
-msgid "Escolha uma opção:"
-msgstr "Choose an option:"
-
-#: templates/museudoipiranga.html:48 templates/tutorial.html:56
+#: templates/museudoipiranga.html:25 templates/per_collection.html:12
 msgid "Coleções"
 msgstr "Collections"
 
-#: templates/museudoipiranga.html:55 templates/tutorial.html:61
+#: templates/museudoipiranga.html:32 templates/per_creator.html:12
 msgid "Criadores"
 msgstr "Creators"
 
-#: templates/museudoipiranga.html:62 templates/tutorial.html:66
+#: templates/museudoipiranga.html:39 templates/per_decade.html:12
 msgid "Décadas"
 msgstr "Decades"
 
-#: templates/museudoipiranga.html:69 templates/tutorial.html:71
+#: templates/museudoipiranga.html:48 templates/per_instance.html:12
 msgid "Tipos de obra"
 msgstr "Types of work"
 
-#: templates/museudoipiranga.html:76 templates/tutorial.html:76
+#: templates/museudoipiranga.html:55 templates/per_depict.html:12
 msgid "Descritores"
 msgstr "Descriptors"
 
-#: templates/per_collection.html:32 templates/per_creator.html:32
-#: templates/per_decade.html:32 templates/per_depict.html:32
-#: templates/per_instance.html:32 templates/tutorial.html:40
+#: templates/per_collection.html:19 templates/per_creator.html:19
+#: templates/per_decade.html:19 templates/per_depict.html:19
+#: templates/per_instance.html:19
 msgid "página inicial"
 msgstr "homepage"
 
-#: templates/per_collection.html:39
+#: templates/per_collection.html:26
 msgid "um artigo na Wikipédia"
 msgstr "an article in the Portuguese Wikipedia"
 
-#: templates/per_collection.html:40
+#: templates/per_collection.html:27
 msgid "Wikimedia Commons"
 msgstr "Wikimedia Commons"
 
-#: templates/per_collection.html:41 templates/per_creator.html:38
-#: templates/per_decade.html:36 templates/per_depict.html:36
-#: templates/per_instance.html:36 templates/tutorial.html:47
+#: templates/per_collection.html:28 templates/per_creator.html:26
+#: templates/per_decade.html:23 templates/per_depict.html:23
+#: templates/per_instance.html:23
 msgid "clique aqui"
 msgstr "click here"
 
-#: templates/per_collection.html:43
+#: templates/per_collection.html:30
 #, python-format
 msgid "Esta é a %(collection_label)s."
 msgstr "This is the %(collection_label)s."
 
-#: templates/per_collection.html:47
+#: templates/per_collection.html:34
 #, python-format
 msgid "É nomeada em homenagem a %(named_after_with_article)s."
 msgstr "Is named after %(named_after_with_article)s."
 
-#: templates/per_collection.html:49 templates/tutorial.html:113
+#: templates/per_collection.html:36
 #, python-format
 msgid "É nomeada em homenagem a %(named_after_label)s."
 msgstr "Is named after %(named_after_label)s."
 
-#: templates/per_collection.html:54 templates/tutorial.html:115
+#: templates/per_collection.html:41
 #, python-format
 msgid ""
 "Possui %(total)s obras registradas no Wikidata, das quais %(total_scope)s"
@@ -201,7 +225,7 @@ msgstr ""
 "Has %(total)s works registered on Wikidata, of which %(total_scope)s have"
 " at least one image and a descriptor in the database."
 
-#: templates/per_collection.html:56
+#: templates/per_collection.html:43
 #, python-format
 msgid ""
 "Possui %(total)s obras registradas no Wikidata, das quais %(total_scope)s"
@@ -210,7 +234,7 @@ msgstr ""
 "Has %(total)s works registered on Wikidata, of which %(total_scope)s have"
 " at least one image and a descriptor in the database."
 
-#: templates/per_collection.html:60 templates/tutorial.html:117
+#: templates/per_collection.html:47
 #, python-format
 msgid ""
 "A coleção possui %(collection_article)s e todas as suas imagens podem ser"
@@ -219,37 +243,41 @@ msgstr ""
 "The collection has %(collection_article)s and all of its images can be "
 "found at %(collection_category)s."
 
-#: templates/per_collection.html:62
+#: templates/per_collection.html:49
 #, python-format
 msgid "A coleção possui %(collection_article)s."
 msgstr "The collection has %(collection_article)s."
 
-#: templates/per_collection.html:64
+#: templates/per_collection.html:51
 #, python-format
 msgid ""
 "Todas as imagens da coleção podem ser encontradas no "
 "%(collection_category)s."
 msgstr "All images in the collection can be found at %(collection_category)s."
 
-#: templates/per_collection.html:66 templates/per_creator.html:58
-#: templates/per_decade.html:49 templates/per_depict.html:45
-#: templates/per_instance.html:46 templates/tutorial.html:119
+#: templates/per_collection.html:54 templates/per_creator.html:46
+#: templates/per_decade.html:36 templates/per_depict.html:32
+#: templates/per_instance.html:33
 #, python-format
 msgid "Para voltar à página anterior, %(clique_aqui)s."
 msgstr "To return to the previous page, %(clique_aqui)s."
 
-#: templates/per_collection.html:68 templates/tutorial.html:88
+#: templates/per_collection.html:56
 msgid "Escolha uma coleção para começar a jogar."
 msgstr "Choose a collection to start playing."
 
-#: templates/per_collection.html:69 templates/per_creator.html:61
-#: templates/per_decade.html:52 templates/per_depict.html:48
-#: templates/per_instance.html:49 templates/tutorial.html:89
+#: templates/per_collection.html:57 templates/per_creator.html:49
+#: templates/per_decade.html:39 templates/per_depict.html:35
+#: templates/per_instance.html:36
 #, python-format
 msgid "Ou volte à %(pagina_inicial)s."
 msgstr "Or go back to %(pagina_inicial)s."
 
-#: templates/per_creator.html:41
+#: templates/per_creator.html:24
+msgid "Wikidata"
+msgstr "Wikidata"
+
+#: templates/per_creator.html:29
 #, python-format
 msgid ""
 "Esta é a coleção de obras de %(creator_article)s no Museu do Ipiranga que"
@@ -258,7 +286,7 @@ msgstr ""
 "This is the collection of works by %(creator_article)s at Museu do "
 "Ipiranga that have at least one image and a descriptor on Wikidata."
 
-#: templates/per_creator.html:43
+#: templates/per_creator.html:31
 #, python-format
 msgid ""
 "Esta é a coleção de obras de %(creator_label)s no Museu do Ipiranga que "
@@ -267,46 +295,46 @@ msgstr ""
 "This is the collection of works by %(creator_label)s at Museu do Ipiranga"
 " that have at least one image and a descriptor on Wikidata."
 
-#: templates/per_creator.html:46
+#: templates/per_creator.html:34
 #, python-format
 msgid "Atualmente são %(total_scope)s obras que cumprem esses critérios."
 msgstr "Currently there are %(total_scope)s works that meet these criteria."
 
-#: templates/per_creator.html:48
+#: templates/per_creator.html:36
 msgid ""
 "Há atualmente somente uma imagem no banco de dados que satisfaz esses "
 "critérios."
 msgstr "Currently there is only one work that meet these criteria."
 
-#: templates/per_creator.html:50
+#: templates/per_creator.html:38
 msgid ""
 "Atualmente não há nenhuma imagem no banco de dados que satisfaz esses "
 "critérios."
 msgstr "There is currently no image in the database that satisfies these criteria."
 
-#: templates/per_creator.html:53
+#: templates/per_creator.html:41
 #, python-format
 msgid ""
 "Há um total de uma obra de %(creator_label)s no Museu do Ipiranga "
 "cadastrada no banco de dados do Wikidata."
 msgstr ""
-"There is a total of one work by %(creator_label)s at the Museu do Ipiranga "
-"registered in the Wikidata database."
+"There is a total of one work by %(creator_label)s at the Museu do "
+"Ipiranga registered in the Wikidata database."
 
-#: templates/per_creator.html:55
+#: templates/per_creator.html:43
 #, python-format
 msgid ""
 "Há um total de %(total)s obras de %(creator_label)s no Museu do Ipiranga "
 "cadastradas no banco de dados do Wikidata."
 msgstr ""
-"There is a total of %(total)s works by %(creator_label)s at the Museu do Ipiranga "
-"registered in the Wikidata database."
+"There is a total of %(total)s works by %(creator_label)s at the Museu do "
+"Ipiranga registered in the Wikidata database."
 
-#: templates/per_creator.html:60
+#: templates/per_creator.html:48
 msgid "Escolha um(a) criador(a) para começar a jogar."
 msgstr "Choose a creator to start playing."
 
-#: templates/per_decade.html:38
+#: templates/per_decade.html:25
 msgid ""
 "Esta é uma coleção de obras do Museu do Ipiranga com a década de produção"
 " indeterminada que possuem ao menos uma imagem e um descritor no "
@@ -316,7 +344,7 @@ msgstr ""
 "undetermined date production that have at least one image and a "
 "descriptor on Wikidata."
 
-#: templates/per_decade.html:40
+#: templates/per_decade.html:27
 #, python-format
 msgid ""
 "Esta é uma coleção de obras do Museu do Ipiranga da década de %(decade)s "
@@ -325,8 +353,8 @@ msgstr ""
 "This is a collection of works from the Museu do Ipiranga from the decade "
 "of %(decade)s that have at least one image and a descriptor on Wikidata."
 
-#: templates/per_decade.html:43 templates/per_depict.html:39
-#: templates/per_instance.html:40
+#: templates/per_decade.html:30 templates/per_depict.html:26
+#: templates/per_instance.html:27
 #, python-format
 msgid ""
 "Há atualmente %(total_scope)s obras registradas no banco de dados que "
@@ -335,8 +363,8 @@ msgstr ""
 "There are currently %(total_scope)s works registered in the database that"
 " meet these criteria."
 
-#: templates/per_decade.html:45 templates/per_depict.html:41
-#: templates/per_instance.html:42
+#: templates/per_decade.html:32 templates/per_depict.html:28
+#: templates/per_instance.html:29
 msgid ""
 "Há atualmente uma obra registrada no banco de dados que satisfaz esses "
 "critérios."
@@ -344,8 +372,8 @@ msgstr ""
 "There is currently only one work registered in the database that meets "
 "these criteria."
 
-#: templates/per_decade.html:47 templates/per_depict.html:43
-#: templates/per_instance.html:44
+#: templates/per_decade.html:34 templates/per_depict.html:30
+#: templates/per_instance.html:31
 msgid ""
 "Não há atualmente nenhuma obra registrada no banco de dados que satisfaz "
 "esses critérios."
@@ -353,11 +381,11 @@ msgstr ""
 "There is currently no work registered in the database that meets these "
 "criteria."
 
-#: templates/per_decade.html:51
+#: templates/per_decade.html:38
 msgid "Escolha uma década para começar a jogar."
 msgstr "Choose a decade to start playing."
 
-#: templates/per_depict.html:37
+#: templates/per_depict.html:24
 #, python-format
 msgid ""
 "Esta é uma coleção de obras do Museu do Ipiranga que retratam "
@@ -368,11 +396,11 @@ msgstr ""
 "%(depict_label)s and that have at least one image and a descriptor "
 "inWikidata."
 
-#: templates/per_depict.html:47
+#: templates/per_depict.html:34
 msgid "Escolha um descritor para começar a jogar."
 msgstr "Choose a descriptor to start playing."
 
-#: templates/per_instance.html:38
+#: templates/per_instance.html:25
 #, python-format
 msgid ""
 "Esta é uma coleção de obras do Museu do Ipiranga do tipo "
@@ -383,33 +411,26 @@ msgstr ""
 "%(instance_label)s that have at least one image and a descriptor in "
 "Wikidata."
 
-#: templates/per_instance.html:48
+#: templates/per_instance.html:35
 msgid "Escolha um tipo de obra para começar a jogar."
 msgstr "Choose a type of work to start playing."
 
-#: templates/sobre.html:38
+#: templates/sobre.html:18
 msgid ""
-"<b>Povo Conta</b> é um jogo colaborativo. O propósito é contribuir com a "
-"descrição das obras no acervo do Museu Paulista da Universidade de São "
-"Paulo."
+"<b>Wiki Museu do Ipiranga - Quantos tem?</b> é um aplicativo "
+"colaborativo. O propósito é contribuir com a descrição das obras no "
+"acervo do Museu Paulista da Universidade de São Paulo."
 msgstr ""
-"<b>Povo Conta</b> is a collaborative game. The purpose is to contribute "
-"to the description of the works in the collection of the Museu Paulista "
-"of the University of São Paulo, also known as Museu do Ipiranga."
 
-#: templates/sobre.html:39
+#: templates/sobre.html:19
 msgid ""
-"O jogo está conectado à base de dados colaborativa Wikidata, um projeto "
-"irmão da Wikipédia. Toda contribuição que é feita no <b>Povo Conta</b> é "
-"automaticamente transmitida para o respectivo item da obra editada no "
-"Wikidata."
+"O aplicativo está conectado à base de dados colaborativa Wikidata, um "
+"projeto irmão da Wikipédia. Toda contribuição que é feita no <b>Wiki "
+"Museu do Ipiranga - Quantos tem?</b> é automaticamente transmitida para o"
+" respectivo item da obra editada no Wikidata."
 msgstr ""
-"The game is connected to the Wikidata collaborative database, a sister "
-"project to Wikipedia. Any contribution made in <b>Povo Conta</b> is "
-"automatically transmitted to the respective item of the work edited on "
-"Wikidata."
 
-#: templates/sobre.html:40
+#: templates/sobre.html:20
 msgid ""
 "As edições são então transpostas para uma série de páginas na internet. "
 "Isso inclui livros colaborativos, repositórios de imagens e em alguns "
@@ -419,257 +440,63 @@ msgstr ""
 "This includes collaborative books, image repositories and in some cases "
 "Wikipedia itself."
 
-#: templates/sobre.html:41
+#: templates/sobre.html:21
 msgid ""
-"O nome do jogo é uma referência à prática no jornalismo de entrevistar "
-"pessoas, em geral na rua, para saber o que pensam sobre determinado "
-"assunto. No <b>Povo Conta</b>, é o Museu Paulista que espera sua "
-"contribuição na descrição de seu acervo."
+"O nome do aplicativo é uma referência à prática no jornalismo de "
+"entrevistar pessoas, em geral na rua, para saber o que pensam sobre "
+"determinado assunto. No <b>Wiki Museu do Ipiranga - Quantos tem?</b>, é o"
+" Museu Paulista que espera sua contribuição na descrição de seu acervo."
 msgstr ""
-"The name of the game is a reference to the practice in journalism of "
-"interviewing people, usually on the street, to find out what they think "
-"about a certain subject. At <b>Povo Conta</b>, it is the Museu do "
-"Ipiranga that awaits your contribution in the description of its "
-"collection."
 
-#: templates/sobre.html:43
+#: templates/sobre.html:22
 msgid "Participe e divulgue!"
 msgstr "Participate and share!"
 
-#: templates/sobre.html:45
+#: templates/sobre.html:24
 msgid "Flask"
 msgstr "Flask"
 
-#: templates/sobre.html:46
+#: templates/sobre.html:25
 msgid "GitHub"
 msgstr "GitHub"
 
-#: templates/sobre.html:47
+#: templates/sobre.html:26
 msgid "GPL v3.0"
 msgstr "GPL v3.0"
 
-#: templates/sobre.html:48
+#: templates/sobre.html:27
 msgid "CC-BY-SA 4.0 Internacional"
 msgstr "CC-BY-SA 4.0 International"
 
-#: templates/sobre.html:49
+#: templates/sobre.html:28
 msgid "CC0"
 msgstr "CC0"
 
-#: templates/sobre.html:51
+#: templates/sobre.html:30
 #, python-format
-msgid "Este jogo foi desenvolvido em %(flask)s."
-msgstr "This game was developed in %(flask)s."
+msgid "Este aplicativo foi desenvolvido em %(flask)s."
+msgstr "This app was developed in %(flask)s."
 
-#: templates/sobre.html:52
+#: templates/sobre.html:31
 #, python-format
 msgid "O código-fonte está disponível no %(github)s."
 msgstr "The source code is available on %(github)s."
 
-#: templates/sobre.html:53
+#: templates/sobre.html:32
 #, python-format
 msgid "Licença do cógido-fonte: %(license_code)s."
 msgstr "Source code license: %(license_code)s."
 
-#: templates/sobre.html:54
+#: templates/sobre.html:33
 #, python-format
 msgid "Licença de textos: %(license_text)s."
 msgstr "License of texts: %(license_text)s."
 
-#: templates/sobre.html:55
+#: templates/sobre.html:34
 #, python-format
 msgid "Licença dos objetos retornados do Wikidata: %(license_wikidata)s."
 msgstr "License of objects returned from Wikidata: %(license_wikidata)s."
 
-#: templates/sobre.html:56
-msgid "Versão 1.0.1."
-msgstr "Version 1.0.1."
-
-#: templates/tutorial.html:39
-msgid "Wikidata"
-msgstr "Wikidata"
-
-#: templates/tutorial.html:42 templates/tutorial.html:156
-#: templates/tutorial.html:270
-msgid "Militão Augusto de Azevedo"
-msgstr "Militão Augusto de Azevedo"
-
-#: templates/tutorial.html:50
-#, python-format
-msgid ""
-"O Museu Paulista já tem %(total_works)s obras cadastradas no banco de "
-"dados do %(wikidata)s. O <b>Povo Conta</b> organiza essas obras em 5 "
-"categorias para facilitar a escolha do usuário. São elas:"
-msgstr ""
-"The Museu do Ipiranga already has %(total_works)s works registered in the"
-" %(wikidata)s database. The <b>Povo Conta</b> organize these works in 5 "
-"categories to facilitate user choice. They are:"
-
-#: templates/tutorial.html:82
-msgid ""
-"Elas aparecem na página inicial do <b>Povo Conta</b>. Ao escolher uma das"
-" categorias, o usuário é levado a uma página que apresenta as "
-"subcategorias dessa categoria principal que escolheu. Por exemplo, ao "
-"selecionar a categoria <i>Coleções</i>, o usuário verá:"
-msgstr ""
-"They appear on the <b>Povo Conta</b> homepage. When choosing one of the "
-"categories, the user is taken to a page that presents the subcategories "
-"of that main category that they chose. For example, when selecting the "
-"<i>Collections</i> category, the user will see:"
-
-#: templates/tutorial.html:106
-msgid ""
-"Ao selecionar uma subcategoria, o usuário então entra na tela de seleção "
-"das obras para iniciar o jogo. Por exemplo, escolhendo a coleção "
-"<i>Militão Augusto de Azevedo</i>, o usuário verá:"
-msgstr ""
-"When selecting a subcategory, the user then enters the works selection "
-"screen to start the game. For example, choosing the <i>Militão Augusto de"
-" Azevedo</i> collection, the user will see:"
-
-#: templates/tutorial.html:112
-#, python-format
-msgid "Esta é a %(collection_label)s"
-msgstr "This is the %(collection_label)s"
-
-#: templates/tutorial.html:141
-msgid ""
-"O usuário poderá então escolher qualquer imagem mostrada para jogar. Ao "
-"clicar em uma obra, por exemplo <i>10165</i>, o usuário verá:"
-msgstr ""
-"The user can then choose any image shown to play. When clicking on a "
-"work, for example <i>10165</i>, the user will see:"
-
-#: templates/tutorial.html:154 templates/tutorial.html:268
-msgid "10165"
-msgstr "10165"
-
-#: templates/tutorial.html:158 templates/tutorial.html:272
-msgid "Data:"
-msgstr "Date:"
-
-#: templates/tutorial.html:158 templates/tutorial.html:272
-msgid "1879"
-msgstr "1879"
-
-#: templates/tutorial.html:160 templates/tutorial.html:274
-msgid "Instância de:"
-msgstr "Instance of"
-
-#: templates/tutorial.html:160 templates/tutorial.html:274
-msgid "fotografia"
-msgstr "photography"
-
-#: templates/tutorial.html:162 templates/tutorial.html:276
-msgid "Material utilizado:"
-msgstr "Material used:"
-
-#: templates/tutorial.html:162 templates/tutorial.html:276
-msgid "papel albuminado"
-msgstr "albumen print"
-
-#: templates/tutorial.html:164 templates/tutorial.html:278
-msgid "Encomendada por:"
-msgstr "Commissioned by:"
-
-#: templates/tutorial.html:164 templates/tutorial.html:278
-msgid "Photographia Americana"
-msgstr "Photographia Americana"
-
-#: templates/tutorial.html:172 templates/tutorial.html:286
-msgid "homem"
-msgstr "man"
-
-#: templates/tutorial.html:174 templates/tutorial.html:288
-msgid "brasileiro branco"
-msgstr "White Brazilian"
-
-#: templates/tutorial.html:176 templates/tutorial.html:290
-msgid "afro-brasileiro"
-msgstr "Afro-Brazilian"
-
-#: templates/tutorial.html:178 templates/tutorial.html:292
-msgid "chapéu"
-msgstr "hat"
-
-#: templates/tutorial.html:212
-msgid ""
-"Antes de jogar, o usuário deverá fazer login em sua conta Wiki e "
-"autorizar que suas edições sejam feitas usando o <b>Povo Conta</b>.\n"
-"            Para isso, o usuário deverá clicar em <i>AUTENTICAR</i> e "
-"seguir as intruções de login e autorização que aparecerão na tela.\n"
-"            Uma vez feita a autorização, o usuário será redirecionado de "
-"volta à página da obra e o botão <i>AUTENTICAR</i> terá se convertido em "
-"<i>CONFIRMAR</i>:"
-msgstr ""
-"Before playing, the user must log in to their Wiki account and authorize "
-"its edits to be made using the <b>Povo Conta</b>.\n"
-"For this, the user must click on <i>AUTHENTICATE</i> and follow the login"
-" and authorization instructions that will appear on the screen.\n"
-"Once the authorization is made, the user will be redirected back to the "
-"work page and the <i>AUTHENTICATE</i> button will have become "
-"<i>CONFIRM</i>"
-
-#: templates/tutorial.html:252
-msgid ""
-"Ao responder a pergunta <i>Quantos itens de cada descritor você vê?</i> e"
-" clicar no botão <i>CONFIRMAR</i>, o usuário grava os valores que inseriu"
-" no item da obra no Wikidata e é redirecionado a uma outra obra "
-"aleatória.\n"
-"            Se então o usuário quiser retornar à obra que acabou de "
-"melhorar, poderá clicar no botão <i>VOLTAR</i>, que terá surgido no lugar"
-" do botão <i>INÍCIO</i>.<br>\n"
-"            Caso não queira jogar com uma imagem, o usuário poderá sempre"
-" clicar no botão <i>PULAR</i> para ir para a página de outra obra "
-"aleatória."
-msgstr ""
-"When answering the question <i>How many items of each descriptor do you "
-"see?</i> and clicking on the <i>CONFIRM</i> button, the user saves the "
-"values they entered in the work item in Wikidata and is redirected to "
-"another random work.\n"
-"If the user then wants to return to the work they have just improved, "
-"they can click on the <i>BACK</i> button, which will have appeared in "
-"place of the <i>HOMEPAGE</i> button.\n"
-"If the user do not want to play with an image, they can always click on "
-"the <i>SKIP</i> button to go to the page of another random work."
-
-#~ msgid ""
-#~ "Há atualmente %(total_scope)s obras "
-#~ "registradas no banco de dados que "
-#~ "satisfazem esse critério."
-#~ msgstr ""
-#~ "There are currently %(total_scope)s works "
-#~ "registered in the database that meet "
-#~ "these criteria."
-
-#~ msgid ""
-#~ "Não há atualmente nenhuma obra "
-#~ "registrada no banco de dados que "
-#~ "satisfaz esse critério."
-#~ msgstr ""
-#~ "There is currently no work registered"
-#~ " in the database that meets these "
-#~ "criteria."
-
-#~ msgid ""
-#~ "Esta é uma coleção de obras do "
-#~ "Museu do Ipiranga do tipo "
-#~ "%(instance_label) que possuem ao menos "
-#~ "uma imagem e um descritor no "
-#~ "Wikidata."
-#~ msgstr ""
-#~ "This is a collection of works from"
-#~ " the Museu do Ipiranga of type "
-#~ "%(instance_label) that have at least one"
-#~ " image and a descriptor in Wikidata."
-
-#~ msgid ""
-#~ "Há um total de %(total)s obras de"
-#~ " %(creator_label)s no Museu do Ipiranga "
-#~ "cadastradas no Wikidata."
-#~ msgstr ""
-#~ "There is a total of %(total) works"
-#~ " by %(creator_label)s at the Museu do"
-#~ " Ipiranga registered in the Wikidata "
-#~ "database."
-
+#: templates/sobre.html:35
+msgid "Versão 1.0.2."
+msgstr "Version 1.0.2."

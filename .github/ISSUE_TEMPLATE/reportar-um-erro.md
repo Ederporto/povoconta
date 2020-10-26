@@ -18,7 +18,7 @@ Passos para reproduzir o comportamento inesperado:
 4. Veja o erro
 
 **Comportamento esperado**
-Descreva de maneira clara e concisa qual o comportamento que você esperava do jogo.
+Descreva de maneira clara e concisa qual o comportamento que você esperava do aplicativo.
 
 **Captura de tela**
 Se possível, adicione capturas da tela para ajudar a explicar o erro que encontrou.

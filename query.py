@@ -100,7 +100,7 @@ def query_wikidata(query):
         "query": query,
         "format": "json"
     }
-    result = SESSION.post(url=url, params=params, headers={'User-agent': 'Povo Conta 1.0.1'})
+    result = SESSION.post(url=url, params=params, headers={'User-agent': 'Wiki Museu do Ipiranga - Quantos tem? 1.0'})
     data = result.json()
     SESSION.close()
     return data

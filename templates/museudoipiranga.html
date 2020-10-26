@@ -1,33 +1,24 @@
 {% extends "base.html" %}
 
-{% block divright %}
-    {% if lang != 'en' %}
-        <a class="right" tabindex="0" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='en')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Flag-us.svg" width="25px" alt="en"></a>
-    {% endif %}
-    {% if lang != 'pt' and lang != 'pt-BR' %}
-        <a class="right" tabindex="0" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='pt')}}"><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Flag-br.svg" width="25px" alt="pt"></a>
-    {% endif %}
-    {% if username %}
-        <a class="right" tabindex="0" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
-    {% endif %}
-{% endblock %}
-
 {% block initial_text %}
-<div class="w3-row" id="instruções" style="text-align: center">
-    <div class="w3-container w3-quarter"></div>
-    <div class="w3-container w3-half">
-        <p>{{ _("Navegue pelo acervo do Museu do Ipiranga e ajude a melhorar as descrições das obras.") }}
-            <br><br>
-            {{ _("Escolha uma opção:") }}</p>
+    <div class="w3-row" id="instruções" style="text-align: center">
+        <div class="w3-container w3-quarter"></div>
+        <div class="w3-container w3-half">
+            <h2 style="text-align:center; padding-bottom:30px;">
+                {{ _("Bem-vindo(a) ao <i>Wiki Museu do Ipiranga - Quantos tem?</i>")}}
+            </h2>
+            <h3 style="text-align:center; padding-bottom:30px;">
+                {{_("Neste aplicativo, você participa do trabalho de pesquisa do Museu do Ipiranga. Sua tarefa: contar quantos elementos estão presentes nas obras do acervo. Para participar, é preciso autenticar-se; depois, escolha uma categoria abaixo para começar.") }}
+            </h3>
+        </div>
     </div>
-</div>
 {% endblock%}
 
 {% block content %}
 <div class="w3-row" id="buttons" style="text-align: center">
-    <div class="w3-container w3-third"></div>
-    <div class="w3-container w3-third">
-        <ul>
+    <div class="w3-container w3-quarter"></div>
+    <div class="w3-container w3-half">
+        <ul class="w3-container w3-half">
             <li>
                 <a href="{{ url_for('show_per_collection') }}" tabindex="0" style="font-size: 135%;">
                     <button name="per_collection" class="button" value="per_collection" style="width:100%;">
@@ -49,6 +40,8 @@
                     </button>
                 </a>
             </li>
+        </ul>
+        <ul class="w3-container w3-half">
             <li>
                 <a href="{{ url_for('show_per_instance') }}" tabindex="0" style="font-size: 135%;">
                     <button name="per_instance" class="button" value="per_instance" style="width:100%;">
@@ -65,5 +58,6 @@
             </li>
         </ul>
     </div>
+    <div class="w3-container w3-quarter"></div>
 </div>
 {% endblock %}

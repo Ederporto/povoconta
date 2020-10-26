@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# This file is part of the "Povo Conta" wikitool
+# This file is part of the "Wiki Museu do Ipiranga - Quantos tem?" wikitool
 #
 # Copyright (C) 2020 Éder Porto and contributors
 #
@@ -21,7 +21,6 @@
 # Wikidata Art Depiction Explorer tool, available at
 # <https://github.com/EdwardBetts/depicts>, under GPL-3 license.
 
-import requests
 import os
 import yaml
 import mwoauth
