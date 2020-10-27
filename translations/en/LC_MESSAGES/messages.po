@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  1.0.1\n"
 "Report-Msgid-Bugs-To: eder.porto@wmnobrasil.org\n"
-"POT-Creation-Date: 2020-10-26 18:42-0300\n"
+"POT-Creation-Date: 2020-10-27 12:25-0300\n"
 "PO-Revision-Date: 2020-04-21 04:36-0300\n"
 "Last-Translator: Éder Porto <eder.porto@wmnobrasil.org>\n"
 "Language: en\n"
@@ -16,58 +16,58 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
 
-#: templates/base.html:25 templates/error.html:11 templates/item.html:8
-#: templates/per_collection.html:12 templates/per_creator.html:12
-#: templates/per_decade.html:12 templates/per_depict.html:12
-#: templates/per_instance.html:12 templates/sobre.html:11
-#: templates/tutorial.html:3
+#: templates/base.html:24 templates/error.html:11 templates/item.html:8
+#: templates/museudoipiranga.html:3 templates/per_collection.html:12
+#: templates/per_creator.html:12 templates/per_decade.html:12
+#: templates/per_depict.html:12 templates/per_instance.html:12
+#: templates/sobre.html:11 templates/tutorial.html:3
 msgid "Wiki Museu do Ipiranga - Quantos tem?"
 msgstr "Wiki Museu do Ipiranga - How many?"
 
-#: templates/base.html:31
+#: templates/base.html:30 templates/museudoipiranga.html:3
 msgid "Página inicial"
 msgstr "Homepage"
 
-#: templates/base.html:32 templates/sobre.html:11
+#: templates/base.html:31 templates/sobre.html:11
 msgid "Sobre"
 msgstr "About"
 
-#: templates/base.html:33 templates/tutorial.html:3
+#: templates/base.html:32 templates/tutorial.html:3
 msgid "Ajuda"
 msgstr "Help"
 
-#: templates/base.html:43
+#: templates/base.html:42
 msgid "Autenticar-se"
 msgstr "Authenticate"
 
-#: templates/base.html:45
+#: templates/base.html:44
 msgid "Menu"
 msgstr "Menu"
 
-#: templates/base.html:56 templates/base.html:58
+#: templates/base.html:55 templates/base.html:57
 msgid "Logotipo Wiki Museu do Ipiranga - Quantos tem?"
 msgstr "Logo of Wiki Museu do Ipiranga - How many?"
 
-#: templates/base.html:72
+#: templates/base.html:71
 msgid "Projeto Novo Museu do Ipiranga"
 msgstr "Novo Museu do Ipiranga Project"
 
-#: templates/base.html:73
+#: templates/base.html:72
 #, python-format
 msgid ""
 "<i>Wiki Museu do Ipiranga - Quantos tem?</i> é um aplicativo desenvolvido"
 " no contexto do <i><b>%(projeto)s</b></i>, organizado pelo <b>Grupo de "
 "Usuários Wiki Movimento Brasil</b> e o <b>Museu do Ipiranga</b>, em "
 "parceria com a <b>Fundação Banco do Brasil</b> e com realização da "
-"<b>Universidade de São Paulo</b> e a <b>Fundação de Apoio à Universidade "
-"de São Paulo</b>."
+"<b>Universidade de São Paulo</b> e da <b>Fundação de Apoio à Universidade"
+" de São Paulo</b>."
 msgstr ""
 "<i>Wiki Museu do Ipiranga - How many?</i> is an application developed in "
 "the context of the <i><b>%(projeto)s</b></i>, organized by the <b>Wiki "
 "Movimento Brasil User Group</b> and the <b>Museu do Ipiranga</b>, in "
 "partnership with the <b>Banco do Brasil Foundation</b> and organized by "
-"the <b>University of São Paulo</b> and <b>University of São Paulo Support"
-" Foundation</b>."
+"the <b>University of São Paulo</b> and the <b>University of São Paulo "
+"Support Foundation</b>."
 
 #: templates/error.html:11 templates/error.html:16
 msgid "Algo deu errado!"
@@ -145,11 +145,11 @@ msgstr "GO BACK"
 msgid "INÍCIO"
 msgstr "HOMEPAGE"
 
-#: templates/museudoipiranga.html:8
+#: templates/museudoipiranga.html:10
 msgid "Bem-vindo(a) ao <i>Wiki Museu do Ipiranga - Quantos tem?</i>"
 msgstr "Welcome to the <i>Wiki Museu do Ipiranga - How many?</i>"
 
-#: templates/museudoipiranga.html:11
+#: templates/museudoipiranga.html:13
 msgid ""
 "Neste aplicativo, você participa do trabalho de pesquisa do Museu do "
 "Ipiranga. Sua tarefa: contar quantos elementos estão presentes nas obras "
@@ -161,23 +161,23 @@ msgstr ""
 "collection. To participate, you need to authenticate yourself; then "
 "choose a category below to start."
 
-#: templates/museudoipiranga.html:25 templates/per_collection.html:12
+#: templates/museudoipiranga.html:27 templates/per_collection.html:12
 msgid "Coleções"
 msgstr "Collections"
 
-#: templates/museudoipiranga.html:32 templates/per_creator.html:12
+#: templates/museudoipiranga.html:34 templates/per_creator.html:12
 msgid "Criadores"
 msgstr "Creators"
 
-#: templates/museudoipiranga.html:39 templates/per_decade.html:12
+#: templates/museudoipiranga.html:41 templates/per_decade.html:12
 msgid "Décadas"
 msgstr "Decades"
 
-#: templates/museudoipiranga.html:48 templates/per_instance.html:12
+#: templates/museudoipiranga.html:50 templates/per_instance.html:12
 msgid "Tipos de obra"
 msgstr "Types of work"
 
-#: templates/museudoipiranga.html:55 templates/per_depict.html:12
+#: templates/museudoipiranga.html:57 templates/per_depict.html:12
 msgid "Descritores"
 msgstr "Descriptors"
 
@@ -417,40 +417,62 @@ msgstr "Choose a type of work to start playing."
 
 #: templates/sobre.html:18
 msgid ""
-"<b>Wiki Museu do Ipiranga - Quantos tem?</b> é um aplicativo "
-"colaborativo. O propósito é contribuir com a descrição das obras no "
-"acervo do Museu Paulista da Universidade de São Paulo."
+"Você está pronto para ser um(a) investigador(a) de acervos? É o que o "
+"aplicativo <b>Wiki Museu do Ipiranga - Quantos tem?</b> te oferece: "
+"desenvolver suas aptidões de investigação e conhecer mais a fundo o "
+"acervo do Museu do Ipiranga."
 msgstr ""
+"Are you ready to be a collection researcher? That's what the <b>Wiki "
+"Museum of Ipiranga - How many?</b> offers you: develop your research "
+"skills and learn more about the Ipiranga Museum collection."
 
 #: templates/sobre.html:19
 msgid ""
-"O aplicativo está conectado à base de dados colaborativa Wikidata, um "
-"projeto irmão da Wikipédia. Toda contribuição que é feita no <b>Wiki "
-"Museu do Ipiranga - Quantos tem?</b> é automaticamente transmitida para o"
-" respectivo item da obra editada no Wikidata."
+"A curadoria de acervo é uma das atividades mais importantes do museu. "
+"Nela, pesquisadoras e pesquisadores -- e agora você! -- se debruçam sobre"
+" os objetos da coleção para identificar sua procedência, o que retrata, a"
+" história da peça. No aplicativo <b>Wiki Museu do Ipiranga - Quantos "
+"tem?</b>, você participa desse trabalho de curadoria, contando quantos "
+"elementos estão presentes nas obras do acervo."
 msgstr ""
+"Curating the collection is one of the most important activities of the "
+"museum. Here, researchers -- and now you! -- look at the objects in the "
+"collection to identify their origin, what they portray, the history of "
+"the piece. In the application <b>Wiki Museu do Ipiranga - How many?</b>, "
+"you participate in this curatorial work, counting how many elements are "
+"present in the works of the collection."
 
 #: templates/sobre.html:20
 msgid ""
-"As edições são então transpostas para uma série de páginas na internet. "
-"Isso inclui livros colaborativos, repositórios de imagens e em alguns "
-"casos a própria Wikipédia."
+"O trabalho é sério! Suas edições são interativas e automaticamente "
+"registradas. Elas aparecem num grande documento, uma base de dados, em "
+"que pouco a pouco as informações sobre o acervo do Museu do Ipiranga são "
+"melhoradas. Você é agora tem o poder de ajudar -- que responsabilidade, "
+"né?"
 msgstr ""
-"The editions are then translated into a series of pages on the Internet. "
-"This includes collaborative books, image repositories and in some cases "
-"Wikipedia itself."
+"The work is serious! Your edits are interactive and automatically "
+"recorded. They appear in a large document, a database, in which the "
+"information about the Ipiranga Museum collection is gradually improved. "
+"You are now empowered to help - what a responsibility, right?"
 
 #: templates/sobre.html:21
 msgid ""
-"O nome do aplicativo é uma referência à prática no jornalismo de "
-"entrevistar pessoas, em geral na rua, para saber o que pensam sobre "
-"determinado assunto. No <b>Wiki Museu do Ipiranga - Quantos tem?</b>, é o"
-" Museu Paulista que espera sua contribuição na descrição de seu acervo."
+"O aplicativo é um recurso de curadoria colaborativa, em que todas e todos"
+" podem participar. Funciona como a Wikipédia, a enciclopédia em que todo "
+"mundo pode editar."
 msgstr ""
+"The application is a collaborative curation resource, where everyone can "
+"participate. It works like Wikipedia, the encyclopedia in which everyone "
+"world can edit."
 
 #: templates/sobre.html:22
-msgid "Participe e divulgue!"
-msgstr "Participate and share!"
+#, python-format
+msgid ""
+"Mãos à obra, temos agora %(number_works)s obras cujas informações "
+"precisam de sua ajuda!"
+msgstr ""
+"Hands on, we now have %(number_works)s works whose information need your "
+"help!"
 
 #: templates/sobre.html:24
 msgid "Flask"
@@ -500,7 +522,4 @@ msgstr "License of objects returned from Wikidata: %(license_wikidata)s."
 #: templates/sobre.html:35
 msgid "Versão 1.0.1."
 msgstr "Version 1.0.1"
-
-#~ msgid "Versão 1.0.2."
-#~ msgstr "Version 1.0.2."
 

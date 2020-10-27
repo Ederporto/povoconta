@@ -173,6 +173,17 @@ def per_creator(lang="pt-br"):
     return data
 
 
+def total_works():
+    data = query_wikidata("SELECT (COUNT(DISTINCT(?work)) AS ?number_works) WHERE {"
+                          "?work wdt:P195 wd:Q56677470. "
+                          "?work wdt:P180 ?depicts. "
+                          "?work wdt:P18 ?image.}")
+    if "results" in data:
+        return int(data["results"]["bindings"][0]["number_works"]["value"])
+
+    return 0
+
+
 def works_of_creator(qid_creator, lang="pt-br"):
     data = query_wikidata("SELECT DISTINCT ?work ?work_label ?image "
                           "(COUNT(?depict) AS ?total) WHERE { "

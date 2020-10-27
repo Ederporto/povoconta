@@ -34,7 +34,7 @@ from flask_babel import Babel
 from query import per_instance, per_collection, per_creator, per_decade, per_depict,\
     works_of_instance, works_in_collection, works_of_creator, works_of_decade,work_depicts,\
     collection_data, creator_data, work_data, get_p180, get_next_qid, works_of_depict,\
-    get_name, get_tutorial_collections, get_tutorial_images, get_tutorial_total_qids
+    get_name, get_tutorial_collections, get_tutorial_images, get_tutorial_total_qids, total_works
 
 
 __dir__ = os.path.dirname(__file__)
@@ -201,7 +201,8 @@ def museudoipiranga():
 @app.route('/sobre', methods=['GET'])
 def sobre():
     username = wikidata_oauth.get_username()
-    return render_template("sobre.html", username=username, lang=get_locale())
+    number_works = total_works()
+    return render_template("sobre.html", username=username, number_works=number_works, lang=get_locale())
 
 
 @app.route('/tutorial', methods=['GET'])
