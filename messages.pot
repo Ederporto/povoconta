@@ -1,23 +1,77 @@
 # Translations template for PROJECT.
-# Copyright (C) 2020 ORGANIZATION
+# Copyright (C) 2021 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-10-27 12:25-0300\n"
+"POT-Creation-Date: 2021-05-10 11:22-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.8.0\n"
+"Generated-By: Babel 2.9.1\n"
 
-#: templates/base.html:24 templates/error.html:11 templates/item.html:8
+#: templates/apps.html:3 templates/base.html:35
+msgid "Outros aplicativos"
+msgstr ""
+
+#: templates/apps.html:13
+msgid ""
+"A iniciativa do <b>Projeto Novo Museu do Ipiranga</b> tem desenvolvido "
+"uma série de aplicativos, chamada <b>Wiki Museu do Ipiranga</b>, com o "
+"objetivo de convidar você a atuar no trabalho de investigação e curadoria"
+" das obras e objetos do acervo do Museu do Ipiranga."
+msgstr ""
+
+#: templates/apps.html:24 templates/apps.html:28 templates/base.html:58
+#: templates/base.html:60
+msgid "Logotipo Wiki Museu do Ipiranga - Quantos tem?"
+msgstr ""
+
+#: templates/apps.html:35
+msgid ""
+"O primeiro aplicativo, <b>Quantos tem?</b> te convida a contar quantos "
+"elementos estão presentes nas obras do acervo do Museu do Ipiranga."
+msgstr ""
+
+#: templates/apps.html:45 templates/apps.html:49
+msgid "Logotipo Wiki Museu do Ipiranga - Com que roupa eu vou?"
+msgstr ""
+
+#: templates/apps.html:56
+msgid ""
+"O segundo aplicativo, <b>Com que roupa eu vou?</b> te convida a descrever"
+" as roupas e os acessórios das pessoas retratadas em obras do acervo do "
+"Museu do Ipiranga."
+msgstr ""
+
+#: templates/apps.html:66 templates/apps.html:70
+msgid "Logotipo Wiki Museu do Ipiranga - Qual a marca?"
+msgstr ""
+
+#: templates/apps.html:77
+msgid ""
+"O terceiro aplicativo, <b>Qual a marca?</b> te convida a identificar as "
+"marcas de objetos do acervo do Museu do Ipiranga."
+msgstr ""
+
+#: templates/apps.html:87 templates/apps.html:91
+msgid "Logotipo Wiki Museu do Ipiranga - O que retrata?"
+msgstr ""
+
+#: templates/apps.html:98
+msgid ""
+"O quarto aplicativo, <b>O que retrata?</b> te convida a identificar os "
+"motivos representados em objetos do acervo do Museu do Ipiranga."
+msgstr ""
+
+#: templates/base.html:26 templates/error.html:11 templates/item.html:8
 #: templates/museudoipiranga.html:3 templates/per_collection.html:12
 #: templates/per_creator.html:12 templates/per_decade.html:12
 #: templates/per_depict.html:12 templates/per_instance.html:12
@@ -25,35 +79,31 @@ msgstr ""
 msgid "Wiki Museu do Ipiranga - Quantos tem?"
 msgstr ""
 
-#: templates/base.html:30 templates/museudoipiranga.html:3
+#: templates/base.html:32 templates/museudoipiranga.html:3
 msgid "Página inicial"
 msgstr ""
 
-#: templates/base.html:31 templates/sobre.html:11
+#: templates/base.html:33 templates/sobre.html:11
 msgid "Sobre"
 msgstr ""
 
-#: templates/base.html:32 templates/tutorial.html:3
+#: templates/base.html:34 templates/tutorial.html:3
 msgid "Ajuda"
 msgstr ""
 
-#: templates/base.html:42
+#: templates/base.html:45
 msgid "Autenticar-se"
 msgstr ""
 
-#: templates/base.html:44
+#: templates/base.html:47
 msgid "Menu"
 msgstr ""
 
-#: templates/base.html:55 templates/base.html:57
-msgid "Logotipo Wiki Museu do Ipiranga - Quantos tem?"
-msgstr ""
-
-#: templates/base.html:71
+#: templates/base.html:74
 msgid "Projeto Novo Museu do Ipiranga"
 msgstr ""
 
-#: templates/base.html:72
+#: templates/base.html:75
 #, python-format
 msgid ""
 "<i>Wiki Museu do Ipiranga - Quantos tem?</i> é um aplicativo desenvolvido"
