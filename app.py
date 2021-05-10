@@ -231,6 +231,15 @@ def tutorial():
                            lang=get_locale())
 
 
+@app.route('/apps')
+def apps():
+    username = wikidata_oauth.get_username()
+    lang = get_locale()
+    return render_template('apps.html',
+                           username=username,
+                           lang=lang)
+
+
 @app.route('/p195', methods=['GET'])
 @app.route('/collections', methods=['GET'])
 @app.route('/coleções', methods=['GET'])
