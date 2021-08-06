@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-05-22 18:37-0300\n"
+"POT-Creation-Date: 2021-08-06 14:28-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,11 +43,12 @@ msgstr ""
 #: templates/apps.html:38
 msgid ""
 "Por exemplo, quantos cordeiros estão retratados no quadro <a "
-"target=\"_blank\" href=\"https://www.wikidata.org/Q52303216\"><i>Mulher "
-"na Janela Alimentando Cordeiros, Menino Sentado numa Banqueta</i></a>, de"
-" <a target=\"_blank\" "
-"href=\"https://pt.wikipedia.org/Adrien_Henri_Vital_van_Emelen\">Adrien "
-"Henri Vital van Emelen</a>?"
+"target=\"_blank\" "
+"href=\"https://wikiquantos.toolforge.org/qid/Q52303216/pt\"><i>Mulher na "
+"Janela Alimentando Cordeiros, Menino Sentado numa Banqueta</i></a>, de <a"
+" target=\"_blank\" "
+"href=\"https://wikiquantos.toolforge.org/criador/Q5474348\">Adrien Henri "
+"Vital van Emelen</a>?"
 msgstr ""
 
 #: templates/apps.html:49 templates/apps.html:53
@@ -65,9 +66,8 @@ msgstr ""
 msgid ""
 "Por exemplo, quais acessórios são usados por Dona Jessy de Souza Queiroz "
 "em seu <a target=\"_blank\" "
-"href=\"https://www.wikidata.org/Q52302832\"><i>retrato</i></a> por <a "
-"target=\"_blank\" href=\"https://pt.wikipedia.org/Karl_Ernst_Papf\">Karl "
-"Ernst Papf</a>?"
+"href=\"https://wikiroupas.toolforge.org/item/Q52302832\"><i>retrato por "
+"Karl Ernst Papf</i></a>?"
 msgstr ""
 
 #: templates/apps.html:73 templates/apps.html:77
@@ -82,8 +82,11 @@ msgstr ""
 
 #: templates/apps.html:86
 msgid ""
-"Por exemplo, qual a marca do brinquedo <a target=\"_blank\" "
-"href=\"https://www.wikidata.org/Q65033132\"><i>Trem de luxo Nº2</i></a>?"
+"Por exemplo, qual a marca do <a target=\"_blank\" "
+"href=\"https://wikimarcas.toolforge.org/colecao/brinquedos\"><i>brinquedo</i></a>"
+" <a target=\"_blank\" "
+"href=\"https://wikimarcas.toolforge.org/item/Q65033132\"><i>Trem de luxo "
+"Nº2</i></a>?"
 msgstr ""
 
 #: templates/apps.html:97 templates/apps.html:101
@@ -92,17 +95,55 @@ msgstr ""
 
 #: templates/apps.html:109
 msgid ""
-"<b>Qual o ornamento?</b> te convida a identificar os motivos "
+"<b>Qual o ornamento?</b> te convida a identificar os ornamentos "
 "representados em objetos do acervo do Museu do Ipiranga."
 msgstr ""
 
 #: templates/apps.html:110
 msgid ""
 "Por exemplo, qual tipo de flor está representada numa <a "
-"target=\"_blank\" href=\"https://www.wikidata.org/Q106210419\"><i>sopeira"
-" com tampa</i></a> produzida pelas <a target=\"_blank\" "
-"href=\"https://pt.wikipedia.org/Indústrias_Reunidas_Fábricas_Matarazzo\">Indústrias"
-" Reunidas Fábricas Matarazzo</a>?"
+"target=\"_blank\" "
+"href=\"https://wikimotivos.toolforge.org/item/Q106210419\"><i>sopeira com"
+" tampa</i> produzida pelas Indústrias Reunidas Fábricas Matarazzo</a>?"
+msgstr ""
+
+#: templates/apps.html:121 templates/apps.html:125
+msgid "Logotipo Wiki Museu do Ipiranga - Para que serve?"
+msgstr ""
+
+#: templates/apps.html:133
+msgid ""
+"<b>Para que serve?</b> te convida a fotografar e descrever o uso de "
+"objetos semelhantes aos encontrados no acervo do Museu do Ipiranga que "
+"você possua em casa."
+msgstr ""
+
+#: templates/apps.html:134
+msgid ""
+"Por exemplo, você tem um <a target=\"_blank\" "
+"href=\"https://wikiusos.toolforge.org/item/Q65033097\"><i>ralador de "
+"queijo</i> como este</a> na cozinha da sua casa? Você o utiliza somente "
+"para ralar queijo? Ou o usa como peça decorativa? Ele tem alguma história"
+" especial?"
+msgstr ""
+
+#: templates/apps.html:145 templates/apps.html:149
+msgid "Logotipo Wiki Museu do Ipiranga - O que há no brasão?"
+msgstr ""
+
+#: templates/apps.html:157
+msgid ""
+"<b>O que há no brasão?</b> te convida a identificar os elementos "
+"heráldicos dos brasões retratados em obras e objetos do acervo do Museu "
+"do Ipiranga."
+msgstr ""
+
+#: templates/apps.html:158
+msgid ""
+"Por exemplo, você consegue identificar todos os elementos presentes <a "
+"target=\"_blank\" "
+"href=\"https://wikibrasoes.toolforge.org/item/Q55851804\"><i>nesta "
+"pintura de brasão de José Wasth Rodrigues</i></a>?"
 msgstr ""
 
 #: templates/base.html:26 templates/error.html:11 templates/item.html:8
@@ -482,7 +523,7 @@ msgid ""
 "O trabalho é sério! Suas edições são interativas e automaticamente "
 "registradas. Elas aparecem num grande documento, uma base de dados, em "
 "que pouco a pouco as informações sobre o acervo do Museu do Ipiranga são "
-"melhoradas. Você é agora tem o poder de ajudar -- que responsabilidade, "
+"melhoradas. Você agora tem o poder de ajudar -- que responsabilidade, "
 "né?"
 msgstr ""
 
