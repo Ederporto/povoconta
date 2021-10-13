@@ -8,6 +8,8 @@ Once in a category, the users see a list of images of the works, to visually hel
 
 Inside the item page, users are presented with a metadata table and some descriptors, defined by the property retrata (P180), and a zoomable image of the item to help them count each of the descriptors.
 
+This tool is available live at: https://wikiquantos.toolforge.org/
+
 ## Installation
 
 There are several packages need to this application to function. All of them are listed in the <code>requeriments.txt</code> file. To install them, use
