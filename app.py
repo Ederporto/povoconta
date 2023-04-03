@@ -49,7 +49,6 @@ WIKIDATA_API_ENDPOINT = 'https://www.wikidata.org/w/api.php'
 THUMBNAIL_SIZE = '300px'
 
 
-@BABEL.localeselector
 def get_locale(lang=None):
     if lang is not None:
         return lang
@@ -62,6 +61,9 @@ def get_locale(lang=None):
         if lang is not None:
             return lang
         return request.accept_languages.best_match(app.config["LANGUAGES"])
+
+
+BABEL.init_app(app, locale_selector=get_locale)
 
 
 @app.route('/set_locale')

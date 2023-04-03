@@ -1,30 +1,22 @@
 {% extends "base.html" %}
 
-{% block styles %}
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="{{ url_for('static', filename= 'static.css') }}">
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Josefin+Sans" type='text/css'>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-{% endblock %}
-
 {% block title %}{{_("Algo deu errado!")}} | {{ _("Wiki Museu do Ipiranga - Quantos tem?") }}{% endblock %}
 
 {% block content %}
 <div class="w3-row" style="text-align:center">
-    <div class="w3-row" style="text-align:text; font-family: 'Josefin Sans', sans-serif; font-size:150%">
+    <div class="w3-row" style="text-align:left; font-family: 'Josefin Sans', sans-serif; font-size:150%">
         <p style="text-align:center"><b>{{_("Algo deu errado!")}}</b></p>
     </div>
     <br>
     <div class="w3-container">
-        <div class="w3-row w3-half" style="text-align:text; font-family: 'Josefin Sans', sans-serif; font-size:150%">
+        <div class="w3-row w3-half" style="text-align:left; font-family: 'Josefin Sans', sans-serif; font-size:150%">
             <a tabindex="0" href="https://github.com/WikiMovimentoBrasil/povoconta/issues" target="_blank">
                 <button type="button" class="button" id="report" style="background-color:#525252;width:90%;margin:0;font-size:100%;">
                     {{_("REPORTAR ERRO")}}
                 </button>
             </a>
         </div>
-        <div class="w3-row w3-half" style="text-align:text; font-family: 'Josefin Sans', sans-serif; font-size:150%">
+        <div class="w3-row w3-half" style="text-align:left; font-family: 'Josefin Sans', sans-serif; font-size:150%">
             <a tabindex="0" href="{{url_for('museudoipiranga')}}">
                 <button type="button" class="button" id="goback" style="background-color:#525252;width:90%;margin:0;font-size:100%;">
                     {{_("VOLTAR À PÁGINA INICIAL")}}
